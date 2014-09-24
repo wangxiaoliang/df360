@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DFCustomViewController.h"
 
-@interface DFViewController : UIViewController
+@interface DFViewController : DFCustomViewController
 
 @end

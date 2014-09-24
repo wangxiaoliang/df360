@@ -1,0 +1,26 @@
+/* 
+  RefreshLocal.strings
+  astro
+
+  Created by Jikui Peng on 12-1-30.
+  Copyright (c) 2012年 banma. All rights reserved.
+*/
+
+//简体
+
+/*
+ *下拉刷新
+ */
+"refresh"  = "刷新";
+"loadingMore" = "加载更多 ...";
+
+"refresh_loading" = "加载中...";
+
+"downPullingRefresh"  = "下拉可以刷新 ...";
+"upPullingLoadingMore" = "上拉加载更多 ...";
+
+"releaseRefresh"  = "松手即可刷新 ...";
+"releaseLoadingMore" = "松手加载更多 ...";
+
+"lastRefresh"  = "上次刷新";
+"lastLoad" = "上次加载";

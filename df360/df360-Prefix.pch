@@ -14,3 +14,9 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#define kOSVersion [[[UIDevice currentDevice] systemVersion] doubleValue]
+
+#define KCurrentWidth self.view.bounds.size.width
+
+#define KCurrentHeight self.view.bounds.size.height
