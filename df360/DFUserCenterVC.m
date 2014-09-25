@@ -7,6 +7,7 @@
 //
 
 #import "DFUserCenterVC.h"
+#import "DFToolClass.h"
 
 @interface DFUserCenterVC()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -31,7 +32,7 @@
     self.WRightBarStyle = RightBarStyleNone;
     self.WTitle = @"个人中心";
     [self buildUI];
-    titleArr = [[NSArray alloc] initWithObjects:@"发布消息",@"我发布的消息",@"我的置顶信息",@"资料设置",@"积分充值",@"赚取人命币说明", nil];
+    titleArr = [[NSArray alloc] initWithObjects:@"发布消息",@"我发布的消息",@"我的置顶信息",@"资料设置",@"积分充值",@"赚取人民币说明", nil];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -50,6 +51,19 @@
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
     imageView.backgroundColor = [UIColor orangeColor];
     [topView addSubview:imageView];
+    
+    if ([DFToolClass isLogin]) {
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSString *name = [defaults objectForKey:@"username"];
+        
+        UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 20, 100, 40)];
+        [loginBtn setTitle:name forState:UIControlStateNormal];
+        [topView addSubview:loginBtn];
+        
+        
+    }
     
     UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 20, 60, 40)];
     [loginBtn setTitle:@"登陆" forState:UIControlStateNormal];
