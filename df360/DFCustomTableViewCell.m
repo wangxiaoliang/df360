@@ -256,7 +256,7 @@
     
     [self addSubview:address];
     
-    UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(150, 30, 50, 30)];
+    UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(150, 30, 150, 30)];
     
     time.tag = 104;
     
@@ -266,7 +266,7 @@
     
     [self addSubview:time];
     
-    UILabel *price = [[UILabel alloc] initWithFrame:CGRectMake(200, 30, 50, 30)];
+    UILabel *price = [[UILabel alloc] initWithFrame:CGRectMake(250, 20, 50, 30)];
     
     price.text = @"123/元";
     
@@ -282,16 +282,22 @@
 /** 子类列表赋值 */
 - (void)reloadChildCellWithArray:(NSArray *)arr withIndex:(NSInteger)row
 {
+    
+    NSDictionary *dic = [arr objectAtIndex:row];
+    
     UIImageView *imageView = (UIImageView *)[self viewWithTag:101];
     
-    UILabel *title = (UILabel *)[self viewWithTag:102];
     
+    UILabel *title = (UILabel *)[self viewWithTag:102];
+    title.text = [dic objectForKey:@"post_text"];
     UILabel *address = (UILabel *)[self viewWithTag:103];
+    address.text = [dic objectForKey:@"area_title"];
     
     UILabel *time = (UILabel *)[self viewWithTag:104];
+    time.text = [dic objectForKey:@"post_end_time"];
     
     UILabel *price = (UILabel *)[self viewWithTag:105];
-    
+    price.text = [NSString stringWithFormat:@"%@/%@",[dic objectForKey:@"post_price"],[dic objectForKey:@"post_price_unit"]];
     
 }
 
