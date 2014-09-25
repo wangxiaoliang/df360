@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>224FAB93-D8D2-4B82-B55A-7B6DA1A6D1EC</string>
+	<string>0A505F9D-CCF8-424F-AFDE-90501A6E648F</string>
 	<key>IDESourceControlProjectName</key>
 	<string>df360</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>C77C818D-09D6-48A6-ADB8-21F5CEA4DE9C</key>
+		<key>664829C7FB0D0706BA1B0A551440FAB0DD015C39</key>
 		<string>https://github.com/wangxiaoliang/df360.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>df360.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>C77C818D-09D6-48A6-ADB8-21F5CEA4DE9C</key>
+		<key>664829C7FB0D0706BA1B0A551440FAB0DD015C39</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/wangxiaoliang/df360.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>C77C818D-09D6-48A6-ADB8-21F5CEA4DE9C</string>
+	<string>664829C7FB0D0706BA1B0A551440FAB0DD015C39</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>C77C818D-09D6-48A6-ADB8-21F5CEA4DE9C</string>
+			<string>664829C7FB0D0706BA1B0A551440FAB0DD015C39</string>
 			<key>IDESourceControlWCCName</key>
 			<string>df360</string>
 		</dict>
