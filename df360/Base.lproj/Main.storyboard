@@ -46,6 +46,25 @@
             </objects>
             <point key="canvasLocation" x="-550" y="437"/>
         </scene>
+        <!--Child DetailVC-->
+        <scene sceneID="6G3-BW-pkn">
+            <objects>
+                <viewController storyboardIdentifier="DFChildDetailVC" id="fDs-G0-pYR" customClass="DFChildDetailVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OOQ-z3-1Aj"/>
+                        <viewControllerLayoutGuide type="bottom" id="uJO-Mv-ltI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fQO-ko-PKk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="UV1-Rd-33F"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wq3-7f-clQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="358" y="-1076"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="mbN-WS-psr">
             <objects>
@@ -75,6 +94,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="RTE-53-1Qs"/>
+                    <connections>
+                        <segue destination="fDs-G0-pYR" kind="push" identifier="childDetailView" id="EdP-zP-VFq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayr-iP-RgT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

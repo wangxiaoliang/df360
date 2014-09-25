@@ -38,6 +38,7 @@
 		30C4A45219B60872006B9E0D /* DFTodayShoppingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C4A45119B60872006B9E0D /* DFTodayShoppingVC.m */; };
 		30C4A45519B60897006B9E0D /* DFSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C4A45419B60897006B9E0D /* DFSettingVC.m */; };
 		30D36F3919B8AD9C00AED275 /* DFToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D36F3819B8AD9C00AED275 /* DFToolView.m */; };
+		30D6320019D2E7D100FD3706 /* DFChildDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D631FF19D2E7D100FD3706 /* DFChildDetailVC.m */; };
 		30D79A0A19C5BA27007F110D /* DFToolClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D79A0919C5BA27007F110D /* DFToolClass.m */; };
 		30D79A0D19C5C5D2007F110D /* DFRequestUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D79A0C19C5C5D2007F110D /* DFRequestUrl.m */; };
 		30D79A2019C6B70C007F110D /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D79A1719C6B70C007F110D /* FMDatabase.m */; };
@@ -125,6 +126,8 @@
 		30C4A45419B60897006B9E0D /* DFSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFSettingVC.m; sourceTree = "<group>"; };
 		30D36F3719B8AD9C00AED275 /* DFToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFToolView.h; sourceTree = "<group>"; };
 		30D36F3819B8AD9C00AED275 /* DFToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFToolView.m; sourceTree = "<group>"; };
+		30D631FE19D2E7D100FD3706 /* DFChildDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFChildDetailVC.h; sourceTree = "<group>"; };
+		30D631FF19D2E7D100FD3706 /* DFChildDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFChildDetailVC.m; sourceTree = "<group>"; };
 		30D79A0819C5BA27007F110D /* DFToolClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFToolClass.h; sourceTree = "<group>"; };
 		30D79A0919C5BA27007F110D /* DFToolClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFToolClass.m; sourceTree = "<group>"; };
 		30D79A0B19C5C5D2007F110D /* DFRequestUrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFRequestUrl.h; sourceTree = "<group>"; };
@@ -330,6 +333,8 @@
 				30C4A42E19B5FF74006B9E0D /* DFViewController.m */,
 				30A412A419CEB636006AE94D /* DFChildVC.h */,
 				30A412A519CEB636006AE94D /* DFChildVC.m */,
+				30D631FE19D2E7D100FD3706 /* DFChildDetailVC.h */,
+				30D631FF19D2E7D100FD3706 /* DFChildDetailVC.m */,
 			);
 			name = "首页";
 			sourceTree = "<group>";
@@ -588,6 +593,7 @@
 				30D79A2419C6B70C007F110D /* FMResultSet.m in Sources */,
 				30D36F3919B8AD9C00AED275 /* DFToolView.m in Sources */,
 				30D79A0A19C5BA27007F110D /* DFToolClass.m in Sources */,
+				30D6320019D2E7D100FD3706 /* DFChildDetailVC.m in Sources */,
 				30C4A42519B5FF74006B9E0D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
