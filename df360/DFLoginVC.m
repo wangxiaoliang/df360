@@ -151,6 +151,10 @@
     
     [manager POST:[DFRequestUrl loginUrl] parameters:para success:^(AFHTTPRequestOperation *operation,id responseObject){
         NSLog(@"json:%@",responseObject);
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[[responseObject objectForKey:@"data"] objectForKey:@"uid"] forKey:@"uid"];
+        
         [self saveUserInfo];
         
         [_hud dismiss];

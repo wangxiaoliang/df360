@@ -62,7 +62,6 @@
         _infoDic = [[NSDictionary alloc] initWithDictionary:[responseObject objectForKey:@"data"]];
         _messageArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"liuyan"]];
 
-        self.touchView.hidden = YES;
         
         [self buildUI];
         
@@ -70,7 +69,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         
-        self.touchView.hidden = NO;
         
         [_hud dismiss];
     }];

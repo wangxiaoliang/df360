@@ -88,7 +88,6 @@
         
         NSLog(@"TopJSON: %@", responseObject);
         _childArr = [responseObject objectForKey:@"data"];
-        self.touchView.hidden = YES;
         [self buildUI];
         [_hud dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -96,7 +95,6 @@
         
         NSLog(@"Error: %@", error);
         
-        self.touchView.hidden = NO;
         [_hud dismiss];
     }];
 }
@@ -193,6 +191,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     [self performSegueWithIdentifier:@"childDetailView" sender:nil];
 }
 

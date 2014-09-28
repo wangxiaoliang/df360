@@ -553,7 +553,6 @@
         NSLog(@"TopJSON: %@", responseObject);
         _requestCount -= 1;
         _topInfoArr = [responseObject objectForKey:@"data"];
-        self.touchView.hidden = YES;
         [self dissMissHud];
         [self buildTopUI];
         
@@ -562,7 +561,6 @@
         NSLog(@"Error: %@", error);
         NSLog(@"operation: %@",operation);
         _requestCount -= 1;
-        self.touchView.hidden = NO;
         [self dissMissHud];
 
         
@@ -576,7 +574,6 @@
     [manager GET:[DFRequestUrl getAllCates] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"FatherJSON: %@", responseObject);
-        self.touchView.hidden = YES;
         _requestCount -= 1;
         [self dissMissHud];
         _fatherCatesArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
@@ -586,7 +583,6 @@
         NSLog(@"operation: %@",operation);
         NSLog(@"Error: %@", error);
         _requestCount -= 1;
-        self.touchView.hidden = NO;
 
         [self dissMissHud];
 

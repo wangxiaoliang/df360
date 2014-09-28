@@ -158,7 +158,6 @@
         
         _QSArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
         
-        self.touchView.hidden = YES;
         
         [self buildUI];
         
@@ -166,7 +165,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         
-        self.touchView.hidden = NO;
         
         [_hud dismiss];
     }];

@@ -14,7 +14,7 @@
 #define logoutTag  2002
 #define nameTag    2003
 
-@interface DFUserCenterVC()<UITableViewDataSource,UITableViewDelegate>
+@interface DFUserCenterVC()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     NSArray *titleArr;
     
@@ -117,22 +117,36 @@
 
 - (void)logout
 {
-    NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"确定要注销吗？" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消",nil];
     
-    [defult removeObjectForKey:@"username"];
-    [defult removeObjectForKey:@"passwork"];
+    [alert show];
     
-    UIButton *nameBtn = (UIButton *)[_topView viewWithTag:nameTag];
     
-    nameBtn.hidden = YES;
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+        
+        [defult removeObjectForKey:@"username"];
+        [defult removeObjectForKey:@"passwork"];
+        [defult removeObjectForKey:@"uid"];
+        
+        UIButton *nameBtn = (UIButton *)[_topView viewWithTag:nameTag];
+        
+        nameBtn.hidden = YES;
+        
+        UIButton *loginBtn = (UIButton *)[_topView viewWithTag:loginTag];
+        
+        loginBtn.hidden = NO;
+        
+        UIButton *logoutBtn = (UIButton *)[self.view viewWithTag:logoutTag];
+        
+        logoutBtn.hidden = YES;
+    }
     
-    UIButton *loginBtn = (UIButton *)[_topView viewWithTag:loginTag];
-    
-    loginBtn.hidden = NO;
-    
-    UIButton *logoutBtn = (UIButton *)[self.view viewWithTag:logoutTag];
-    
-    logoutBtn.hidden = YES;
 }
 
 #pragma mark - TableViewDataSource

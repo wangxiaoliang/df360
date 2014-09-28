@@ -42,4 +42,8 @@
 /** 获取子分类信息下信息列表接口 */
 + (NSString *)getSubcatListWithPage:(NSString *)page
                        withSubcatId:(NSString *)subcat_id;
+
+/** 我置顶信息列表 */
++ (NSString *)getInfoUpWithUid:(NSString *)uid
+                      withPage:(NSString *)page;
 @end

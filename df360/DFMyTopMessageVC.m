@@ -7,8 +7,9 @@
 //
 
 #import "DFMyTopMessageVC.h"
+#import "DFCustomTableViewCell.h"
 
-@interface DFMyTopMessageVC ()
+@interface DFMyTopMessageVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
 
@@ -20,9 +21,60 @@
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
 
+    [self buildUI];
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)buildUI
+{
+    UITableView *tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, KCurrentWidth, KCurrentHeight - 74) style:UITableViewStylePlain];
+    
+    tabelView.backgroundColor = [UIColor whiteColor];
+    
+    tabelView.dataSource = self;
+    
+    tabelView.delegate = self;
+    
+    [self.view addSubview:tabelView];
+}
+
+#pragma mark - tableViewDetelate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 10;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identify = @"MyTopMessageCell";
+    
+    DFCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
+    
+    if (!cell) {
+        cell = [[DFCustomTableViewCell alloc] init];
+        [cell initMySendMessageCell];
+    }
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

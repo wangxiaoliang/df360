@@ -314,7 +314,7 @@
     
     [self addSubview:titleLabel];
     
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(105, 10, 170, 20)];
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(105, 6, 170, 32)];
     
     textField.backgroundColor = [UIColor clearColor];
     
@@ -326,4 +326,81 @@
     
     [self addSubview:textField];
 }
+
+/** 我发布、置顶的信息Cell */
+- (void)initMySendMessageCell
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 10, 30, 30)];
+    
+    imageView.backgroundColor = [UIColor lightGrayColor];
+    
+    imageView.tag = 101;
+    
+    [self addSubview:imageView];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 5, 150, 20)];
+    
+    titleLabel.text = @"标题";
+    
+    titleLabel.tag = 102;
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    
+    titleLabel.font = [UIFont systemFontOfSize:13];
+    
+    titleLabel.textAlignment = NSTextAlignmentLeft;
+    
+    [self addSubview:titleLabel];
+    
+    UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 30, 150, 20)];
+    
+    typeLabel.text = @"租房";
+    
+    typeLabel.tag = 103;
+    
+    typeLabel.backgroundColor = [UIColor clearColor];
+    
+    typeLabel.textAlignment = NSTextAlignmentLeft;
+    
+    typeLabel.font = [UIFont systemFontOfSize:13];
+    
+    [self addSubview:typeLabel];
+    
+    UILabel *beginTime = [[UILabel alloc] initWithFrame:CGRectMake(210, 5, 100, 20)];
+    
+    beginTime.text = @"2014-09-28";
+    
+    beginTime.backgroundColor = [UIColor clearColor];
+    
+    beginTime.tag = 104;
+    
+    beginTime.textAlignment = NSTextAlignmentLeft;
+    
+    beginTime.font = [UIFont systemFontOfSize:13];
+    
+    [self addSubview:beginTime];
+    
+    UILabel *endTime = [[UILabel alloc] initWithFrame:CGRectMake(210, 30, 100, 20)];
+    
+    endTime.text = @"2014-09-30";
+    
+    endTime.backgroundColor = [UIColor clearColor];
+    
+    endTime.tag = 105;
+    
+    endTime.textAlignment = NSTextAlignmentLeft;
+    
+    endTime.font = [UIFont systemFontOfSize:13];
+    
+    [self addSubview:endTime];
+
+    
+}
+
+/** 我发布、置顶的信息赋值 */
+- (void)reloadMySendMessageWithArray:(NSArray *)arr WithIndex:(NSInteger)row
+{
+    
+}
+
 @end

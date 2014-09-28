@@ -81,4 +81,11 @@
     return [NSString stringWithFormat:@"%@subcat_list?page=%@&subcat_id=%@",DFBaseUrl, page, subcat_id];
 }
 
+/** 我置顶信息列表 */
++ (NSString *)getInfoUpWithUid:(NSString *)uid
+                      withPage:(NSString *)page
+{
+    return [NSString stringWithFormat:@"%@info_up?member_uid=%@&page=%@",DFBaseUrl, uid, page];
+}
+
 @end

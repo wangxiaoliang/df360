@@ -37,4 +37,10 @@
 
 /** 修改资料cell */
 - (void)initModifyUserInfoCellWithTitleArray:(NSArray *)arr Index:(NSInteger)row;
+
+/** 我发布、置顶的信息Cell */
+- (void)initMySendMessageCell;
+
+/** 我发布、置顶的信息赋值 */
+- (void)reloadMySendMessageWithArray:(NSArray *)arr WithIndex:(NSInteger)row;
 @end
