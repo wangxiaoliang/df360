@@ -10,5 +10,5 @@
 #import "DFCustomViewController.h"
 
 @interface DFUserCenterVC : DFCustomViewController
-
+@property (nonatomic ,retain) NSMutableArray *allCates;
 @end

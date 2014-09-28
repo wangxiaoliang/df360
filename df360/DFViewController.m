@@ -17,6 +17,7 @@
 #import "DFToolClass.h"
 #import "DFChildVC.h"
 #import "DFSelectFatherCateVC.h"
+#import "DFUserCenterVC.h"
 
 @interface DFViewController ()<UISearchBarDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITabBarDelegate,DFHudProgressDelegate,UIActionSheetDelegate>
 {
@@ -579,6 +580,7 @@
         _requestCount -= 1;
         [self dissMissHud];
         _fatherCatesArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
+        
         [self buildFatherUI];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"operation: %@",operation);
@@ -673,6 +675,10 @@
             [self performSegueWithIdentifier:[NSString stringWithFormat:@"tab%ld",(long)tag] sender:_fatherCatesArr];
         }
     }
+    else if (tag == 0)
+    {
+        [self performSegueWithIdentifier:[NSString stringWithFormat:@"tab%ld",(long)tag] sender:_fatherCatesArr];
+    }
     else
     {
         [self performSegueWithIdentifier:[NSString stringWithFormat:@"tab%ld",(long)tag] sender:nil];
@@ -690,6 +696,11 @@
     if ([segue.identifier isEqualToString:@"tab4"]) {
         DFSelectFatherCateVC *selectVC = (DFSelectFatherCateVC *)segue.destinationViewController;
         selectVC.allCates = sender;
+    }
+    
+    if ([segue.identifier isEqualToString:@"tab0"]) {
+        DFUserCenterVC *userCenter = (DFUserCenterVC *)segue.destinationViewController;
+        userCenter.allCates = sender;
     }
 }
 

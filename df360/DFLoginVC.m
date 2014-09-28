@@ -211,9 +211,8 @@
     
     [defaults setObject:_userNameTextField.text forKey:@"username"];
     [defaults setObject:_passwordTextField.text forKey:@"password"];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"登陆成功!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
+        
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning

@@ -8,10 +8,17 @@
 
 #import "DFUserCenterVC.h"
 #import "DFToolClass.h"
+#import "DFSelectFatherCateVC.h"
+
+#define loginTag   2001
+#define logoutTag  2002
+#define nameTag    2003
 
 @interface DFUserCenterVC()<UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *titleArr;
+    
+    UIView *_topView;
 }
 @end
 
@@ -44,33 +51,56 @@
     search.hidden = YES;
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 80)];
-    topView.backgroundColor = [UIColor brownColor];
-    [self.view addSubview:topView];
+    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 80)];
+    _topView.backgroundColor = [UIColor brownColor];
+    [self.view addSubview:_topView];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
     imageView.backgroundColor = [UIColor orangeColor];
-    [topView addSubview:imageView];
+    [_topView addSubview:imageView];
     
+    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 20, 100, 40)];
+    loginBtn.tag = loginTag;
+    
+    [loginBtn setTitle:@"登陆" forState:UIControlStateNormal];
+    [loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+    [_topView addSubview:loginBtn];
+
+    
+    UIButton *nameBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 20, 100, 40)];
+    nameBtn.tag = nameTag;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *name = [defaults objectForKey:@"username"];
+    
+    [nameBtn setTitle:name forState:UIControlStateNormal];
+    [_topView addSubview:nameBtn];
+    
+    UIButton *logout = [UIButton buttonWithType:UIButtonTypeCustom];
+    logout.tag = logoutTag;
+    logout.frame = CGRectMake(20, 400, 280, 36);
+    [logout setTitle:@"注销" forState:UIControlStateNormal];
+    [logout setBackgroundImage:[UIImage imageNamed:@"movdet_btn.png"] forState:UIControlStateNormal];
+    [logout setBackgroundImage:[UIImage imageNamed:@"movdet_btn_press.png"] forState:UIControlStateHighlighted];
+    logout.backgroundColor = [UIColor lightGrayColor];
+    [logout addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:logout];
+
+
+
     if ([DFToolClass isLogin]) {
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
-        NSString *name = [defaults objectForKey:@"username"];
-        
-        UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 20, 100, 40)];
-        [loginBtn setTitle:name forState:UIControlStateNormal];
-        [topView addSubview:loginBtn];
-        
+        loginBtn.hidden = YES;
         
     }
     
-    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 20, 60, 40)];
-    [loginBtn setTitle:@"登陆" forState:UIControlStateNormal];
-    [loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:loginBtn];
+    else
+    {
+        nameBtn.hidden = YES;
+        logout.hidden = YES;
+    }
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, KCurrentWidth, 500) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, KCurrentWidth, 44 * 6) style:UITableViewStylePlain];
     
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -83,6 +113,26 @@
 - (void)login
 {
     [self performSegueWithIdentifier:@"login" sender:nil];
+}
+
+- (void)logout
+{
+    NSUserDefaults *defult = [NSUserDefaults standardUserDefaults];
+    
+    [defult removeObjectForKey:@"username"];
+    [defult removeObjectForKey:@"passwork"];
+    
+    UIButton *nameBtn = (UIButton *)[_topView viewWithTag:nameTag];
+    
+    nameBtn.hidden = YES;
+    
+    UIButton *loginBtn = (UIButton *)[_topView viewWithTag:loginTag];
+    
+    loginBtn.hidden = NO;
+    
+    UIButton *logoutBtn = (UIButton *)[self.view viewWithTag:logoutTag];
+    
+    logoutBtn.hidden = YES;
 }
 
 #pragma mark - TableViewDataSource
@@ -106,6 +156,72 @@
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSArray *identifyArr = @[@"userCenterPushSelectFather",@"myMessage",@"myTopMessage",@"userInfoSetting",@"supplement"];
+    
+    if (indexPath.row == 0) {
+        
+        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:self.allCates];
+        
+    }
+    
+    else if (indexPath.row == 5)
+    {
+        
+    }
+    
+    else
+    {
+        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:nil];
+    }
+
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"userCenterPushSelectFather"]) {
+        DFSelectFatherCateVC *selectFather = (DFSelectFatherCateVC *)segue.destinationViewController;
+        selectFather.allCates = sender;
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    
+    UIButton *nameBtn = (UIButton *)[_topView viewWithTag:nameTag];
+    
+    
+    UIButton *loginBtn = (UIButton *)[_topView viewWithTag:loginTag];
+    
+    
+    UIButton *logoutBtn = (UIButton *)[self.view viewWithTag:logoutTag];
+    
+    if ([DFToolClass isLogin]) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSString *name = [defaults objectForKey:@"username"];
+        
+        [nameBtn setTitle:name forState:UIControlStateNormal];
+
+        loginBtn.hidden = YES;
+        logoutBtn.hidden = NO;
+        nameBtn.hidden = NO;
+    }
+    
+    else
+    {
+        nameBtn.hidden = YES;
+        logoutBtn.hidden = YES;
+        loginBtn.hidden = NO;
+    }
+
+}
+
 
 
 - (void)didReceiveMemoryWarning
