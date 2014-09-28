@@ -35,5 +35,6 @@
 /** 子类列表赋值 */
 - (void)reloadChildCellWithArray:(NSArray *)arr withIndex:(NSInteger)row;
 
-
+/** 修改资料cell */
+- (void)initModifyUserInfoCellWithTitleArray:(NSArray *)arr Index:(NSInteger)row;
 @end

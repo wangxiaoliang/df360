@@ -301,5 +301,29 @@
     
 }
 
-
+/** 修改资料cell */
+- (void)initModifyUserInfoCellWithTitleArray:(NSArray *)arr Index:(NSInteger)row
+{
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 80, 20)];
+    
+    titleLabel.text = [arr objectAtIndex:row];
+    
+    titleLabel.font = [UIFont systemFontOfSize:13];
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    
+    [self addSubview:titleLabel];
+    
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(105, 10, 170, 20)];
+    
+    textField.backgroundColor = [UIColor clearColor];
+    
+    textField.borderStyle = UITextBorderStyleRoundedRect;
+    
+    textField.tag = row + 1000;
+    
+    textField.returnKeyType = UIReturnKeyDone;
+    
+    [self addSubview:textField];
+}
 @end

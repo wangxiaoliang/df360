@@ -16,6 +16,11 @@
 		3005DB4E19C586DD008591A2 /* DFQSBKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3005DB4D19C586DD008591A2 /* DFQSBKVC.m */; };
 		3005DB5119C598BF008591A2 /* DFLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3005DB5019C598BF008591A2 /* DFLoginVC.m */; };
 		3005DB5419C5995C008591A2 /* DFRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3005DB5319C5995C008591A2 /* DFRegisterVC.m */; };
+		301A603C19D7EDF00050DBDE /* QRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 301A603719D7EDF00050DBDE /* QRadioButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		301A603D19D7EDF00050DBDE /* radio_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 301A603819D7EDF00050DBDE /* radio_checked.png */; };
+		301A603E19D7EDF00050DBDE /* radio_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301A603919D7EDF00050DBDE /* radio_checked@2x.png */; };
+		301A603F19D7EDF00050DBDE /* radio_unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 301A603A19D7EDF00050DBDE /* radio_unchecked.png */; };
+		301A604019D7EDF00050DBDE /* radio_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301A603B19D7EDF00050DBDE /* radio_unchecked@2x.png */; };
 		30A412A619CEB636006AE94D /* DFChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A412A519CEB636006AE94D /* DFChildVC.m */; };
 		30B9F65919CEDBFD00335DF0 /* DFSendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B9F65819CEDBFD00335DF0 /* DFSendVC.m */; };
 		30B9F65C19D060FF00335DF0 /* DFSelectFatherCateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B9F65B19D060FF00335DF0 /* DFSelectFatherCateVC.m */; };
@@ -95,6 +100,12 @@
 		3005DB5019C598BF008591A2 /* DFLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFLoginVC.m; sourceTree = "<group>"; };
 		3005DB5219C5995C008591A2 /* DFRegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFRegisterVC.h; sourceTree = "<group>"; };
 		3005DB5319C5995C008591A2 /* DFRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFRegisterVC.m; sourceTree = "<group>"; };
+		301A603619D7EDF00050DBDE /* QRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRadioButton.h; sourceTree = "<group>"; };
+		301A603719D7EDF00050DBDE /* QRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRadioButton.m; sourceTree = "<group>"; };
+		301A603819D7EDF00050DBDE /* radio_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = radio_checked.png; sourceTree = "<group>"; };
+		301A603919D7EDF00050DBDE /* radio_checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "radio_checked@2x.png"; sourceTree = "<group>"; };
+		301A603A19D7EDF00050DBDE /* radio_unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = radio_unchecked.png; sourceTree = "<group>"; };
+		301A603B19D7EDF00050DBDE /* radio_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "radio_unchecked@2x.png"; sourceTree = "<group>"; };
 		30A412A419CEB636006AE94D /* DFChildVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFChildVC.h; sourceTree = "<group>"; };
 		30A412A519CEB636006AE94D /* DFChildVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFChildVC.m; sourceTree = "<group>"; };
 		30B9F65719CEDBFD00335DF0 /* DFSendVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFSendVC.h; sourceTree = "<group>"; };
@@ -211,6 +222,19 @@
 				30003D7419C9CC1B0010A13F /* LMContainsLMComboxScrollView.m */,
 			);
 			path = LMComBox;
+			sourceTree = "<group>";
+		};
+		301A603519D7EDF00050DBDE /* QRadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				301A603619D7EDF00050DBDE /* QRadioButton.h */,
+				301A603719D7EDF00050DBDE /* QRadioButton.m */,
+				301A603819D7EDF00050DBDE /* radio_checked.png */,
+				301A603919D7EDF00050DBDE /* radio_checked@2x.png */,
+				301A603A19D7EDF00050DBDE /* radio_unchecked.png */,
+				301A603B19D7EDF00050DBDE /* radio_unchecked@2x.png */,
+			);
+			path = QRadioButton;
 			sourceTree = "<group>";
 		};
 		30B9F65619CEDBB900335DF0 /* 发布 */ = {
@@ -393,6 +417,7 @@
 		30D79A1419C6B6C5007F110D /* 第三方类库 */ = {
 			isa = PBXGroup;
 			children = (
+				301A603519D7EDF00050DBDE /* QRadioButton */,
 				30003D7019C9CC1B0010A13F /* LMComBox */,
 				30D79A2519C6B71B007F110D /* RefreshView */,
 				30D79A1519C6B70C007F110D /* FMDB */,
@@ -522,18 +547,22 @@
 				30C4A43119B5FF74006B9E0D /* Images.xcassets in Resources */,
 				30D79A3619C6B71B007F110D /* blackArrow.png in Resources */,
 				30C4A42319B5FF74006B9E0D /* InfoPlist.strings in Resources */,
+				301A604019D7EDF00050DBDE /* radio_unchecked@2x.png in Resources */,
 				30D79A4119C6B71B007F110D /* whiteArrow.png in Resources */,
 				30D79A3B19C6B71B007F110D /* grayArrow@2x.png in Resources */,
 				30D79A3D19C6B71B007F110D /* loading_icon@2x.png in Resources */,
 				30D79A4319C6B71B007F110D /* RefreshLocal.strings in Resources */,
 				30D79A3919C6B71B007F110D /* blueArrow@2x.png in Resources */,
 				30D79A4219C6B71B007F110D /* whiteArrow@2x.png in Resources */,
+				301A603D19D7EDF00050DBDE /* radio_checked.png in Resources */,
+				301A603F19D7EDF00050DBDE /* radio_unchecked.png in Resources */,
 				30D79A3819C6B71B007F110D /* blueArrow.png in Resources */,
 				30D79A3F19C6B71B007F110D /* refresh_triggering.wav in Resources */,
 				30D79A3719C6B71B007F110D /* blackArrow@2x.png in Resources */,
 				30D79A3A19C6B71B007F110D /* grayArrow.png in Resources */,
 				30C4A42C19B5FF74006B9E0D /* Main.storyboard in Resources */,
 				30D79A3E19C6B71B007F110D /* refresh_release.wav in Resources */,
+				301A603E19D7EDF00050DBDE /* radio_checked@2x.png in Resources */,
 				30D79A3C19C6B71B007F110D /* loading_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -605,6 +634,7 @@
 				30C4A45519B60897006B9E0D /* DFSettingVC.m in Sources */,
 				30D79A2219C6B70C007F110D /* FMDatabasePool.m in Sources */,
 				30D8F0D819D7B1F5000025F3 /* DFSupplementVC.m in Sources */,
+				301A603C19D7EDF00050DBDE /* QRadioButton.m in Sources */,
 				30C4A45219B60872006B9E0D /* DFTodayShoppingVC.m in Sources */,
 				30D79A2319C6B70C007F110D /* FMDatabaseQueue.m in Sources */,
 				30C4A42F19B5FF74006B9E0D /* DFViewController.m in Sources */,
