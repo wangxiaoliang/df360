@@ -48,7 +48,7 @@
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     
-    [manager GET:[DFRequestUrl getInfoUpWithUid:[ud objectForKey:@"uid"] withPage:[NSString stringWithFormat:@"%ld",_page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[DFRequestUrl getMyInfoWithPage:[NSString stringWithFormat:@"%ld", _page] withUid:[ud objectForKey:@"uid"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"TopJSON: %@", responseObject);
         _myMessageArr = [responseObject objectForKey:@"data"];
@@ -67,7 +67,7 @@
 
 - (void)buildUI
 {
-    UITableView *tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, KCurrentWidth, KCurrentHeight - 74) style:UITableViewStylePlain];
+    UITableView *tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, KCurrentHeight) style:UITableViewStylePlain];
     
     tabelView.backgroundColor = [UIColor whiteColor];
     
@@ -87,7 +87,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _myMessageArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -106,7 +106,7 @@
         [cell initMySendMessageCell];
     }
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-
+    [cell reloadMySendMessageWithArray:_myMessageArr WithIndex:indexPath.row];
     return cell;
 }
 

@@ -46,4 +46,8 @@
 /** 我置顶信息列表 */
 + (NSString *)getInfoUpWithUid:(NSString *)uid
                       withPage:(NSString *)page;
+
+/** 我发布的信息 */
++ (NSString *)getMyInfoWithPage:(NSString *)page
+                        withUid:(NSString *)Uid;
 @end

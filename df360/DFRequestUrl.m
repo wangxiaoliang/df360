@@ -88,4 +88,12 @@
     return [NSString stringWithFormat:@"%@info_up?member_uid=%@&page=%@",DFBaseUrl, uid, page];
 }
 
+/** 我发布的信息 */
++ (NSString *)getMyInfoWithPage:(NSString *)page
+                        withUid:(NSString *)Uid
+{
+    return [NSString stringWithFormat:@"%@info_posts?page=%@&member_uid=%@",DFBaseUrl, page, Uid];
+
+}
+
 @end

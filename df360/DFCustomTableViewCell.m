@@ -400,7 +400,23 @@
 /** 我发布、置顶的信息赋值 */
 - (void)reloadMySendMessageWithArray:(NSArray *)arr WithIndex:(NSInteger)row
 {
+    UIImageView *imageView = (UIImageView *)[self viewWithTag:101];
     
+    UILabel *titleLabel = (UILabel *)[self viewWithTag:102];
+    
+    titleLabel.text = [[arr objectAtIndex:row] objectForKey:@"post_title"];
+    
+    UILabel *cateLable = (UILabel *)[self viewWithTag:103];
+    
+    cateLable.text = [[arr objectAtIndex:row] objectForKey:@"cat_title"];
+    
+    UILabel *beginTime = (UILabel *)[self viewWithTag:104];
+    
+    beginTime.text = [[arr objectAtIndex:row] objectForKey:@"post_begin_time"];
+    
+    UILabel *endTime = (UILabel *)[self viewWithTag:105];
+    
+    endTime.text = [[arr objectAtIndex:row] objectForKey:@"post_end_time"];
 }
 
 @end

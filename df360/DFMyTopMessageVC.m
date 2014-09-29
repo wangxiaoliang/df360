@@ -8,9 +8,16 @@
 
 #import "DFMyTopMessageVC.h"
 #import "DFCustomTableViewCell.h"
+#import "DFRequestUrl.h"
+#import "DFToolView.h"
+#import "AFNetworking.h"
 
-@interface DFMyTopMessageVC ()<UITableViewDelegate,UITableViewDataSource>
-
+@interface DFMyTopMessageVC ()<UITableViewDelegate,UITableViewDataSource,DFHudProgressDelegate>
+{
+    DFHudProgress *_hud;
+    NSMutableArray *_topArr;
+    NSInteger _page;
+}
 @end
 
 @implementation DFMyTopMessageVC
@@ -21,7 +28,7 @@
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
 
-    [self buildUI];
+    _page = 0;
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -29,7 +36,7 @@
 
 - (void)buildUI
 {
-    UITableView *tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, KCurrentWidth, KCurrentHeight - 74) style:UITableViewStylePlain];
+    UITableView *tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, KCurrentHeight) style:UITableViewStylePlain];
     
     tabelView.backgroundColor = [UIColor whiteColor];
     
@@ -40,6 +47,32 @@
     [self.view addSubview:tabelView];
 }
 
+- (void)getMyMessageData
+{
+    [_hud show];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+    [manager GET:[DFRequestUrl getInfoUpWithUid:[ud objectForKey:@"uid"] withPage:[NSString stringWithFormat:@"%ld", _page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"TopJSON: %@", responseObject);
+        _topArr = [responseObject objectForKey:@"data"];
+        [_hud dismiss];
+        [self buildUI];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        NSLog(@"operation: %@",operation);
+        [_hud dismiss];
+        
+        
+    }];
+    
+}
+
+
 #pragma mark - tableViewDetelate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -49,7 +82,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _topArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -68,6 +101,7 @@
         [cell initMySendMessageCell];
     }
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    [cell reloadMySendMessageWithArray:_topArr WithIndex:indexPath.row];
 
     return cell;
 }
