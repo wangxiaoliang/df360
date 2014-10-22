@@ -14,12 +14,15 @@
 #import "DFToolView.h"
 #import "DFCustomTableViewCell.h"
 #import "LMContainsLMComboxScrollView.h"
+#import "PopoverView.h"
 
-@interface DFChildVC ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate>
+
+@interface DFChildVC ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate,DFSegmentDelegate>
 {
-    LMContainsLMComboxScrollView *LMcomboxScrollView;
     
     NSMutableArray *_comArr; //下拉数据源
+    
+    NSMutableArray *_titleArr;
     
     NSMutableArray *_areaArr;  //区域
     
@@ -33,7 +36,11 @@
     
     NSInteger _page;
     
+    NSInteger _requestCount;
+    
     DFHudProgress *_hud;
+    
+    DFSegmentController *segment;
 }
 @end
 
@@ -52,12 +59,13 @@
 {
     _page = 0;
     
-    _areaArr = [[NSMutableArray alloc] initWithObjects:@"所属区域", nil];
-    _typeArr = [[NSMutableArray alloc] initWithObjects:@"交易类型", nil];
-    _payTypeArr = [[NSMutableArray alloc] initWithObjects:@"付款方式", nil];
-    _oldOrNewArr = [[NSMutableArray alloc] initWithObjects:@"新旧程度", nil];
+    _requestCount = 2;
     
-    _comArr = [[NSMutableArray alloc] initWithObjects:_areaArr,_typeArr,_payTypeArr,_oldOrNewArr, nil];
+    _comArr = [[NSMutableArray alloc] init];
+    
+    _titleArr = [[NSMutableArray alloc] init];
+    
+    _typeArr = [[NSMutableArray alloc] init];
     
     _hud = [[DFHudProgress alloc] init];
     _hud.delegate = self;
@@ -74,10 +82,54 @@
     self.view.backgroundColor = [DFToolClass getColor:@"e5e5e5"];
 
     
+    
     [self getListData];
     
+    [self getComArr];
+
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)getComArr
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:[DFRequestUrl sysSetWithSubcatid:[self.childDic objectForKey:@"cat_id"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"TopJSON: %@", responseObject);
+        NSArray *dataArr = [responseObject objectForKey:@"data"];
+        
+        for (NSDictionary *dic in dataArr) {
+            NSArray *childarr = [dic objectForKey:@"child_categories"];
+            
+            [_typeArr addObject:[dic objectForKey:@"c_id"]];
+            
+            [_titleArr addObject:[dic objectForKey:@"c_name"]];
+            
+            [_comArr addObject:childarr];
+            
+            
+        }
+        
+        _requestCount -= 1;
+        if (_requestCount == 0) {
+            [self buildUI];
+        }
+        [self buildUI];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"operation: %@",operation);
+        
+        NSLog(@"Error: %@", error);
+        _requestCount -= 1;
+
+    }];
+
+}
+
+- (void)getArea
+{
+    
 }
 
 - (void)getListData
@@ -88,13 +140,18 @@
         
         NSLog(@"TopJSON: %@", responseObject);
         _childArr = [responseObject objectForKey:@"data"];
-        [self buildUI];
+        _requestCount -= 1;
+        
+        if (_requestCount == 0) {
+            [self buildUI];
+        }
+        
         [_hud dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"operation: %@",operation);
         
         NSLog(@"Error: %@", error);
-        
+        _requestCount -= 1;
         [_hud dismiss];
     }];
 }
@@ -102,19 +159,8 @@
 - (void)buildUI
 {
     
-    
-    
-    /************ 下拉选项 ************/
-    LMcomboxScrollView = [[LMContainsLMComboxScrollView alloc]initWithFrame:CGRectMake(0, 0, KCurrentHeight, KCurrentHeight)];
-    LMcomboxScrollView.backgroundColor = [UIColor clearColor];
-    LMcomboxScrollView.showsVerticalScrollIndicator = NO;
-    LMcomboxScrollView.showsHorizontalScrollIndicator = NO;
-    [self.view addSubview:LMcomboxScrollView];
-
-    [self setUpBgScrollView];
-    
     /************ tableView ************/
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 24, KCurrentWidth, KCurrentHeight - 88) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KCurrentWidth, KCurrentHeight - 40) style:UITableViewStylePlain];
     
     tableView.backgroundColor = [UIColor whiteColor];
     
@@ -125,40 +171,16 @@
     [self.view addSubview:tableView];
     
     
-
-}
-
--(void)setUpBgScrollView
-{
+    segment = [[DFSegmentController alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 40) withTitle:_titleArr withData:_comArr];
+    segment.delegate = self;
+    segment.segementTitle = _titleArr;
+    segment.segementData = _comArr;
     
-    NSLog(@"%@",_comArr);
-    
-    for(NSInteger i=0;i<4;i++)
-    {
-        LMComBoxView *comBox = [[LMComBoxView alloc]initWithFrame:CGRectMake((KCurrentWidth/4)*i, 0, KCurrentWidth/4, 24)];
-        comBox.backgroundColor = [UIColor whiteColor];
-        comBox.arrowImgName = @"down_dark0.png";
-        comBox.titlesList = [_comArr objectAtIndex:i];
-        comBox.delegate = self;
-        comBox.supView = LMcomboxScrollView;
-        [comBox defaultSettings];
-        comBox.tag =  i;
-        [LMcomboxScrollView addSubview:comBox];
-    }
+    [self.view addSubview:segment];
 }
 
--(void)selectAtIndex:(int)index inCombox:(LMComBoxView *)_combox
-{
-    NSInteger tag = [_combox tag];
-    switch (tag) {
-        case 0:
-            
-            break;
-            
-        default:
-            break;
-    }
-}
+
+
 
 #pragma mark - TableViewDeletagte
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -199,6 +221,38 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
+}
+
+#pragma mark - segementDelegate
+- (void)segmentIsClickWithType:(NSInteger)type withId:(NSString *)subid
+{
+    NSLog(@"%ld   %@",type,subid);
+    [_hud show];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:[DFRequestUrl getSubcatListWithPage:[NSString stringWithFormat:@"%ld",_page] withSubcatId:[self.childDic objectForKey:@"cat_id"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"TopJSON: %@", responseObject);
+        _childArr = [responseObject objectForKey:@"data"];
+        _requestCount -= 1;
+        
+        if (_requestCount == 0) {
+            [self buildUI];
+        }
+        
+        [_hud dismiss];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"operation: %@",operation);
+        
+        NSLog(@"Error: %@", error);
+        _requestCount -= 1;
+        [_hud dismiss];
+    }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [segment dissmisSegmentView];
+
 }
 
 - (void)didReceiveMemoryWarning

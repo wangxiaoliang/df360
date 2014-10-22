@@ -8,9 +8,12 @@
 
 #import "DFCustomTableViewCell.h"
 #import "DFToolClass.h"
+#import "UIImageView+WebCache.h"
+
 
 #define cellWigth self.bounds.size.width
 #define cellHeight self.bounds.size.height
+#define baseURL @"http://www.df360.cc/"
 
 @implementation DFCustomTableViewCell
 
@@ -45,7 +48,7 @@
     
     [self addSubview:imageView];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 120, 40)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, 120, 40)];
     
     titleLabel.backgroundColor = [UIColor clearColor];
     
@@ -53,9 +56,11 @@
     
     titleLabel.text = @"大甩卖";
     
+    titleLabel.font = [UIFont systemFontOfSize:16];
+    
     [self addSubview:titleLabel];
     
-    UILabel *nowPrice = [[UILabel alloc] initWithFrame:CGRectMake(100, 30, 70, 30)];
+    UILabel *nowPrice = [[UILabel alloc] initWithFrame:CGRectMake(80, 30, 70, 30)];
     
     nowPrice.text = @"￥190";
     
@@ -63,11 +68,13 @@
     
     nowPrice.backgroundColor = [UIColor clearColor];
     
+    nowPrice.font = [UIFont systemFontOfSize:15];
+    
     nowPrice.textColor = [DFToolClass getColor:@"ea4940"];
     
     [self addSubview:nowPrice];
     
-    UILabel *oldPrice = [[UILabel alloc] initWithFrame:CGRectMake(170, 36, 60, 20)];
+    UILabel *oldPrice = [[UILabel alloc] initWithFrame:CGRectMake(150, 36, 60, 20)];
     
     oldPrice.text = @"￥200";
     
@@ -79,17 +86,21 @@
     
     [self addSubview:oldPrice];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(170, 45.5, 40, 0.5)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(150, 45.5, 40, 0.5)];
     
     line.backgroundColor = [UIColor blackColor];
     
     [self addSubview:line];
     
-    UILabel *number = [[UILabel alloc] initWithFrame:CGRectMake(230, 30,  80, 30)];
+    UILabel *number = [[UILabel alloc] initWithFrame:CGRectMake(200, 30,  110, 30)];
     
     number.text = @"100人购买";
     
     number.tag = 105;
+    
+    number.font = [UIFont systemFontOfSize:13];
+    
+    number.textAlignment = NSTextAlignmentRight;
     
     number.backgroundColor = [UIColor clearColor];
     
@@ -101,7 +112,10 @@
 {
     UIImageView *imageView = (UIImageView *)[self viewWithTag:101];
     
-//    imageView.image = [UIImage imageNamed:[[arr objectAtIndex:row] objectForKey:<#(id)#>]]
+
+    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",baseURL,[[arr objectAtIndex:row] objectForKey:@"goods_pic"]]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+
+    
     
     UILabel *titleLabel = (UILabel *)[self viewWithTag:102];
     
@@ -139,6 +153,8 @@
     
     title.text = @"哈哈哈哈";
     
+    title.font = [UIFont systemFontOfSize:15];
+    
     [self addSubview:title];
     
     UILabel *content = [[UILabel alloc] initWithFrame:CGRectMake(80, 30, 220, 40)];
@@ -161,7 +177,7 @@
 {
     UIImageView *image = (UIImageView *)[self viewWithTag:101];
     
-    
+    [image setImage:[UIImage imageNamed:@"personImg"]];
     
     UILabel *title = (UILabel *)[self viewWithTag:102];
     
@@ -195,7 +211,8 @@
     
     [self addSubview:name];
     
-    UILabel *message = [[UILabel alloc] initWithFrame:CGRectMake(15, 50, cellWigth - 15, 40)];
+    UILabel *message = [[UILabel alloc] init];
+    
     
     message.backgroundColor = [UIColor whiteColor];
     
@@ -207,6 +224,8 @@
     
     [self addSubview:message];
     
+    self.backgroundColor = [UIColor whiteColor];
+    
 }
 
 /** 糗百评论赋值 */
@@ -215,11 +234,21 @@
 {
     UIImageView *imageView = (UIImageView *)[self viewWithTag:101];
     
+    imageView.image = [UIImage imageNamed:@"personImg"];
+    
     UILabel *name = (UILabel *)[self viewWithTag:102];
     
     name.text = [[arr objectAtIndex:row] objectForKey:@"author"];
     
     UILabel *message = (UILabel *)[self viewWithTag:103];
+    
+    [message setNumberOfLines:0];
+    
+    CGSize size = CGSizeMake(cellWigth - 25, 100);
+    
+    CGSize messageSize = [[[arr objectAtIndex:row] objectForKey:@"message"] sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping];
+
+    [message setFrame:CGRectMake(15, 42, cellWigth - 25, messageSize.height)];
     
     message.text = [[arr objectAtIndex:row] objectForKey:@"message"];
     

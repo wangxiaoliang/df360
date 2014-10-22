@@ -52,24 +52,29 @@
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 80)];
-    _topView.backgroundColor = [UIColor brownColor];
+    _topView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_topView];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
-    imageView.backgroundColor = [UIColor orangeColor];
+    imageView.backgroundColor = [UIColor clearColor];
+    
+    imageView.image = [UIImage imageNamed:@"personImg"];
+    
     [_topView addSubview:imageView];
     
-    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 20, 100, 40)];
+    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(60, 20, 100, 40)];
     loginBtn.tag = loginTag;
     
     [loginBtn setTitle:@"登陆" forState:UIControlStateNormal];
+    [loginBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    
     [loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     [_topView addSubview:loginBtn];
 
     
-    UIButton *nameBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 20, 100, 40)];
+    UIButton *nameBtn = [[UIButton alloc] initWithFrame:CGRectMake(60, 20, 100, 40)];
     nameBtn.tag = nameTag;
-    
+    [nameBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSString *name = [defaults objectForKey:@"username"];

@@ -14,7 +14,16 @@
 {
     // Override point for customization after application launch.
     
+    [[UINavigationBar appearance] setBarTintColor:[UIColor orangeColor]];
     
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+        
     return YES;
 }
 							

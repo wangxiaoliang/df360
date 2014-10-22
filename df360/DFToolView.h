@@ -32,3 +32,53 @@
 - (void)dismiss;
 
 @end
+
+@protocol DFSegmentDelegate <NSObject>
+
+- (void)segmentIsClickWithType:(NSInteger)type withId:(NSString *)subid;
+
+@end
+
+@interface DFSegmentController : UIView <UITableViewDataSource,UITableViewDelegate>
+{
+    NSInteger index;
+    BOOL more;
+    BOOL selectMore;
+    NSMutableArray *dataSource;
+    
+}
+
+@property (nonatomic, assign) id<DFSegmentDelegate>delegate;
+@property (nonatomic, retain) NSArray *segementTitle;
+@property (nonatomic, retain) NSArray *segementData;
+@property (nonatomic, assign) BOOL isShowing;
+
+- (id)initWithFrame:(CGRect)frame
+          withTitle:(NSArray *)title
+           withData:(NSArray *)data;
+
+- (void)dissmisSegmentView;
+
+@end
+
+@protocol DFTuanSegmentDelegate <NSObject>
+
+- (void)tuanSegmentIsClickWithType:(NSInteger)type withId:(NSString *)subid;
+
+@end
+
+@interface DFTuanSegmentController : UIView<UITableViewDataSource,UITableViewDelegate>
+{
+    NSInteger index;
+    BOOL selectMore;
+    NSMutableArray *dataSource;
+}
+
+@property (nonatomic, assign) id<DFTuanSegmentDelegate>delegate;
+@property (nonatomic, retain) NSDictionary *segementData;
+@property (nonatomic, assign) BOOL isShowing;
+
+- (id)initWithFrame:(CGRect)frame withData:(NSDictionary *)data;
+
+- (void)dissmisSegmentView;
+@end

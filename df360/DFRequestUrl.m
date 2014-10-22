@@ -61,6 +61,18 @@
     return [NSString stringWithFormat:@"%@tuan_goods",DFBaseUrl];
 }
 
+/** 团购详情 */
++ (NSString *)TGInfoWithID:(NSString *)catId
+{
+    return [NSString stringWithFormat:@"%@tuan_good_info?goods_id=%@",DFBaseUrl, catId];
+}
+
+/** 获取糗百分类接口 */
++ (NSString *)getQBFid
+{
+    return [NSString stringWithFormat:@"%@qb_fids", DFBaseUrl];
+}
+
 /** 获取糗百信息 */
 + (NSString *)getQBInfoWithFid:(NSString *)fid withPage:(NSInteger)page
 {
@@ -72,6 +84,13 @@
 {
     return [NSString stringWithFormat:@"%@form_info?tid=%@",DFBaseUrl,tid];
 
+}
+
+/** 获取糗百留言 */
++ (NSString *)getQBMessageWithTid:(NSString *)tid
+                         withPage:(NSString *)page
+{
+    return [NSString stringWithFormat:@"%@form_info_liuyan?tid=%@&page=%@",DFBaseUrl, tid, page];
 }
 
 /** 获取子分类信息下信息列表接口 */
@@ -88,6 +107,19 @@
     return [NSString stringWithFormat:@"%@info_up?member_uid=%@&page=%@",DFBaseUrl, uid, page];
 }
 
+/** 获取信息详情接口 */
++ (NSString *)getInfoPostWithPostId:(NSString *)postId
+{
+    return [NSString stringWithFormat:@"%@info_post?post_id=%@",DFBaseUrl ,postId];
+}
+
+/** 举报接口 */
++ (NSString *)report
+{
+    return [NSString stringWithFormat:@"%@info_jubao",DFBaseUrl];
+}
+
+
 /** 我发布的信息 */
 + (NSString *)getMyInfoWithPage:(NSString *)page
                         withUid:(NSString *)Uid
@@ -96,4 +128,34 @@
 
 }
 
+/** 初始化所属区域 */
++ (NSString *)getArea
+{
+    return [NSString stringWithFormat:@"%@info_area",DFBaseUrl];
+}
+
+/** 初始化交易类型 */
++ (NSString *)getTradeType
+{
+    return [NSString stringWithFormat:@"%@trade_type",DFBaseUrl];
+}
+
+/** 初始化付款方式 */
++ (NSString *)getFukuan
+{
+    return [NSString stringWithFormat:@"%@fukuan",DFBaseUrl];
+}
+
+/** 初始化新旧程度 */
++ (NSString *)getXinjiu
+{
+    return [NSString stringWithFormat:@"%@xinjiu",DFBaseUrl];
+}
+
+/** 查询条件接口 */
++ (NSString *)sysSetWithSubcatid:(NSString *)subcatid
+{
+    return [NSString stringWithFormat:@"%@sysset_bysubcat_id?subcat_id=%@",DFBaseUrl, subcatid];
+
+}
 @end

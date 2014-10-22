@@ -12,4 +12,5 @@
 
 @interface DFChildVC : DFCustomViewController<LMComBoxViewDelegate>
 @property (nonatomic, retain) NSDictionary *childDic;
+@property (nonatomic, retain) NSString *subcatid;
 @end

@@ -18,6 +18,7 @@
 #import "DFChildVC.h"
 #import "DFSelectFatherCateVC.h"
 #import "DFUserCenterVC.h"
+#import "DFTopInfoVC.h"
 
 @interface DFViewController ()<UISearchBarDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITabBarDelegate,DFHudProgressDelegate,UIActionSheetDelegate>
 {
@@ -44,6 +45,8 @@
     NSMutableArray *_fatherCatesArr; //父分类信息
     
     NSMutableArray *_childCatesArr; //子分类信息
+    
+    NSString *_fatherCatID;  //父分类类别id
     
     DFHudProgress *_hud;
     
@@ -98,7 +101,7 @@
     [leftBtn setTitle:@"登封" forState:UIControlStateNormal];
     leftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     leftBtn.backgroundColor = [UIColor clearColor];
-    [leftBtn setTitleColor:[DFToolClass getColor:@"ea4940"] forState:UIControlStateNormal];
+    [leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     
@@ -127,7 +130,7 @@
     [self.view addSubview:_backScrollView];
     
     //固定置顶的图片
-    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 53)];
+    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 53)];
     image.image = [UIImage imageNamed:@"info_index_top"];
     [_backScrollView addSubview:image];
     
@@ -135,38 +138,34 @@
     float btnWidth = (self.view.bounds.size.width - 100)/4;
     
     
-//    //第三方网站界面
-//    
+    //第三方网站界面
+    
 //    UIView *webView = [[UIView alloc] initWithFrame:CGRectMake(0, deltaHeight + 373, KCurrentWidth, 100)];
-//    
-//    webView.backgroundColor = [UIColor grayColor];
-//    
-//    [_backScrollView addSubview:webView];
-//    
-//    for (int y = 0; y < 4; y++) {
-//        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(20 + (btnWidth + 20)*y, 20 , btnWidth, btnWidth)];
-//        btn.backgroundColor = [UIColor blueColor];
-//        [btn addTarget:self action:@selector(webViewSelected:) forControlEvents:UIControlEventTouchUpInside];
-//        btn.tag = y ;
-//        
-//        [webView addSubview:btn];
-//    }
+    UIButton *webBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [webBtn setFrame:CGRectMake(0, 373, KCurrentWidth, 100)];
+    
+    [webBtn setImage:[UIImage imageNamed:@"icon_ad"] forState:UIControlStateNormal];
+    
+    webBtn.backgroundColor = [UIColor clearColor];
+    
+    [_backScrollView addSubview:webBtn];
+    
+    
     UITabBar *downTab = [[UITabBar alloc] initWithFrame:CGRectMake(0, KCurrentHeight - 113, KCurrentWidth, 49)];
     
-    downTab.backgroundColor = [UIColor redColor];
+//    downTab.backgroundColor = [UIColor redColor];
     
     NSMutableArray *tabItems = [NSMutableArray array];
     
     NSArray *tabTitle = @[@"个人中心",@"今日团购",@"夜猫基地",@"设置",@"发布"];
     
+    NSArray *tabImage = @[@"home_tab_person",@"home_tab_collect",@"home_tab_history",@"home_tab_setting",@"home_tab_publish"];
+    
     for (int i = 0; i < 5; i ++) {
         UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:[tabTitle objectAtIndex:i] image:nil tag:i];
+        item.image = [UIImage imageNamed:[tabImage objectAtIndex:i]];
         [tabItems addObject:item];
-        if (i == 4) {
-            item.imageInsets = UIEdgeInsetsMake(0, 0, 0, 10);
-            item.titlePositionAdjustment = UIOffsetMake(10, 0);
-
-        }
     }
     
     downTab.items = tabItems;
@@ -208,16 +207,19 @@
     [_backScrollView addSubview:line];
     
     
-    _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 63, KCurrentWidth , 80)];
+    _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 53, KCurrentWidth , 80)];
     
     _topScrollView.contentSize = CGSizeMake(KCurrentWidth * topPages, 80);
     _topScrollView.showsVerticalScrollIndicator = false;
     _topScrollView.backgroundColor = [UIColor whiteColor];
     _topScrollView.delegate = self;
+    _topScrollView.pagingEnabled = YES;
     
     _topPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 143, 320, 10)];
     _topPageControl.backgroundColor = [UIColor clearColor];
     _topPageControl.numberOfPages = topPages;
+    _topPageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
+    _topPageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
     [_topPageControl addTarget:self action:@selector(topPageControlSelected:) forControlEvents:UIControlEventValueChanged];
     
     
@@ -244,8 +246,9 @@
                     topBtn.backgroundColor = [UIColor whiteColor];
                     [topBtn setFrame:CGRectMake(20 + 100*y + page * KCurrentWidth, 5 + 40*i, 80, 30)];
                     [topBtn setTitle:title forState:UIControlStateNormal];
-                    [topBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-                    topBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+                    [topBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                    [topBtn addTarget:self action:@selector(topBtnSelected:) forControlEvents:UIControlEventTouchUpInside];
+                    topBtn.titleLabel.font = [UIFont systemFontOfSize:13];
                     topBtn.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
                     topBtn.tag = tag;
                     [_topScrollView addSubview:topBtn];
@@ -299,24 +302,28 @@
     
     line.backgroundColor = [UIColor blackColor];
     
-    [_backScrollView addSubview:line];
+//    [_backScrollView addSubview:line];
     
     _fatherScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, topHight, KCurrentWidth , 100 + 2*btnWidth)];
     _fatherScrollView.contentSize = CGSizeMake(KCurrentWidth * fatherPages, 90);
     _fatherScrollView.showsVerticalScrollIndicator = false;
     _fatherScrollView.delegate = self;
+    _fatherScrollView.pagingEnabled = YES;
+    
     _fatherScrollView.backgroundColor = [UIColor whiteColor];
     
-    _fatherPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, topHight + 100 + 2*btnWidth, KCurrentWidth, 10)];
-    _fatherPageControl.backgroundColor = [UIColor clearColor];
+    _fatherPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, topHight + 85 + 2*btnWidth, KCurrentWidth, 10)];
+    _fatherPageControl.backgroundColor = [UIColor whiteColor];
     _fatherPageControl.numberOfPages = fatherPages;
+    _fatherPageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
+    _fatherPageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
     [_fatherPageControl addTarget:self action:@selector(topPageControlSelected:) forControlEvents:UIControlEventValueChanged];
     
     line = [[UIView alloc] initWithFrame:CGRectMake(0, topHight + 100 + 2*btnWidth, KCurrentWidth, 0.5)];
     
     line.backgroundColor = [UIColor blackColor];
     
-    [_backScrollView addSubview:line];
+//    [_backScrollView addSubview:line];
     [_backScrollView addSubview:_fatherScrollView];
     [_backScrollView addSubview:_fatherPageControl];
     
@@ -338,13 +345,14 @@
                     NSString *title = [[_fatherCatesArr objectAtIndex:tag] objectForKey:@"cat_title"];
                     
                     UIButton *fatherBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    fatherBtn.backgroundColor = [UIColor grayColor];
+                    fatherBtn.backgroundColor = [UIColor clearColor];
                     [fatherBtn setFrame:CGRectMake(20 + (btnWidth + 20)*y + page * KCurrentWidth,20 + (40 + btnWidth)*i, btnWidth, btnWidth)];
                     [fatherBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
                     fatherBtn.titleLabel.font = [UIFont systemFontOfSize:12];
                     fatherBtn.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
                     [fatherBtn addTarget:self action:@selector(categorySelected:) forControlEvents:UIControlEventTouchUpInside];
                     fatherBtn.tag = tag;
+                    [fatherBtn setImage:[UIImage imageNamed:@"home_icon_cg_house"] forState:UIControlStateNormal];
                     [_btnArr addObject:fatherBtn];
                     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20 + (btnWidth + 20)*y + page * KCurrentWidth,20 + (40 + btnWidth)*i + 60, btnWidth, 20)];
                     titleLabel.backgroundColor = [UIColor clearColor];
@@ -406,7 +414,7 @@
         NSInteger tag = [sender tag];
         
         _childCatesArr = [[_fatherCatesArr objectAtIndex:tag] objectForKey:@"child"];
-        
+        _fatherCatID = [[_fatherCatesArr objectAtIndex:tag] objectForKey:@"cat_id"];
         [self showSecondCategoryWithPoint:point];
         
         for (UIButton *btn in _btnArr) {
@@ -540,7 +548,16 @@
     
     NSInteger tag = [sender tag];
     
+    
     [self performSegueWithIdentifier:@"childSelected" sender:[_childCatesArr objectAtIndex:tag]];
+}
+
+#pragma mark - 点击topBtn
+- (void)topBtnSelected:(UIButton *)sender
+{
+    NSInteger tag = [sender tag];
+    
+    [self performSegueWithIdentifier:@"topInfo" sender:[_topInfoArr objectAtIndex:tag]];
 }
 
 #pragma mark  - 获取置顶信息
@@ -670,6 +687,10 @@
         if ([DFToolClass isLogin]) {
             [self performSegueWithIdentifier:[NSString stringWithFormat:@"tab%ld",(long)tag] sender:_fatherCatesArr];
         }
+        else
+        {
+            [self performSegueWithIdentifier:@"notLogin" sender:nil];
+        }
     }
     else if (tag == 0)
     {
@@ -697,6 +718,10 @@
     if ([segue.identifier isEqualToString:@"tab0"]) {
         DFUserCenterVC *userCenter = (DFUserCenterVC *)segue.destinationViewController;
         userCenter.allCates = sender;
+    }
+    if ([segue.identifier isEqualToString:@"topInfo"]) {
+        DFTopInfoVC *top = (DFTopInfoVC *)segue.destinationViewController;
+        top.sendDic = sender;
     }
 }
 

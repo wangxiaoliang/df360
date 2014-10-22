@@ -9,5 +9,5 @@
 #import "DFCustomViewController.h"
 
 @interface DFSendQBVC : DFCustomViewController
-@property (nonatomic, retain) NSString *fid;
+@property (nonatomic, retain) NSDictionary *fid;
 @end

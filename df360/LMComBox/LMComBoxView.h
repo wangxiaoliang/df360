@@ -21,14 +21,12 @@
 @class LMComBoxView;
 @protocol LMComBoxViewDelegate <NSObject>
 
--(void)selectAtIndex:(int)index inCombox:(LMComBoxView *)_combox;
+-(void)selectAtIndex:(NSInteger)index inCombox:(LMComBoxView *)_combox;
 
 @end
 
 @interface LMComBoxView : UIView<UITableViewDataSource,UITableViewDelegate>
-{
-    UILabel *titleLabel;
-}
+@property(nonatomic,strong)UILabel *titleLabel;
 @property(nonatomic,assign)BOOL isOpen;
 @property(nonatomic,strong)UITableView *listTable;
 @property(nonatomic,strong)NSMutableArray *titlesList;

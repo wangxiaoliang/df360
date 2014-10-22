@@ -77,8 +77,8 @@
     /*********   LeftBarItem ********/
     if (self.WLeftBarStyle == LeftBarStyleDefault) {
         UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btnBack setBackgroundImage:[UIImage imageNamed:@"navBar_arrow.png"] forState:UIControlStateNormal];
-        [btnBack setBackgroundImage:[UIImage imageNamed:@"navBar_arrow_press.png"] forState:UIControlStateHighlighted];
+        [btnBack setBackgroundImage:[UIImage imageNamed:@"yy_navbar_arrow.png"] forState:UIControlStateNormal];
+        [btnBack setBackgroundImage:[UIImage imageNamed:@"yy_navbar_arrow_press.png"] forState:UIControlStateHighlighted];
         btnBack.frame = CGRectMake(0, 0, 12, 20);
         btnBack.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 15);
         [btnBack addTarget:self action:@selector(doback) forControlEvents:UIControlEventTouchUpInside];
@@ -133,7 +133,7 @@
         }
         else
         {
-            label.textColor = [DFToolClass getColor:@"434343"];
+            label.textColor = [UIColor whiteColor];
         }
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;

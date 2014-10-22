@@ -13,16 +13,16 @@
 #import "DFToolView.h"
 #import "DFRequestUrl.h"
 #import "DFCustomTableViewCell.h"
+#import "DFShoppingDetailVC.h"
 
-@interface DFTodayShoppingVC ()<DFHudProgressDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface DFTodayShoppingVC ()<DFHudProgressDelegate,UITableViewDataSource,UITableViewDelegate,DFTuanSegmentDelegate>
 {
-    LMContainsLMComboxScrollView *LMcomboxScrollView;
     
     NSInteger _requestCount; //请求数量 -- 用来判断何时消失_hud
     
     NSMutableArray *_comArr;  //下拉数据源
     
-    NSMutableArray *_tgTypeArr; //团购类型数组
+    NSDictionary *_tgTypeDic; //团购类型
     
     NSMutableArray *_areaArr;  //团购区域
     
@@ -31,6 +31,8 @@
     DFHudProgress *_hud;
     
     NSMutableArray *_tgArr;  //团购列表信息
+    
+    DFTuanSegmentController *segement;
     
 }
 @end
@@ -57,10 +59,8 @@
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
     
-    _tgTypeArr = [[NSMutableArray alloc] init];
-    _areaArr = [[NSMutableArray alloc] initWithObjects:@"登封", nil];
-    _timeArr = [[NSMutableArray alloc] initWithObjects:@"最近一周", nil];
-    _comArr = [[NSMutableArray alloc] initWithObjects:_tgTypeArr,_areaArr,_timeArr, nil];
+    _tgTypeDic = [[NSDictionary alloc] init];
+    
     
     _hud = [[DFHudProgress alloc] init];
     _hud.delegate = self;
@@ -82,10 +82,8 @@
         
         NSLog(@"JSON: %@", responseObject);
         
-        NSArray *dicArr = [responseObject objectForKey:@"data"];
-        for (NSDictionary *dic in dicArr) {
-            [_tgTypeArr addObject:[dic objectForKey:@"cat_title"]];
-        }
+        _tgTypeDic = [responseObject objectForKey:@"data"];
+       
         _requestCount -= 1;
         [self hudDissMiss];
 
@@ -118,49 +116,57 @@
 - (void)buildUI
 {
     
-    self.view.backgroundColor = [DFToolClass getColor:@"e5e5e5"];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     
     /************ 下拉选项 ************/
-    LMcomboxScrollView = [[LMContainsLMComboxScrollView alloc]initWithFrame:CGRectMake(0, 0, KCurrentHeight, KCurrentHeight)];
-    LMcomboxScrollView.backgroundColor = [UIColor clearColor];
-    LMcomboxScrollView.showsVerticalScrollIndicator = NO;
-    LMcomboxScrollView.showsHorizontalScrollIndicator = NO;
-    [self.view addSubview:LMcomboxScrollView];
-
-    [self setUpBgScrollView];
+//    LMcomboxScrollView = [[LMContainsLMComboxScrollView alloc]initWithFrame:CGRectMake(0, 0, KCurrentHeight, KCurrentHeight)];
+//    LMcomboxScrollView.backgroundColor = [UIColor clearColor];
+//    LMcomboxScrollView.showsVerticalScrollIndicator = NO;
+//    LMcomboxScrollView.showsHorizontalScrollIndicator = NO;
+//    [self.view addSubview:LMcomboxScrollView];
+//
+//    [self setUpBgScrollView];
+    segement = [[DFTuanSegmentController alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 40) withData:_tgTypeDic];
+    
+    segement.segementData = _tgTypeDic;
+    
+    segement.delegate = self;
+    
+    [self.view addSubview:segement];
+    
     
     /************ 底部按钮 ************/
-    UIView *downView = [[UIView alloc] initWithFrame:CGRectMake(0, KCurrentHeight - 44, KCurrentWidth, 44)];
-    downView.backgroundColor = [UIColor redColor];
-    
-    [LMcomboxScrollView addSubview:downView];
-    
-    UIButton *myTG = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth/2, 44)];
-    
-    [myTG setTitle:@"我的团购" forState:UIControlStateNormal];
-    
-    [myTG setBackgroundColor:[UIColor clearColor]];
-    
-    [downView addSubview:myTG];
-    
-    UIButton *myShop = [[UIButton alloc] initWithFrame:CGRectMake(KCurrentWidth/2, 0, KCurrentWidth/2, 44)];
-    
-    [myShop setTitle:@"我的商店" forState:UIControlStateNormal];
-    
-    [myShop setBackgroundColor:[UIColor clearColor]];
-    
-    [downView addSubview:myShop];
-    
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(KCurrentWidth/2, 0, 1, 44)];
-    
-    lineView.backgroundColor = [UIColor blackColor];
-    
-    [downView addSubview:lineView];
+//    UIView *downView = [[UIView alloc] initWithFrame:CGRectMake(0, KCurrentHeight - 44, KCurrentWidth, 44)];
+//    downView.backgroundColor = [UIColor redColor];
+//    
+//    [self.view addSubview:downView];
+//    
+//    UIButton *myTG = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth/2, 44)];
+//    
+//    [myTG setTitle:@"我的团购" forState:UIControlStateNormal];
+//    
+//    [myTG setBackgroundColor:[UIColor clearColor]];
+//    
+//    [downView addSubview:myTG];
+//    
+//    UIButton *myShop = [[UIButton alloc] initWithFrame:CGRectMake(KCurrentWidth/2, 0, KCurrentWidth/2, 44)];
+//    
+//    [myShop setTitle:@"我的商店" forState:UIControlStateNormal];
+//    
+//    [myShop setBackgroundColor:[UIColor clearColor]];
+//    
+//    [downView addSubview:myShop];
+//    
+//    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(KCurrentWidth/2, 0, 1, 44)];
+//    
+//    lineView.backgroundColor = [UIColor blackColor];
+//    
+//    [downView addSubview:lineView];
     
     /************ TableView ************/
 
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 24, KCurrentWidth, KCurrentHeight - 68) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KCurrentWidth, KCurrentHeight - 84) style:UITableViewStylePlain];
     
     tableView.backgroundColor = [UIColor clearColor];
     
@@ -168,43 +174,12 @@
     
     tableView.dataSource = self;
     
-    [LMcomboxScrollView addSubview:tableView];
+    [self.view addSubview:tableView];
     
-    
-}
-
--(void)setUpBgScrollView
-{
-    
-    NSLog(@"%@",_comArr);
-    
-    for(NSInteger i=0;i<3;i++)
-    {
-        LMComBoxView *comBox = [[LMComBoxView alloc]initWithFrame:CGRectMake(1 + (106)*i, 0, 106, 24)];
-        comBox.backgroundColor = [UIColor whiteColor];
-        comBox.arrowImgName = @"down_dark0.png";
-        comBox.titlesList = [_comArr objectAtIndex:i];
-        comBox.delegate = self;
-        comBox.supView = LMcomboxScrollView;
-        [comBox defaultSettings];
-        comBox.tag =  i;
-        [LMcomboxScrollView addSubview:comBox];
-    }
+    [self setExtraCellLineHidden:tableView];
 }
 
 
--(void)selectAtIndex:(int)index inCombox:(LMComBoxView *)_combox
-{
-    NSInteger tag = [_combox tag];
-    switch (tag) {
-        case 0:
-            
-            break;
-            
-        default:
-            break;
-    }
-}
 
 
 #pragma mark - tableViewDelegate
@@ -216,6 +191,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([_tgArr count] == 0) {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    else
+    {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
     return [_tgArr count];
 }
 
@@ -236,6 +218,32 @@
     }
     [cell reloadTGCellWithArray:_tgArr withIndex:indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSArray *senderArr = [[NSArray alloc] initWithObjects:[[_tgArr objectAtIndex:indexPath.row] objectForKey:@"goods_id"],[[_tgArr objectAtIndex:indexPath.row] objectForKey:@"goods_pic"], nil];
+    
+    [self performSegueWithIdentifier:@"shoppingDetail" sender:senderArr];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"shoppingDetail"]) {
+        DFShoppingDetailVC *shopping = (DFShoppingDetailVC *)segue.destinationViewController;
+        shopping.catId = [sender objectAtIndex:0];
+        shopping.goodPic = [sender objectAtIndex:1];
+        
+    }
+}
+
+- (void)setExtraCellLineHidden: (UITableView *)tableView{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+    [tableView setTableHeaderView:view];
 }
 
 - (void)hudDissMiss

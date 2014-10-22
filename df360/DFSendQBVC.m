@@ -8,17 +8,22 @@
 
 #import "DFSendQBVC.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DFToolClass.h"
+#import "AFNetworking.h"
+#import "DFToolView.h"
 
 #define titlePlaceTag 10001
 #define contentPlaceTag 10002
 #define titleTextViewTag 20001
 #define contentTextViewTag 20002
 
-@interface DFSendQBVC ()<UITextViewDelegate>
+@interface DFSendQBVC ()<UITextViewDelegate,DFHudProgressDelegate,UIAlertViewDelegate>
 {
     NSString *_title;
     
     NSString *_content;
+    
+    DFHudProgress *_hud;
 }
 @end
 
@@ -144,7 +149,63 @@
 #pragma mark - 发布
 - (void)sendQB
 {
-    
+    if ([_title isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入标题" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        
+        return;
+    }
+    if ([_content isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入内容" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        
+        return;
+    }
+    if ([DFToolClass isLogin]) {
+        [_hud show];
+        
+        NSString *url = @"http://www.df360.cc/df360/api/form_infopublish";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        NSString *fid = [self.fid objectForKey:@"c_id"];
+        
+        NSUserDefaults *df = [NSUserDefaults standardUserDefaults];
+        
+        NSString *author = [df objectForKey:@"username"];
+        
+        NSString *authored = [df objectForKey:@"uid"];
+        
+        NSString *ipAddress = [DFToolClass getIPAddress];
+        
+        NSDictionary *para = @{@"fid":fid,@"author":author,@"authorid":authored,@"subject":_title,@"message":_content,@"useip":ipAddress};
+        
+        NSLog(@"%@",para);
+        
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+        
+        [manager POST:url parameters:para success:^(AFHTTPRequestOperation *operation,id responseObject){
+            NSLog(@"json:%@",responseObject);
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"发布成功" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            
+            alert.tag = 11;
+            
+            [alert show];
+            
+            [_hud dismiss];
+        }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+            NSLog(@"error:%@",error);
+            [_hud dismiss];
+        }];
+        
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"QBLYNotLogin" sender:nil];
+    }
+
 }
 
 #pragma mark - UITextViewDelegate
@@ -170,6 +231,14 @@
         [textView resignFirstResponder];
         return NO;
     }
+    
+    if (textView.tag == titleTextViewTag) {
+        _title = textView.text;
+    }
+    if (textView.tag == contentTextViewTag) {
+        _content = textView.text;
+    }
+    
     return YES;
 }
 
@@ -193,9 +262,22 @@
         }
         
     }
+    if (textView.tag == titleTextViewTag) {
+        _title = textView.text;
+    }
+    if (textView.tag == contentTextViewTag) {
+        _content = textView.text;
+    }
     
 }
 
+#pragma mark - alertViewDelegate
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 11) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {

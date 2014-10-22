@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ifaddrs.h>
+#import <arpa/inet.h>
 
 
 /** 工具类 */
@@ -20,5 +22,11 @@
 
 /** 判断用户是否登陆 */
 + (BOOL)isLogin;
+
++ (CGFloat)widthOfLabel:(NSString *)strText ForFont:(UIFont *)font labelHeight:(CGFloat)height;
+/** 获取本机IP */
++ (NSString *)getIPAddress;
+
+
 
 @end

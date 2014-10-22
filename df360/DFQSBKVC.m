@@ -14,6 +14,7 @@
 #import "RefreshView.h"
 #import "DFSendQBVC.h"
 #import "DFQBDetailVC.h"
+#import "DFToolClass.h"
 
 @interface DFQSBKVC ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate,UIActionSheetDelegate>
 {
@@ -24,6 +25,10 @@
     NSMutableArray *_QSArr;
     
     DFHudProgress *_hud;
+    
+    NSInteger _requestCounts;
+    
+    NSMutableArray *_btnArr;
 }
 @end
 
@@ -42,7 +47,11 @@
 {
     _page = 0;
     
-    _fidArr = [[NSArray alloc] initWithObjects:@"2",@"36",@"37",@"38", nil];
+    _requestCounts = 2;
+    
+    _fidArr = [[NSArray alloc] init];
+    
+    _btnArr = [[NSMutableArray alloc] init];
     
     UISearchBar *search = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:1];
     search.hidden = YES;
@@ -58,6 +67,8 @@
     
     [self requestQSWithFid:@"2"];
     
+    [self requestQBFid];
+    
 //    [self buildUI];
     
     [super viewDidLoad];
@@ -68,24 +79,38 @@
 {
     /****** 顶部tabBar ******/
     
-    NSArray *titleArr = @[@"糗事爆料",@"笑话百科",@"情感私密",@"不能说的秘密"];
+    self.view.backgroundColor = [UIColor whiteColor];
+
+    
+    NSArray *titleImg = @[@"QSBL",@"XHBK",@"QGSM",@"BNSDMM"];
     
     for (int i = 0; i < 4 ; i++) {
+        
         UIButton *topBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [topBtn setFrame:CGRectMake((KCurrentWidth/4)*i, 0, KCurrentWidth/4, 40)];
         topBtn.tag = i;
-        topBtn.backgroundColor = [UIColor whiteColor];
+        if (i == 0) {
+            topBtn.backgroundColor = [DFToolClass getColor:@"f4f4f4"];
+        }
+        else
+        {
+            topBtn.backgroundColor = [UIColor whiteColor];
+        }
         [topBtn addTarget:self action:@selector(topBtnSelected:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 20 , 20)];
+        [_btnArr addObject:topBtn];
         
-        image.backgroundColor = [UIColor lightGrayColor];
+        UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake((KCurrentWidth/4)/2 - 10, 0, 20 , 20)];
+        
+        image.backgroundColor = [UIColor clearColor];
+        
+        [image setImage:[UIImage imageNamed:[titleImg objectAtIndex:i]]];
         
         [topBtn addSubview:image];
         
-        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, KCurrentWidth/4-20, 40)];
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, KCurrentWidth/4, 20)];
         
-        title.text = [titleArr objectAtIndex:i];
+        title.text = [[_fidArr objectAtIndex:i] objectForKey:@"c_name"];
         
         title.font = [UIFont systemFontOfSize:12];
         
@@ -100,18 +125,20 @@
         
     }
     
-    for (int i = 1; i < 4; i ++) {
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake((KCurrentWidth/4)*i, 0, 0.5, 40)];
-        
-        lineView.backgroundColor = [UIColor blackColor];
-        
-        [self.view addSubview:lineView];
-    }
+//    for (int i = 1; i < 4; i ++) {
+//        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake((KCurrentWidth/4)*i, 0, 0.5, 40)];
+//        
+//        lineView.backgroundColor = [UIColor lightGrayColor];
+//        
+//        [self.view addSubview:lineView];
+//    }
     
     
     UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 40, KCurrentWidth, 0.5)];
     
-    line.backgroundColor = [UIColor blackColor];
+    line.backgroundColor = [UIColor lightGrayColor];
+    
+    line.alpha = 0.2f;
     
     [self.view addSubview:line];
     
@@ -121,7 +148,7 @@
     
     [downBtn setFrame:CGRectMake(0, KCurrentHeight - 40, KCurrentWidth, 40)];
     
-    downBtn.backgroundColor = [UIColor redColor];
+    downBtn.backgroundColor = [UIColor orangeColor];
     
     [downBtn setTitle:@"投稿" forState:UIControlStateNormal];
     
@@ -131,18 +158,54 @@
     
     
     /************ tableView ************/
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, KCurrentWidth, KCurrentHeight - 154) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40.5, KCurrentWidth, KCurrentHeight - 144) style:UITableViewStylePlain];
     
     tableView.delegate = self;
     
     tableView.dataSource = self;
     
+    tableView.tag = 110;
+    
     tableView.backgroundColor = [UIColor clearColor];
     
+    [self setExtraCellLineHidden:tableView];
 
     
     [self.view addSubview:tableView];
     
+}
+
+#pragma mark - 请求糗事信息
+- (void)requestQBFid
+{
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:[DFRequestUrl getQBFid] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        _fidArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
+        
+        _requestCounts -= 1;
+        
+        if (_requestCounts == 0) {
+            [self buildUI];
+
+            [_hud dismiss];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+
+        _requestCounts -= 1;
+        
+        if (_requestCounts == 0) {
+            
+            [_hud dismiss];
+        }
+
+        
+    }];
 }
 
 #pragma mark - 请求糗事信息
@@ -159,27 +222,76 @@
         _QSArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
         
         
-        [self buildUI];
+        _requestCounts -= 1;
         
-        [_hud dismiss];
+        if (_requestCounts == 0) {
+            [self buildUI];
+            [_hud dismiss];
+        }
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         
+        _requestCounts -= 1;
+        
+        if (_requestCounts == 0) {
+            [_hud dismiss];
+            
+        }
+    }];
+}
+
+- (void)requestQSAgainWithFid:(NSString *)fid
+{
+    [_hud show];
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:[DFRequestUrl getQBInfoWithFid:fid withPage:_page] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+        [_QSArr removeAllObjects];
+        
+        _QSArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
+        
+        UITableView *tableView = (UITableView *)[self.view viewWithTag:110];
+        
+        [tableView reloadData];
         
         [_hud dismiss];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+            [_hud dismiss];
+            
     }];
+
 }
 
 #pragma mark - 导航栏按钮事件
 - (void)topBtnSelected:(UIButton *)sender
 {
+    NSInteger tag = [sender tag];
+    
+    for (UIButton *btn in _btnArr) {
+        btn.backgroundColor = [UIColor whiteColor];
+    }
+    sender.backgroundColor = [DFToolClass getColor:@"f4f4f4"];
+    
+    _page = 0;
+    
+    [self requestQSAgainWithFid:[[_fidArr objectAtIndex:tag] objectForKey:@"c_id"]];
+    
     
 }
 
 #pragma mark - 发布糗事
 - (void)sendQS
 {
-    UIActionSheet *action  = [[UIActionSheet alloc] initWithTitle:@"分类" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"糗事爆料",@"笑话百科",@"情感私密",@"不能说的秘密", nil];
+    
+    UIActionSheet *action  = [[UIActionSheet alloc] initWithTitle:@"分类" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:[[_fidArr objectAtIndex:0] objectForKey:@"c_name"],[[_fidArr objectAtIndex:1] objectForKey:@"c_name"],[[_fidArr objectAtIndex:2] objectForKey:@"c_name"],[[_fidArr objectAtIndex:3] objectForKey:@"c_name"], nil];
     [action showInView:self.view];
     
     
@@ -188,6 +300,7 @@
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    
     [self performSegueWithIdentifier:@"sendQB" sender:[_fidArr objectAtIndex:buttonIndex]];
 
 }
@@ -216,7 +329,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([_QSArr count] == 0) {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    else
+    {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
     return [_QSArr count];
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -242,6 +363,12 @@
     [self performSegueWithIdentifier:@"QBDetail" sender:[[_QSArr objectAtIndex:indexPath.row] objectForKey:@"tid"]];
 }
 
+- (void)setExtraCellLineHidden: (UITableView *)tableView{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+    [tableView setTableHeaderView:view];
+}
 
 
 - (void)didReceiveMemoryWarning
