@@ -42,6 +42,9 @@
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
 
+    UISearchBar *search = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:1];
+    search.hidden = YES;
+    
     [self buildUI];
     [super viewDidLoad];
     // Do any additional setup after loading the view.

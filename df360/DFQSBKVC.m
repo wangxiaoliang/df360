@@ -300,8 +300,9 @@
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
-    [self performSegueWithIdentifier:@"sendQB" sender:[_fidArr objectAtIndex:buttonIndex]];
+    if (buttonIndex != 4) {
+        [self performSegueWithIdentifier:@"sendQB" sender:[_fidArr objectAtIndex:buttonIndex]];
+    }
 
 }
 

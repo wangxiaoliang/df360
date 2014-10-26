@@ -15,6 +15,7 @@
 #import "DFCustomTableViewCell.h"
 #import "LMContainsLMComboxScrollView.h"
 #import "PopoverView.h"
+#import "MJRefresh.h"
 
 
 @interface DFChildVC ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate,DFSegmentDelegate>
@@ -41,6 +42,14 @@
     DFHudProgress *_hud;
     
     DFSegmentController *segment;
+    
+    BOOL _firstRequest;
+    
+    BOOL _needRequest;
+    
+    UITableView *_tableView;
+    
+    
 }
 @end
 
@@ -60,6 +69,9 @@
     _page = 0;
     
     _requestCount = 2;
+    
+    _firstRequest = YES;
+    _needRequest = YES;
     
     _comArr = [[NSMutableArray alloc] init];
     
@@ -134,18 +146,32 @@
 
 - (void)getListData
 {
-    [_hud show];
+    if (_firstRequest) {
+        [_hud show];
+    }
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:[DFRequestUrl getSubcatListWithPage:[NSString stringWithFormat:@"%ld",_page] withSubcatId:[self.childDic objectForKey:@"cat_id"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"TopJSON: %@", responseObject);
-        _childArr = [responseObject objectForKey:@"data"];
-        _requestCount -= 1;
-        
-        if (_requestCount == 0) {
-            [self buildUI];
+        _childArr = [NSMutableArray arrayWithArray:[responseObject objectForKey:@"data"]];
+        if (_childArr.count != 10) {
+            _needRequest = false;
         }
-        
+        if (_firstRequest) {
+            _requestCount -= 1;
+            _firstRequest = false;
+            
+            if (_requestCount == 0) {
+                [self buildUI];
+            }
+        }
+        else
+        {
+            [_tableView reloadData];
+        }
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
         [_hud dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"operation: %@",operation);
@@ -160,15 +186,37 @@
 {
     
     /************ tableView ************/
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KCurrentWidth, KCurrentHeight - 40) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KCurrentWidth, KCurrentHeight - 40) style:UITableViewStylePlain];
     
-    tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.backgroundColor = [UIColor whiteColor];
     
-    tableView.delegate = self;
+    _tableView.delegate = self;
     
-    tableView.dataSource = self;
+    _tableView.dataSource = self;
     
-    [self.view addSubview:tableView];
+    [self setExtraCellLineHidden:_tableView];
+    
+    __block DFChildVC *blockSelf = self;
+     [_tableView addHeaderWithCallback:^{
+         blockSelf -> _page = 0;
+         blockSelf -> _needRequest = YES;
+        [blockSelf -> _childArr removeAllObjects];
+         [blockSelf getListData];
+    }];
+    
+    
+    [_tableView addFooterWithCallback:^{
+        if (blockSelf -> _needRequest) {
+            blockSelf -> _page++;
+            [blockSelf getListData];
+        }
+        else
+        {
+            [blockSelf -> _tableView footerEndRefreshing];
+        }
+    }];
+    
+    [self.view addSubview:_tableView];
     
     
     segment = [[DFSegmentController alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 40) withTitle:_titleArr withData:_comArr];
@@ -190,6 +238,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([_childArr count] == 0) {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    else
+    {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
     return [_childArr count];
 }
 
@@ -213,6 +268,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSLog(@"%@",[_childArr objectAtIndex:indexPath.row]);
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     [self performSegueWithIdentifier:@"childDetailView" sender:nil];
@@ -253,6 +311,13 @@
 {
     [segment dissmisSegmentView];
 
+}
+
+- (void)setExtraCellLineHidden: (UITableView *)tableView{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+    [tableView setTableHeaderView:view];
 }
 
 - (void)didReceiveMemoryWarning

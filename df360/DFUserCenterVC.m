@@ -39,7 +39,7 @@
     self.WRightBarStyle = RightBarStyleNone;
     self.WTitle = @"个人中心";
     [self buildUI];
-    titleArr = [[NSArray alloc] initWithObjects:@"发布消息",@"我发布的消息",@"我的置顶信息",@"资料设置",@"积分充值",@"赚取人民币说明", nil];
+    titleArr = [[NSArray alloc] initWithObjects:@"我发布的消息",@"置顶的信息",@"我的兑换记录",@"修改资料",@"积分充值",@"挣取积分", nil];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -180,23 +180,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSArray *identifyArr = @[@"userCenterPushSelectFather",@"myMessage",@"myTopMessage",@"userInfoSetting",@"supplement"];
+    NSArray *identifyArr = @[@"myMessage",@"myTopMessage",@"myExchange",@"userInfoSetting",@"supplement"];
     
-    if (indexPath.row == 0) {
-        
-        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:self.allCates];
-        
-    }
-    
-    else if (indexPath.row == 5)
-    {
-        
-    }
-    
-    else
-    {
-        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:nil];
-    }
+    [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:nil];
 
 }
 

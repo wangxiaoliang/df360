@@ -27,6 +27,7 @@
 /** 获取本机IP */
 + (NSString *)getIPAddress;
 
-
+/** 判断字符串是否为null */
++ (NSString *)stringISNULL:(NSString *)str;
 
 @end

@@ -20,3 +20,5 @@
 #define KCurrentWidth self.view.bounds.size.width
 
 #define KCurrentHeight self.view.bounds.size.height
+
+#define UMENG_APPKEY @"544a510dfd98c599c7029c02"

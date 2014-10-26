@@ -90,6 +90,24 @@
 		30D8F0D219D7B1B7000025F3 /* DFMyTopMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D8F0D119D7B1B7000025F3 /* DFMyTopMessageVC.m */; };
 		30D8F0D519D7B1D2000025F3 /* DFUserInfoSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D8F0D419D7B1D2000025F3 /* DFUserInfoSettingVC.m */; };
 		30D8F0D819D7B1F5000025F3 /* DFSupplementVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D8F0D719D7B1F5000025F3 /* DFSupplementVC.m */; };
+		30DCFBEA19FA8C2500785CD8 /* libUMFeedback.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30DCFBE819FA8C2500785CD8 /* libUMFeedback.a */; };
+		30DCFBF819FA8E0C00785CD8 /* UMContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFBEF19FA8E0C00785CD8 /* UMContactViewController.m */; };
+		30DCFBF919FA8E0C00785CD8 /* UMContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30DCFBF019FA8E0C00785CD8 /* UMContactViewController.xib */; };
+		30DCFBFA19FA8E0C00785CD8 /* UMFeedbackTableViewCellLeft.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFBF219FA8E0C00785CD8 /* UMFeedbackTableViewCellLeft.m */; };
+		30DCFBFB19FA8E0C00785CD8 /* UMFeedbackTableViewCellRight.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFBF419FA8E0C00785CD8 /* UMFeedbackTableViewCellRight.m */; };
+		30DCFBFC19FA8E0C00785CD8 /* UMFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFBF619FA8E0C00785CD8 /* UMFeedbackViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		30DCFBFD19FA8E0C00785CD8 /* UMFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30DCFBF719FA8E0C00785CD8 /* UMFeedbackViewController.xib */; };
+		30DCFC0019FA8EB800785CD8 /* UMEGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFBFF19FA8EB800785CD8 /* UMEGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		30DCFC0219FA9F0100785CD8 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = 30DCFC0119FA9F0100785CD8 /* help.html */; };
+		30DCFC0619FA9F7F00785CD8 /* DFHelpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFC0519FA9F7F00785CD8 /* DFHelpVC.m */; };
+		30DCFC1819FAA32400785CD8 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 30DCFC0819FAA32300785CD8 /* MJRefresh.bundle */; };
+		30DCFC1919FAA32400785CD8 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFC0B19FAA32400785CD8 /* MJRefreshBaseView.m */; };
+		30DCFC1A19FAA32400785CD8 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFC0D19FAA32400785CD8 /* MJRefreshConst.m */; };
+		30DCFC1B19FAA32400785CD8 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFC0F19FAA32400785CD8 /* MJRefreshFooterView.m */; };
+		30DCFC1C19FAA32400785CD8 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFC1119FAA32400785CD8 /* MJRefreshHeaderView.m */; };
+		30DCFC1D19FAA32400785CD8 /* UIScrollView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFC1319FAA32400785CD8 /* UIScrollView+Extension.m */; };
+		30DCFC1E19FAA32400785CD8 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFC1519FAA32400785CD8 /* UIScrollView+MJRefresh.m */; };
+		30DCFC1F19FAA32400785CD8 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DCFC1719FAA32400785CD8 /* UIView+Extension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -241,6 +259,39 @@
 		30D8F0D419D7B1D2000025F3 /* DFUserInfoSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFUserInfoSettingVC.m; sourceTree = "<group>"; };
 		30D8F0D619D7B1F5000025F3 /* DFSupplementVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFSupplementVC.h; sourceTree = "<group>"; };
 		30D8F0D719D7B1F5000025F3 /* DFSupplementVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFSupplementVC.m; sourceTree = "<group>"; };
+		30DCFBE819FA8C2500785CD8 /* libUMFeedback.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMFeedback.a; sourceTree = "<group>"; };
+		30DCFBE919FA8C2500785CD8 /* UMFeedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMFeedback.h; sourceTree = "<group>"; };
+		30DCFBEE19FA8E0C00785CD8 /* UMContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMContactViewController.h; sourceTree = "<group>"; };
+		30DCFBEF19FA8E0C00785CD8 /* UMContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMContactViewController.m; sourceTree = "<group>"; };
+		30DCFBF019FA8E0C00785CD8 /* UMContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMContactViewController.xib; sourceTree = "<group>"; };
+		30DCFBF119FA8E0C00785CD8 /* UMFeedbackTableViewCellLeft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMFeedbackTableViewCellLeft.h; sourceTree = "<group>"; };
+		30DCFBF219FA8E0C00785CD8 /* UMFeedbackTableViewCellLeft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMFeedbackTableViewCellLeft.m; sourceTree = "<group>"; };
+		30DCFBF319FA8E0C00785CD8 /* UMFeedbackTableViewCellRight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMFeedbackTableViewCellRight.h; sourceTree = "<group>"; };
+		30DCFBF419FA8E0C00785CD8 /* UMFeedbackTableViewCellRight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMFeedbackTableViewCellRight.m; sourceTree = "<group>"; };
+		30DCFBF519FA8E0C00785CD8 /* UMFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMFeedbackViewController.h; sourceTree = "<group>"; };
+		30DCFBF619FA8E0C00785CD8 /* UMFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMFeedbackViewController.m; sourceTree = "<group>"; };
+		30DCFBF719FA8E0C00785CD8 /* UMFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMFeedbackViewController.xib; sourceTree = "<group>"; };
+		30DCFBFE19FA8EB800785CD8 /* UMEGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMEGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		30DCFBFF19FA8EB800785CD8 /* UMEGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMEGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		30DCFC0119FA9F0100785CD8 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
+		30DCFC0419FA9F7F00785CD8 /* DFHelpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFHelpVC.h; sourceTree = "<group>"; };
+		30DCFC0519FA9F7F00785CD8 /* DFHelpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFHelpVC.m; sourceTree = "<group>"; };
+		30DCFC0819FAA32300785CD8 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		30DCFC0919FAA32400785CD8 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		30DCFC0A19FAA32400785CD8 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
+		30DCFC0B19FAA32400785CD8 /* MJRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBaseView.m; sourceTree = "<group>"; };
+		30DCFC0C19FAA32400785CD8 /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
+		30DCFC0D19FAA32400785CD8 /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
+		30DCFC0E19FAA32400785CD8 /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
+		30DCFC0F19FAA32400785CD8 /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
+		30DCFC1019FAA32400785CD8 /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
+		30DCFC1119FAA32400785CD8 /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
+		30DCFC1219FAA32400785CD8 /* UIScrollView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Extension.h"; sourceTree = "<group>"; };
+		30DCFC1319FAA32400785CD8 /* UIScrollView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Extension.m"; sourceTree = "<group>"; };
+		30DCFC1419FAA32400785CD8 /* UIScrollView+MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJRefresh.h"; sourceTree = "<group>"; };
+		30DCFC1519FAA32400785CD8 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
+		30DCFC1619FAA32400785CD8 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		30DCFC1719FAA32400785CD8 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		5A64997A877349659A8A9081 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		CE4BD7BE5CA74542BC9D323E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -250,6 +301,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30DCFBEA19FA8C2500785CD8 /* libUMFeedback.a in Frameworks */,
 				30D79A4819C6D630007F110D /* libsqlite3.dylib in Frameworks */,
 				30C4A41B19B5FF74006B9E0D /* CoreGraphics.framework in Frameworks */,
 				30C4A41D19B5FF74006B9E0D /* UIKit.framework in Frameworks */,
@@ -357,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				30A0EEC819F8022D00DAD260 /* Images.xcassets */,
+				30DCFC0119FA9F0100785CD8 /* help.html */,
 				30C4A41E19B5FF74006B9E0D /* df360 */,
 				30C4A43D19B5FF74006B9E0D /* df360Tests */,
 				30C4A41719B5FF74006B9E0D /* Frameworks */,
@@ -390,6 +443,7 @@
 		30C4A41E19B5FF74006B9E0D /* df360 */ = {
 			isa = PBXGroup;
 			children = (
+				30DCFBE619FA8BF200785CD8 /* 友盟 */,
 				30D36F3619B8AD5A00AED275 /* 工具类 */,
 				30D79A1419C6B6C5007F110D /* 第三方类库 */,
 				30C4A42719B5FF74006B9E0D /* DFAppDelegate.h */,
@@ -506,6 +560,9 @@
 			children = (
 				30C4A45319B60897006B9E0D /* DFSettingVC.h */,
 				30C4A45419B60897006B9E0D /* DFSettingVC.m */,
+				30DCFC0419FA9F7F00785CD8 /* DFHelpVC.h */,
+				30DCFC0519FA9F7F00785CD8 /* DFHelpVC.m */,
+				30DCFC0319FA9F5E00785CD8 /* 友盟反馈 */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -528,6 +585,7 @@
 		30D79A1419C6B6C5007F110D /* 第三方类库 */ = {
 			isa = PBXGroup;
 			children = (
+				30DCFC0719FAA32300785CD8 /* MJRefresh */,
 				30AF174A19F413D300B086A6 /* SDWebImage */,
 				301A604119EB9ED00050DBDE /* PopoverView */,
 				301A603519D7EDF00050DBDE /* QRadioButton */,
@@ -575,6 +633,65 @@
 				30D79A3419C6B71B007F110D /* RefreshLocal.strings */,
 			);
 			path = RefreshView;
+			sourceTree = "<group>";
+		};
+		30DCFBE619FA8BF200785CD8 /* 友盟 */ = {
+			isa = PBXGroup;
+			children = (
+				30DCFBE719FA8BF900785CD8 /* 反馈 */,
+			);
+			name = "友盟";
+			sourceTree = "<group>";
+		};
+		30DCFBE719FA8BF900785CD8 /* 反馈 */ = {
+			isa = PBXGroup;
+			children = (
+				30DCFBE819FA8C2500785CD8 /* libUMFeedback.a */,
+				30DCFBE919FA8C2500785CD8 /* UMFeedback.h */,
+			);
+			name = "反馈";
+			sourceTree = "<group>";
+		};
+		30DCFC0319FA9F5E00785CD8 /* 友盟反馈 */ = {
+			isa = PBXGroup;
+			children = (
+				30DCFBFE19FA8EB800785CD8 /* UMEGORefreshTableHeaderView.h */,
+				30DCFBFF19FA8EB800785CD8 /* UMEGORefreshTableHeaderView.m */,
+				30DCFBEE19FA8E0C00785CD8 /* UMContactViewController.h */,
+				30DCFBEF19FA8E0C00785CD8 /* UMContactViewController.m */,
+				30DCFBF019FA8E0C00785CD8 /* UMContactViewController.xib */,
+				30DCFBF119FA8E0C00785CD8 /* UMFeedbackTableViewCellLeft.h */,
+				30DCFBF219FA8E0C00785CD8 /* UMFeedbackTableViewCellLeft.m */,
+				30DCFBF319FA8E0C00785CD8 /* UMFeedbackTableViewCellRight.h */,
+				30DCFBF419FA8E0C00785CD8 /* UMFeedbackTableViewCellRight.m */,
+				30DCFBF519FA8E0C00785CD8 /* UMFeedbackViewController.h */,
+				30DCFBF619FA8E0C00785CD8 /* UMFeedbackViewController.m */,
+				30DCFBF719FA8E0C00785CD8 /* UMFeedbackViewController.xib */,
+			);
+			name = "友盟反馈";
+			sourceTree = "<group>";
+		};
+		30DCFC0719FAA32300785CD8 /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				30DCFC0819FAA32300785CD8 /* MJRefresh.bundle */,
+				30DCFC0919FAA32400785CD8 /* MJRefresh.h */,
+				30DCFC0A19FAA32400785CD8 /* MJRefreshBaseView.h */,
+				30DCFC0B19FAA32400785CD8 /* MJRefreshBaseView.m */,
+				30DCFC0C19FAA32400785CD8 /* MJRefreshConst.h */,
+				30DCFC0D19FAA32400785CD8 /* MJRefreshConst.m */,
+				30DCFC0E19FAA32400785CD8 /* MJRefreshFooterView.h */,
+				30DCFC0F19FAA32400785CD8 /* MJRefreshFooterView.m */,
+				30DCFC1019FAA32400785CD8 /* MJRefreshHeaderView.h */,
+				30DCFC1119FAA32400785CD8 /* MJRefreshHeaderView.m */,
+				30DCFC1219FAA32400785CD8 /* UIScrollView+Extension.h */,
+				30DCFC1319FAA32400785CD8 /* UIScrollView+Extension.m */,
+				30DCFC1419FAA32400785CD8 /* UIScrollView+MJRefresh.h */,
+				30DCFC1519FAA32400785CD8 /* UIScrollView+MJRefresh.m */,
+				30DCFC1619FAA32400785CD8 /* UIView+Extension.h */,
+				30DCFC1719FAA32400785CD8 /* UIView+Extension.m */,
+			);
+			path = MJRefresh;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -627,6 +744,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
+					30C4A41419B5FF74006B9E0D = {
+						DevelopmentTeam = 464A59D8Y9;
+					};
 					30C4A43519B5FF74006B9E0D = {
 						TestTargetID = 30C4A41419B5FF74006B9E0D;
 					};
@@ -668,15 +788,19 @@
 				30D79A3919C6B71B007F110D /* blueArrow@2x.png in Resources */,
 				30D79A4219C6B71B007F110D /* whiteArrow@2x.png in Resources */,
 				301A603D19D7EDF00050DBDE /* radio_checked.png in Resources */,
+				30DCFC0219FA9F0100785CD8 /* help.html in Resources */,
 				301A603F19D7EDF00050DBDE /* radio_unchecked.png in Resources */,
 				30D79A3819C6B71B007F110D /* blueArrow.png in Resources */,
+				30DCFC1819FAA32400785CD8 /* MJRefresh.bundle in Resources */,
 				30D79A3F19C6B71B007F110D /* refresh_triggering.wav in Resources */,
 				30D79A3719C6B71B007F110D /* blackArrow@2x.png in Resources */,
 				30D79A3A19C6B71B007F110D /* grayArrow.png in Resources */,
 				30C4A42C19B5FF74006B9E0D /* Main.storyboard in Resources */,
 				30D79A3E19C6B71B007F110D /* refresh_release.wav in Resources */,
 				301A603E19D7EDF00050DBDE /* radio_checked@2x.png in Resources */,
+				30DCFBF919FA8E0C00785CD8 /* UMContactViewController.xib in Resources */,
 				30D79A3C19C6B71B007F110D /* loading_icon.png in Resources */,
+				30DCFBFD19FA8E0C00785CD8 /* UMFeedbackViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,24 +852,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30DCFC1B19FAA32400785CD8 /* MJRefreshFooterView.m in Sources */,
 				30AF176C19F413D300B086A6 /* SDWebImageDecoder.m in Sources */,
 				30AF176F19F413D300B086A6 /* SDWebImageManager.m in Sources */,
+				30DCFC1D19FAA32400785CD8 /* UIScrollView+Extension.m in Sources */,
 				30D79A4619C6BB36007F110D /* DFCustomViewController.m in Sources */,
 				3005DB5119C598BF008591A2 /* DFLoginVC.m in Sources */,
 				3005DB5419C5995C008591A2 /* DFRegisterVC.m in Sources */,
 				30003D7619C9CC1B0010A13F /* LMContainsLMComboxScrollView.m in Sources */,
+				30DCFC1E19FAA32400785CD8 /* UIScrollView+MJRefresh.m in Sources */,
 				30B9F65F19D0611500335DF0 /* DFSelectChildCateVC.m in Sources */,
 				30B9F65919CEDBFD00335DF0 /* DFSendVC.m in Sources */,
 				30AF176819F413D300B086A6 /* MKAnnotationView+WebCache.m in Sources */,
 				30003D7919C9D97D0010A13F /* DFCustomTableViewCell.m in Sources */,
+				30DCFC1A19FAA32400785CD8 /* MJRefreshConst.m in Sources */,
 				30D79A2019C6B70C007F110D /* FMDatabase.m in Sources */,
 				30AF177419F413D300B086A6 /* UIImage+WebP.m in Sources */,
+				30DCFC0619FA9F7F00785CD8 /* DFHelpVC.m in Sources */,
 				30C4A42919B5FF74006B9E0D /* DFAppDelegate.m in Sources */,
 				30AF176A19F413D300B086A6 /* SDImageCache.m in Sources */,
 				30003D7519C9CC1B0010A13F /* LMComBoxView.m in Sources */,
 				30D8F0CF19D7B19F000025F3 /* DFMyMessageVC.m in Sources */,
 				301A604419EB9ED00050DBDE /* PopoverView.m in Sources */,
+				30DCFC1919FAA32400785CD8 /* MJRefreshBaseView.m in Sources */,
 				30AF177319F413D300B086A6 /* UIImage+MultiFormat.m in Sources */,
+				30DCFC1F19FAA32400785CD8 /* UIView+Extension.m in Sources */,
 				3005DB4E19C586DD008591A2 /* DFQSBKVC.m in Sources */,
 				30AF174919F404BF00B086A6 /* DFShoppingDetailVC.m in Sources */,
 				30A412A619CEB636006AE94D /* DFChildVC.m in Sources */,
@@ -753,10 +884,12 @@
 				30AF176B19F413D300B086A6 /* SDWebImageCompat.m in Sources */,
 				30003D7C19CACA890010A13F /* DFSendQBVC.m in Sources */,
 				30D79A2119C6B70C007F110D /* FMDatabaseAdditions.m in Sources */,
+				30DCFBFB19FA8E0C00785CD8 /* UMFeedbackTableViewCellRight.m in Sources */,
 				30D79A4019C6B71B007F110D /* RefreshView.m in Sources */,
 				30C4A45519B60897006B9E0D /* DFSettingVC.m in Sources */,
 				30AF176E19F413D300B086A6 /* SDWebImageDownloaderOperation.m in Sources */,
 				30D79A2219C6B70C007F110D /* FMDatabasePool.m in Sources */,
+				30DCFBF819FA8E0C00785CD8 /* UMContactViewController.m in Sources */,
 				30D8F0D819D7B1F5000025F3 /* DFSupplementVC.m in Sources */,
 				3006D41B19F5500800BBAC5D /* DFTopInfoVC.m in Sources */,
 				301A603C19D7EDF00050DBDE /* QRadioButton.m in Sources */,
@@ -771,8 +904,11 @@
 				30C4A44F19B60691006B9E0D /* DFUserCenterVC.m in Sources */,
 				30D79A2419C6B70C007F110D /* FMResultSet.m in Sources */,
 				30AF177019F413D300B086A6 /* SDWebImagePrefetcher.m in Sources */,
+				30DCFBFA19FA8E0C00785CD8 /* UMFeedbackTableViewCellLeft.m in Sources */,
 				30D36F3919B8AD9C00AED275 /* DFToolView.m in Sources */,
+				30DCFC1C19FAA32400785CD8 /* MJRefreshHeaderView.m in Sources */,
 				30AF176919F413D300B086A6 /* NSData+ImageContentType.m in Sources */,
+				30DCFC0019FA8EB800785CD8 /* UMEGORefreshTableHeaderView.m in Sources */,
 				30D8F0D219D7B1B7000025F3 /* DFMyTopMessageVC.m in Sources */,
 				30D8F0D519D7B1D2000025F3 /* DFUserInfoSettingVC.m in Sources */,
 				30D79A0A19C5BA27007F110D /* DFToolClass.m in Sources */,
@@ -780,6 +916,7 @@
 				30D6320019D2E7D100FD3706 /* DFChildDetailVC.m in Sources */,
 				30AF177119F413D300B086A6 /* UIButton+WebCache.m in Sources */,
 				30AF176D19F413D300B086A6 /* SDWebImageDownloader.m in Sources */,
+				30DCFBFC19FA8E0C00785CD8 /* UMFeedbackViewController.m in Sources */,
 				30C4A42519B5FF74006B9E0D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -873,6 +1010,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "87f7b96b-ffe7-4880-bba4-f436add0efcc";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -905,6 +1043,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PROVISIONING_PROFILE = "87f7b96b-ffe7-4880-bba4-f436add0efcc";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -916,11 +1055,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "df360/df360-Prefix.pch";
 				INFOPLIST_FILE = "df360/df360-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/df360",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -931,11 +1077,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "df360/df360-Prefix.pch";
 				INFOPLIST_FILE = "df360/df360-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/df360",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -258,7 +258,7 @@
     [[UIApplication sharedApplication].keyWindow addSubview:view];
     
     [UIView animateWithDuration:0.3f animations:^{
-        view.frame = CGRectMake(0, KCurrentHeight - 276, KCurrentWidth, 276);
+        view.frame = CGRectMake(0, KCurrentHeight - 276 + 64, KCurrentWidth, 276);
         bgView.alpha = 0.5f;
     }completion:^(BOOL finished){
         

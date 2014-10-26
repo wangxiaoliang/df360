@@ -90,6 +90,10 @@
     return address;
     
 }
-
+/** 判断字符串是否为null */
++ (NSString *)stringISNULL:(NSString *)str
+{
+    return [str isEqual:[NSNull null]]?@"":str;
+}
 
 @end

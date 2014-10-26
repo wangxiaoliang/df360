@@ -8,6 +8,7 @@
 
 #import "DFSettingVC.h"
 #import "DFToolClass.h"
+#import "UMFeedbackViewController.h"
 
 @interface DFSettingVC ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -90,6 +91,30 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 1) {
+        [self nativeFeedback];
+    }
+    if (indexPath.row == 2) {
+        [self performSegueWithIdentifier:@"help" sender:nil];
+    }
+}
+- (void)nativeFeedback
+{
+    [self showNativeFeedbackWithAppkey:UMENG_APPKEY];
+}
+
+- (void)showNativeFeedbackWithAppkey:(NSString *)appkey {
+    UMFeedbackViewController *feedbackViewController = [[UMFeedbackViewController alloc] initWithNibName:@"UMFeedbackViewController" bundle:nil];
+    feedbackViewController.appkey = appkey;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:feedbackViewController];
+    //    navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    //    navigationController.navigationBar.translucent = NO;
+    [self presentViewController:navigationController animated:YES completion:nil];
+
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

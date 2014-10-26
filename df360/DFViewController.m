@@ -79,7 +79,7 @@
 
     self.WLeftBarStyle = LeftBarStyleNone;
     self.WRightBarStyle = RightBarStyleNone;
-
+    
     [super viewDidLoad];
     	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -241,7 +241,9 @@
                     NSInteger tag = y + i*3 + page*6;
                     
                     NSString *title = [[_topInfoArr objectAtIndex:tag] objectForKey:@"post_title"];
-                    
+                    if ([title isEqual:[NSNull null]]) {
+                        title = @"";
+                    }
                     UIButton *topBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                     topBtn.backgroundColor = [UIColor whiteColor];
                     [topBtn setFrame:CGRectMake(20 + 100*y + page * KCurrentWidth, 5 + 40*i, 80, 30)];
@@ -493,13 +495,14 @@
                 NSString *title = [[_childCatesArr objectAtIndex:tag] objectForKey:@"cat_title"];
                 
                 UIButton *childBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                childBtn.backgroundColor = [UIColor whiteColor];
+                childBtn.backgroundColor = [UIColor clearColor];
                 [childBtn setFrame:CGRectMake(20 + 100*y + page * KCurrentWidth, 10 + 40*i, 80, 30)];
                 [childBtn setTitle:title forState:UIControlStateNormal];
-                [childBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                [childBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 childBtn.titleLabel.font = [UIFont systemFontOfSize:13];
                 childBtn.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
                 [childBtn addTarget:self action:@selector(childBtnSelected:) forControlEvents:UIControlEventTouchUpInside];
+                childBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
                 childBtn.tag = tag;
                 [_childScrollView addSubview:childBtn];
                 

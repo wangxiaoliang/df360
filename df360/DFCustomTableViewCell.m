@@ -295,7 +295,7 @@
     
     [self addSubview:time];
     
-    UILabel *price = [[UILabel alloc] initWithFrame:CGRectMake(250, 20, 50, 30)];
+    UILabel *price = [[UILabel alloc] initWithFrame:CGRectMake(250, 10, 70, 50)];
     
     price.text = @"123/元";
     
@@ -316,18 +316,24 @@
     
     UIImageView *imageView = (UIImageView *)[self viewWithTag:101];
     
-    
+    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",baseURL,[[arr objectAtIndex:row] objectForKey:@"post_img_1"]]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     UILabel *title = (UILabel *)[self viewWithTag:102];
+    
     title.text = [dic objectForKey:@"post_text"];
     UILabel *address = (UILabel *)[self viewWithTag:103];
     address.text = [dic objectForKey:@"area_title"];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[dic objectForKey:@"post_end_time"] floatValue]];
     
+    NSDateFormatter * df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    NSString *regStr = [df stringFromDate:confromTimesp];
+
     UILabel *time = (UILabel *)[self viewWithTag:104];
-    time.text = [dic objectForKey:@"post_end_time"];
+    time.text = regStr;
     
     UILabel *price = (UILabel *)[self viewWithTag:105];
-    price.text = [NSString stringWithFormat:@"%@/%@",[dic objectForKey:@"post_price"],[dic objectForKey:@"post_price_unit"]];
-    
+    price.numberOfLines = 2;
+    price.text = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"post_price"],[dic objectForKey:@"post_price_unit"]];
 }
 
 /** 修改资料cell */
