@@ -33,6 +33,7 @@
     
     UIImage *_selectImg;
     
+    
 }
 @end
 
@@ -161,7 +162,7 @@
 {
 }
 
-- (void)uploadImgWithImage:(UIImage *)image withFilename:(NSString *)filename
+- (void)uploadImgWithImage:(UIImage *)image withFilename:(NSString *)filename withPaths:(NSString *)paths
 {
     
     NSString *name = [[filename componentsSeparatedByString:@"."] objectAtIndex:0];
@@ -186,20 +187,29 @@
 //    [requestData appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
 //    [requestData appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
-    NSDictionary *parameters = @{@"loadfile":name};
-    [manager POST:urlString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-//        [formData appendPartWithFileURL:filePath name:@"image" error:nil];
-        [formData appendPartWithFormData:imgData name:name];
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Success: %@", responseObject);
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[responseObject objectForKey:@"error"] message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+
+    NSDictionary *parameters = @{@"loadfile":paths};
+    
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",responseObject);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"%@",error);
+
+        
     }];
-}
+    
+    [manager POST:urlString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imgData name:name fileName:filename mimeType:@"image/jpeg"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"response ======= %@",responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error =======  %@",error);
+    }];
+    
+ }
 
 #pragma mark - collectionView delegate
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -402,6 +412,10 @@
     
     NSURL *imageURL = [info valueForKey:UIImagePickerControllerReferenceURL];
     
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
     _selectImg = [info objectForKey:UIImagePickerControllerEditedImage];
     
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
@@ -409,7 +423,7 @@
         ALAssetRepresentation *representation = [myasset defaultRepresentation];
         NSString *fileName = [representation filename];
         NSLog(@"fileName : %@",fileName);
-        [self uploadImgWithImage:_selectImg withFilename:fileName];
+        [self uploadImgWithImage:_selectImg withFilename:fileName withPaths:documentsDirectory];
     };
     ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
     [assetslibrary assetForURL:imageURL

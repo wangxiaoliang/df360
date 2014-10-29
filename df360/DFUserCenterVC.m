@@ -10,6 +10,7 @@
 #import "DFToolClass.h"
 #import "DFMyMessageVC.h"
 #import "DFSelectFatherCateVC.h"
+#import "DFLoginVC.h"
 
 #define loginTag   2001
 #define logoutTag  2002
@@ -195,19 +196,26 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSArray *identifyArr = @[@"myMessage",@"myMessage",@"userInfoSetting",@"supplement",@"getIntegral"];
-    
-    if (indexPath.row == 0) {
-        
-        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:@"myMessage"];
-        return;
-    }
-    if (indexPath.row == 1) {
-        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:@"myTopMessage"];
-        return;
+    if ([DFToolClass isLogin]) {
+        if (indexPath.row == 0) {
+            
+            [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:@"myMessage"];
+            return;
+        }
+        if (indexPath.row == 1) {
+            [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:@"myTopMessage"];
+            return;
+        }
+        else
+        {
+            [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:nil];
+        }
     }
     else
     {
-        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:nil];
+        DFLoginVC *login = [[DFLoginVC alloc] init];
+        
+        [self.navigationController pushViewController:login animated:YES];
     }
 }
 

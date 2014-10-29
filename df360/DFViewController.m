@@ -126,7 +126,7 @@
     [self.navigationController.navigationBar addSubview:searchBar];
     
     _backScrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    _backScrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 568 + 200);
+    _backScrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 568 + 50);
     [self.view addSubview:_backScrollView];
     
     //固定置顶的图片
