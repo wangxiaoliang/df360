@@ -167,7 +167,7 @@
     
     NSString *name = [[filename componentsSeparatedByString:@"."] objectAtIndex:0];
     
-    NSString *urlString = @"http://www.df360.cc/df360/api/imgvideo_upload";
+    NSString *urlString = @"http://www.df360.cc/df360/api/ptest";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSData *imgData = UIImageJPEGRepresentation(image, 0.5);
@@ -188,7 +188,9 @@
 //    [requestData appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
 
-    NSDictionary *parameters = @{@"loadfile":paths};
+    NSDictionary *parameters = @{@"file_name":paths,@"post_name":@"loadfile"};
+    
+    NSLog(@"%@",paths);
     
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",responseObject);
@@ -199,15 +201,16 @@
         
     }];
     
-    [manager POST:urlString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:imgData name:name fileName:filename mimeType:@"image/jpeg"];
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"response ======= %@",responseObject);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error =======  %@",error);
-    }];
+//    [manager POST:urlString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+////        [formData appendPartWithFileData:imgData name:name fileName:filename mimeType:@"image/jpeg"];
+//        [formData appendPartWithFormData:imgData name:name];
+//    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//        NSLog(@"response ======= %@",responseObject);
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"error =======  %@",error);
+//    }];
     
  }
 
@@ -410,25 +413,26 @@
 {
     [picker dismissViewControllerAnimated:YES completion:^{}];
     
-    NSURL *imageURL = [info valueForKey:UIImagePickerControllerReferenceURL];
     
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    
-    NSString* documentsDirectory = [paths objectAtIndex:0];
-    
-    _selectImg = [info objectForKey:UIImagePickerControllerEditedImage];
-    
-    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
-    {
-        ALAssetRepresentation *representation = [myasset defaultRepresentation];
-        NSString *fileName = [representation filename];
-        NSLog(@"fileName : %@",fileName);
-        [self uploadImgWithImage:_selectImg withFilename:fileName withPaths:documentsDirectory];
-    };
-    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
-    [assetslibrary assetForURL:imageURL
-                   resultBlock:resultblock
-                  failureBlock:nil];
+//    NSURL *imageURL = [info valueForKey:UIImagePickerControllerReferenceURL];
+//    
+//    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//    
+//    NSString* documentsDirectory = [paths objectAtIndex:0];
+//    
+//    _selectImg = [info objectForKey:UIImagePickerControllerMediaURL];
+//    
+//    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
+//    {
+//        ALAssetRepresentation *representation = [myasset defaultRepresentation];
+//        NSString *fileName = [representation filename];
+//        NSLog(@"fileName : %@",fileName);
+//        [self uploadImgWithImage:_selectImg withFilename:fileName withPaths:documentsDirectory];
+//    };
+//    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+//    [assetslibrary assetForURL:imageURL
+//                   resultBlock:resultblock
+//                  failureBlock:nil];
     
     /* 此处info 有六个值
      * UIImagePickerControllerMediaType; // an NSString UTTypeImage)
@@ -440,17 +444,35 @@
      * UIImagePickerControllerMediaMetadata    // an NSDictionary containing metadata from a captured photo
      */
     // 保存图片至本地，方法见下文
-    //    [self saveImage:image withName:@"currentImage.png"];
-    //
-    //    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"currentImage.png"];
-    //
-    //    UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    //    isFullScreen = NO;
+    
+    
+    [self saveImage:image withName:@"currentImage.png"];
+    
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"currentImage.png"];
+    
+    _selectImg = [[UIImage alloc] initWithContentsOfFile:fullPath];
+    
+    [self uploadImgWithImage:_selectImg withFilename:@"currentImage" withPaths:fullPath];
+    
     [_photoArr addObject:_selectImg];
     [_collectionView reloadData];
     
 }
+
+- (void) saveImage:(UIImage *)currentImage withName:(NSString *)imageName
+{
+    
+    NSData *imageData = UIImageJPEGRepresentation(currentImage, 0.5);
+    // 获取沙盒目录
+    
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:imageName];
+    // 将图片写入文件
+    
+    [imageData writeToFile:fullPath atomically:NO];
+}
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self dismissViewControllerAnimated:YES completion:^{}];
