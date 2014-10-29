@@ -9,5 +9,5 @@
 #import "DFCustomViewController.h"
 
 @interface DFMyMessageVC : DFCustomViewController
-
+@property (nonatomic, retain) NSString *messageType;
 @end

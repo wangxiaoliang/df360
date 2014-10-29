@@ -37,7 +37,7 @@
 + (NSString *)getTuanCat;
 
 /** 团购列表信息 */
-+ (NSString *)getTGoods;
++ (NSString *)getTGoodsWithPage:(NSString *)page;
 
 /** 团购详情 */
 + (NSString *)TGInfoWithID:(NSString *)catId;
@@ -67,6 +67,8 @@
 + (NSString *)getMyInfoWithPage:(NSString *)page
                         withUid:(NSString *)Uid;
 
+/** 获取发布布局 */
++ (NSString *)getLayoutWithId:(NSString *)catId;
 /** 初始化所属区域 */
 + (NSString *)getArea;
 

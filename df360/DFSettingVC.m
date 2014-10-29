@@ -13,6 +13,8 @@
 @interface DFSettingVC ()<UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *_titleArr;
+    
+    NSArray *_imgArr;
 }
 @end
 
@@ -30,6 +32,8 @@
 - (void)viewDidLoad
 {
     _titleArr = [[NSArray alloc] initWithObjects:@"版本更新",@"用户反馈",@"帮助",@"关于我们", nil];
+    
+    _imgArr = [[NSArray alloc] initWithObjects:@"ic_update",@"ic_feedback",@"ic_help",@"ic_about", nil];
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
     self.WTitle = @"设置";
@@ -82,11 +86,13 @@
     
     cell.textLabel.text = [_titleArr objectAtIndex:indexPath.row];
     
+    cell.imageView.image = [UIImage imageNamed:[_imgArr objectAtIndex:indexPath.row]];
+    
     UILabel *label = (UILabel *)cell.textLabel;
     
     label.frame = CGRectMake(0, 0, KCurrentWidth, 44);
     
-    label.textAlignment = NSTextAlignmentCenter;
+    label.textAlignment = NSTextAlignmentLeft;
     
     return cell;
 }

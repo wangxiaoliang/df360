@@ -331,6 +331,7 @@
     
     _btnArr = [[NSMutableArray alloc] init];
     
+    NSArray *imageArr = [[NSArray alloc] initWithObjects:@"ic_house", @"ic_mark", @"ic_jobs", @"ic_resume", @"ic-friends", @"ic_study", @"ic_pet", @"ic_clean", @"ic-photo", @"ic_travel", @"ic_hotel", @"ic_play", @"ic_shoping", @"ic_tag", nil];
     
     for (int page = 0; page < fatherPages; page ++) {
         
@@ -354,7 +355,7 @@
                     fatherBtn.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
                     [fatherBtn addTarget:self action:@selector(categorySelected:) forControlEvents:UIControlEventTouchUpInside];
                     fatherBtn.tag = tag;
-                    [fatherBtn setImage:[UIImage imageNamed:@"home_icon_cg_house"] forState:UIControlStateNormal];
+                    [fatherBtn setImage:[UIImage imageNamed:[imageArr objectAtIndex:tag]] forState:UIControlStateNormal];
                     [_btnArr addObject:fatherBtn];
                     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20 + (btnWidth + 20)*y + page * KCurrentWidth,20 + (40 + btnWidth)*i + 60, btnWidth, 20)];
                     titleLabel.backgroundColor = [UIColor clearColor];
@@ -468,6 +469,8 @@
     
     _childScrollView.contentSize = CGSizeMake(KCurrentWidth * childPages, 150);
     _childScrollView.showsVerticalScrollIndicator = false;
+    _childScrollView.pagingEnabled = YES;
+
 //    _childScrollView.delegate = self;
     
     _childScrollView.backgroundColor = [UIColor blackColor];

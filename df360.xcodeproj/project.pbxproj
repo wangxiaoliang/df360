@@ -25,7 +25,6 @@
 		301A604019D7EDF00050DBDE /* radio_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 301A603B19D7EDF00050DBDE /* radio_unchecked@2x.png */; };
 		301A604419EB9ED00050DBDE /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 301A604319EB9ED00050DBDE /* PopoverView.m */; };
 		30A0EEC719F7F93200DAD260 /* DFQBMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A0EEC619F7F93200DAD260 /* DFQBMessageVC.m */; };
-		30A0EEC919F8022D00DAD260 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30A0EEC819F8022D00DAD260 /* Images.xcassets */; };
 		30A412A619CEB636006AE94D /* DFChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A412A519CEB636006AE94D /* DFChildVC.m */; };
 		30AF174919F404BF00B086A6 /* DFShoppingDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AF174819F404BF00B086A6 /* DFShoppingDetailVC.m */; };
 		30AF176819F413D300B086A6 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AF174C19F413D300B086A6 /* MKAnnotationView+WebCache.m */; };
@@ -61,6 +60,10 @@
 		30C4A44F19B60691006B9E0D /* DFUserCenterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C4A44E19B60691006B9E0D /* DFUserCenterVC.m */; };
 		30C4A45219B60872006B9E0D /* DFTodayShoppingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C4A45119B60872006B9E0D /* DFTodayShoppingVC.m */; };
 		30C4A45519B60897006B9E0D /* DFSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C4A45419B60897006B9E0D /* DFSettingVC.m */; };
+		30CDABDE19FF62A900DF66F3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30CDABDD19FF62A900DF66F3 /* Images.xcassets */; };
+		30CDABE119FF722B00DF66F3 /* DFGetIntegral.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CDABE019FF722B00DF66F3 /* DFGetIntegral.m */; };
+		30CDABE419FF8F0700DF66F3 /* photoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30CDABE319FF8F0700DF66F3 /* photoCell.m */; };
+		30CDABE61A00750E00DF66F3 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CDABE51A00750E00DF66F3 /* AssetsLibrary.framework */; };
 		30D36F3919B8AD9C00AED275 /* DFToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D36F3819B8AD9C00AED275 /* DFToolView.m */; };
 		30D6320019D2E7D100FD3706 /* DFChildDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D631FF19D2E7D100FD3706 /* DFChildDetailVC.m */; };
 		30D79A0A19C5BA27007F110D /* DFToolClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D79A0919C5BA27007F110D /* DFToolClass.m */; };
@@ -151,7 +154,6 @@
 		301A604319EB9ED00050DBDE /* PopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverView.m; sourceTree = "<group>"; };
 		30A0EEC519F7F93200DAD260 /* DFQBMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFQBMessageVC.h; sourceTree = "<group>"; };
 		30A0EEC619F7F93200DAD260 /* DFQBMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFQBMessageVC.m; sourceTree = "<group>"; };
-		30A0EEC819F8022D00DAD260 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = df360/Images.xcassets; sourceTree = "<group>"; };
 		30A412A419CEB636006AE94D /* DFChildVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFChildVC.h; sourceTree = "<group>"; };
 		30A412A519CEB636006AE94D /* DFChildVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFChildVC.m; sourceTree = "<group>"; };
 		30AF174719F404BF00B086A6 /* DFShoppingDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFShoppingDetailVC.h; sourceTree = "<group>"; };
@@ -215,6 +217,12 @@
 		30C4A45119B60872006B9E0D /* DFTodayShoppingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFTodayShoppingVC.m; sourceTree = "<group>"; };
 		30C4A45319B60897006B9E0D /* DFSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFSettingVC.h; sourceTree = "<group>"; };
 		30C4A45419B60897006B9E0D /* DFSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFSettingVC.m; sourceTree = "<group>"; };
+		30CDABDD19FF62A900DF66F3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = df360/Images.xcassets; sourceTree = "<group>"; };
+		30CDABDF19FF722B00DF66F3 /* DFGetIntegral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFGetIntegral.h; sourceTree = "<group>"; };
+		30CDABE019FF722B00DF66F3 /* DFGetIntegral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFGetIntegral.m; sourceTree = "<group>"; };
+		30CDABE219FF8F0700DF66F3 /* photoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = photoCell.h; sourceTree = "<group>"; };
+		30CDABE319FF8F0700DF66F3 /* photoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = photoCell.m; sourceTree = "<group>"; };
+		30CDABE51A00750E00DF66F3 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		30D36F3719B8AD9C00AED275 /* DFToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFToolView.h; sourceTree = "<group>"; };
 		30D36F3819B8AD9C00AED275 /* DFToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFToolView.m; sourceTree = "<group>"; };
 		30D631FE19D2E7D100FD3706 /* DFChildDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFChildDetailVC.h; sourceTree = "<group>"; };
@@ -301,6 +309,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30CDABE61A00750E00DF66F3 /* AssetsLibrary.framework in Frameworks */,
 				30DCFBEA19FA8C2500785CD8 /* libUMFeedback.a in Frameworks */,
 				30D79A4819C6D630007F110D /* libsqlite3.dylib in Frameworks */,
 				30C4A41B19B5FF74006B9E0D /* CoreGraphics.framework in Frameworks */,
@@ -397,6 +406,8 @@
 			children = (
 				30B9F65719CEDBFD00335DF0 /* DFSendVC.h */,
 				30B9F65819CEDBFD00335DF0 /* DFSendVC.m */,
+				30CDABE219FF8F0700DF66F3 /* photoCell.h */,
+				30CDABE319FF8F0700DF66F3 /* photoCell.m */,
 				30B9F65A19D060FF00335DF0 /* DFSelectFatherCateVC.h */,
 				30B9F65B19D060FF00335DF0 /* DFSelectFatherCateVC.m */,
 				30B9F65D19D0611500335DF0 /* DFSelectChildCateVC.h */,
@@ -408,7 +419,7 @@
 		30C4A40C19B5FF74006B9E0D = {
 			isa = PBXGroup;
 			children = (
-				30A0EEC819F8022D00DAD260 /* Images.xcassets */,
+				30CDABDD19FF62A900DF66F3 /* Images.xcassets */,
 				30DCFC0119FA9F0100785CD8 /* help.html */,
 				30C4A41E19B5FF74006B9E0D /* df360 */,
 				30C4A43D19B5FF74006B9E0D /* df360Tests */,
@@ -430,6 +441,7 @@
 		30C4A41719B5FF74006B9E0D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				30CDABE51A00750E00DF66F3 /* AssetsLibrary.framework */,
 				30D79A4719C6D630007F110D /* libsqlite3.dylib */,
 				30C4A41819B5FF74006B9E0D /* Foundation.framework */,
 				30C4A41A19B5FF74006B9E0D /* CoreGraphics.framework */,
@@ -523,6 +535,8 @@
 				30D8F0D419D7B1D2000025F3 /* DFUserInfoSettingVC.m */,
 				30D8F0D619D7B1F5000025F3 /* DFSupplementVC.h */,
 				30D8F0D719D7B1F5000025F3 /* DFSupplementVC.m */,
+				30CDABDF19FF722B00DF66F3 /* DFGetIntegral.h */,
+				30CDABE019FF722B00DF66F3 /* DFGetIntegral.m */,
 			);
 			name = "个人中心";
 			sourceTree = "<group>";
@@ -778,7 +792,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				30D79A3619C6B71B007F110D /* blackArrow.png in Resources */,
-				30A0EEC919F8022D00DAD260 /* Images.xcassets in Resources */,
 				30C4A42319B5FF74006B9E0D /* InfoPlist.strings in Resources */,
 				301A604019D7EDF00050DBDE /* radio_unchecked@2x.png in Resources */,
 				30D79A4119C6B71B007F110D /* whiteArrow.png in Resources */,
@@ -787,6 +800,7 @@
 				30D79A4319C6B71B007F110D /* RefreshLocal.strings in Resources */,
 				30D79A3919C6B71B007F110D /* blueArrow@2x.png in Resources */,
 				30D79A4219C6B71B007F110D /* whiteArrow@2x.png in Resources */,
+				30CDABDE19FF62A900DF66F3 /* Images.xcassets in Resources */,
 				301A603D19D7EDF00050DBDE /* radio_checked.png in Resources */,
 				30DCFC0219FA9F0100785CD8 /* help.html in Resources */,
 				301A603F19D7EDF00050DBDE /* radio_unchecked.png in Resources */,
@@ -853,6 +867,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30DCFC1B19FAA32400785CD8 /* MJRefreshFooterView.m in Sources */,
+				30CDABE119FF722B00DF66F3 /* DFGetIntegral.m in Sources */,
 				30AF176C19F413D300B086A6 /* SDWebImageDecoder.m in Sources */,
 				30AF176F19F413D300B086A6 /* SDWebImageManager.m in Sources */,
 				30DCFC1D19FAA32400785CD8 /* UIScrollView+Extension.m in Sources */,
@@ -883,6 +898,7 @@
 				30AF177219F413D300B086A6 /* UIImage+GIF.m in Sources */,
 				30AF176B19F413D300B086A6 /* SDWebImageCompat.m in Sources */,
 				30003D7C19CACA890010A13F /* DFSendQBVC.m in Sources */,
+				30CDABE419FF8F0700DF66F3 /* photoCell.m in Sources */,
 				30D79A2119C6B70C007F110D /* FMDatabaseAdditions.m in Sources */,
 				30DCFBFB19FA8E0C00785CD8 /* UMFeedbackTableViewCellRight.m in Sources */,
 				30D79A4019C6B71B007F110D /* RefreshView.m in Sources */,
@@ -1009,9 +1025,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "87f7b96b-ffe7-4880-bba4-f436add0efcc";
+				ONLY_ACTIVE_ARCH = NO;
+				PROVISIONING_PROFILE = "56c8fdfd-576f-48ae-8bb7-074fbb5f614c";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7s armv7 i386";
 			};
 			name = Debug;
 		};
@@ -1043,9 +1060,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "87f7b96b-ffe7-4880-bba4-f436add0efcc";
+				PROVISIONING_PROFILE = "56c8fdfd-576f-48ae-8bb7-074fbb5f614c";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7s armv7 i386";
 			};
 			name = Release;
 		};
@@ -1055,8 +1073,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tracy Cui (5ENQVLG7N6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tracy Cui (5ENQVLG7N6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "df360/df360-Prefix.pch";
 				INFOPLIST_FILE = "df360/df360-Info.plist";
@@ -1066,7 +1084,8 @@
 					"$(PROJECT_DIR)/df360",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "56c8fdfd-576f-48ae-8bb7-074fbb5f614c";
+				VALID_ARCHS = "armv7 armv7s i386";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1077,8 +1096,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tracy Cui (5ENQVLG7N6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tracy Cui (5ENQVLG7N6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "df360/df360-Prefix.pch";
 				INFOPLIST_FILE = "df360/df360-Info.plist";
@@ -1088,7 +1107,8 @@
 					"$(PROJECT_DIR)/df360",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "56c8fdfd-576f-48ae-8bb7-074fbb5f614c";
+				VALID_ARCHS = "armv7 armv7s i386";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "DFRequestUrl.h"
 #import "DFToolView.h"
+#import "DFChildDetailVC.h"
 
 @interface DFMyMessageVC ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate>
 {
@@ -25,7 +26,13 @@
 @implementation DFMyMessageVC
 
 - (void)viewDidLoad {
-    self.WTitle = @"我发布的信息";
+    if ([self.messageType isEqualToString:@"myMessage"]) {
+        self.WTitle = @"我发布的信息";
+    }
+    else
+    {
+        self.WTitle = @"置顶的信息";
+    }
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
 
@@ -48,21 +55,43 @@
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     
-    [manager GET:[DFRequestUrl getMyInfoWithPage:[NSString stringWithFormat:@"%ld", _page] withUid:[ud objectForKey:@"uid"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"TopJSON: %@", responseObject);
-        _myMessageArr = [responseObject objectForKey:@"data"];
-        [_hud dismiss];
-        [self buildUI];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        NSLog(@"operation: %@",operation);
-        [_hud dismiss];
-        
-        
-    }];
+    if ([self.messageType isEqualToString:@"myMessage"]) {
+        [manager GET:[DFRequestUrl getMyInfoWithPage:[NSString stringWithFormat:@"%ld", _page] withUid:[ud objectForKey:@"uid"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSLog(@"TopJSON: %@", responseObject);
+            _myMessageArr = [responseObject objectForKey:@"data"];
+            [_hud dismiss];
+            [self buildUI];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+            NSLog(@"operation: %@",operation);
+            [_hud dismiss];
+            
+            
+        }];
 
+    }
+    else
+    {
+        [manager GET:[DFRequestUrl getInfoUpWithUid:[ud objectForKey:@"uid"] withPage:[NSString stringWithFormat:@"%ld", _page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSLog(@"TopJSON: %@", responseObject);
+            _myMessageArr = [responseObject objectForKey:@"data"];
+            [_hud dismiss];
+            [self buildUI];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+            NSLog(@"operation: %@",operation);
+            [_hud dismiss];
+            
+            
+        }];
+
+    }
+    
+    
 }
 
 - (void)buildUI
@@ -113,6 +142,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    [self performSegueWithIdentifier:@"myMessageDetail" sender:[_myMessageArr objectAtIndex:indexPath.row]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"myMessageDetail"]) {
+        DFChildDetailVC *detail = (DFChildDetailVC *)segue.destinationViewController;
+        detail.sendDic = sender;
+    }
 }
 
 

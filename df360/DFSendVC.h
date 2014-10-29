@@ -9,5 +9,5 @@
 #import "DFCustomViewController.h"
 
 @interface DFSendVC : DFCustomViewController
-
+@property (nonatomic, retain) NSDictionary *childDic;
 @end

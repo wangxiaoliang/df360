@@ -49,6 +49,9 @@
     
     UITableView *_tableView;
     
+    NSString *_searchCondition;
+    
+    NSString *_searchValue;
     
 }
 @end
@@ -78,6 +81,8 @@
     _titleArr = [[NSMutableArray alloc] init];
     
     _typeArr = [[NSMutableArray alloc] init];
+    
+    _childArr = [[NSMutableArray alloc] init];
     
     _hud = [[DFHudProgress alloc] init];
     _hud.delegate = self;
@@ -151,10 +156,16 @@
     }
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[DFRequestUrl getSubcatListWithPage:[NSString stringWithFormat:@"%ld",_page] withSubcatId:[self.childDic objectForKey:@"cat_id"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[self getListURL] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"TopJSON: %@", responseObject);
-        _childArr = [NSMutableArray arrayWithArray:[responseObject objectForKey:@"data"]];
+        
+        for (NSDictionary *dic in [responseObject objectForKey:@"data"]) {
+            
+            [_childArr addObject:dic];
+        }
+        
+        
         if (_childArr.count != 10) {
             _needRequest = false;
         }
@@ -182,6 +193,22 @@
     }];
 }
 
+- (NSString *)getListURL
+{
+    NSString *strURL;
+    if (_searchCondition.length > 1) {
+        strURL = [NSString stringWithFormat:@"http://www.df360.cc/df360/api/subcat_list?&subcat_id=%@&%@=%@&page=%@",[self.childDic objectForKey:@"cat_id"],_searchCondition,_searchValue,[NSString stringWithFormat:@"%ld",_page]];
+    }
+    else
+    {
+        strURL = [NSString stringWithFormat:@"http://www.df360.cc/df360/api/subcat_list?&subcat_id=%@&page=%@",[self.childDic objectForKey:@"cat_id"],[NSString stringWithFormat:@"%ld",_page]];
+    }
+    
+    strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    return strURL;
+}
+
 - (void)buildUI
 {
     
@@ -200,7 +227,6 @@
      [_tableView addHeaderWithCallback:^{
          blockSelf -> _page = 0;
          blockSelf -> _needRequest = YES;
-        [blockSelf -> _childArr removeAllObjects];
          [blockSelf getListData];
     }];
     
@@ -273,38 +299,55 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    [self performSegueWithIdentifier:@"childDetailView" sender:nil];
+    [self performSegueWithIdentifier:@"childDetailView" sender:[_childArr objectAtIndex:indexPath.row]];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
+    if ([segue.identifier isEqualToString:@"childDetailView"]) {
+        DFChildDetailVC *detail = (DFChildDetailVC *)segue.destinationViewController;
+        detail.sendDic = sender;
+    }
 }
+
+
 
 #pragma mark - segementDelegate
 - (void)segmentIsClickWithType:(NSInteger)type withId:(NSString *)subid
 {
     NSLog(@"%ld   %@",type,subid);
-    [_hud show];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[DFRequestUrl getSubcatListWithPage:[NSString stringWithFormat:@"%ld",_page] withSubcatId:[self.childDic objectForKey:@"cat_id"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"TopJSON: %@", responseObject);
-        _childArr = [responseObject objectForKey:@"data"];
-        _requestCount -= 1;
-        
-        if (_requestCount == 0) {
-            [self buildUI];
-        }
-        
-        [_hud dismiss];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"operation: %@",operation);
-        
-        NSLog(@"Error: %@", error);
-        _requestCount -= 1;
-        [_hud dismiss];
-    }];
+    
+    _searchCondition = [_typeArr objectAtIndex:type];
+    
+    _searchValue = subid;
+    
+    _page = 0;
+    
+    [_childArr removeAllObjects];
+    
+    [self getListData];
+    
+    
+//    [_hud show];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:[DFRequestUrl getSubcatListWithPage:[NSString stringWithFormat:@"%ld",_page] withSubcatId:[self.childDic objectForKey:@"cat_id"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//        NSLog(@"TopJSON: %@", responseObject);
+//        _childArr = [responseObject objectForKey:@"data"];
+//        _requestCount -= 1;
+//        
+//        if (_requestCount == 0) {
+//            [self buildUI];
+//        }
+//        
+//        [_hud dismiss];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"operation: %@",operation);
+//        
+//        NSLog(@"Error: %@", error);
+//        _requestCount -= 1;
+//        [_hud dismiss];
+//    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

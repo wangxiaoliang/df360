@@ -10,7 +10,7 @@
 #import "LMComBoxView.h"
 
 
-@interface DFChildVC : DFCustomViewController<LMComBoxViewDelegate>
+@interface DFChildVC : DFCustomViewController
 @property (nonatomic, retain) NSDictionary *childDic;
 @property (nonatomic, retain) NSString *subcatid;
 @end

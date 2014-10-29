@@ -14,6 +14,7 @@
 #import "DFRequestUrl.h"
 #import "DFCustomTableViewCell.h"
 #import "DFShoppingDetailVC.h"
+#import "MJRefresh.h"
 
 @interface DFTodayShoppingVC ()<DFHudProgressDelegate,UITableViewDataSource,UITableViewDelegate,DFTuanSegmentDelegate>
 {
@@ -34,6 +35,15 @@
     
     DFTuanSegmentController *segement;
     
+    UITableView *_tableView;
+    
+    NSInteger _page;
+    
+    BOOL _needRequest;
+    
+    NSString *_searchCondition;
+    
+    NSString *_searchValue;
 }
 @end
 
@@ -51,6 +61,10 @@
 - (void)viewDidLoad
 {
     _requestCount = 2;
+    
+    _page = 0;
+    
+    _needRequest = YES;
     
     UISearchBar *search = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:1];
     search.hidden = YES;
@@ -98,11 +112,17 @@
 - (void)getTGGoods
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[DFRequestUrl getTGoods] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[DFRequestUrl getTGoodsWithPage:[NSString stringWithFormat:@"%ld",_page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"JSON: %@", responseObject);
         
         _tgArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
+        if (_tgArr.count < 10) {
+            _needRequest = NO;
+        }
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
+
         _requestCount -= 1;
         [self hudDissMiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -111,6 +131,66 @@
         [self hudDissMiss];
     }];
 
+}
+
+- (void)getTGGoodsAgain
+{
+    [_hud show];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:[self getTGURLWithSearchCondition:_searchCondition WithSearchValue:_searchValue WithPage:[NSString stringWithFormat:@"%ld",_page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        if (_tgArr.count < 10) {
+            _needRequest = NO;
+        }
+        for (NSDictionary *dic in [responseObject objectForKey:@"data"]) {
+            [_tgArr addObject:dic];
+        }
+        
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
+
+        [_hud dismiss];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        _requestCount -= 1;
+        [_hud dismiss];
+    }];
+    
+}
+
+- (NSString *)getTGURLWithSearchCondition:(NSString *)condition WithSearchValue:(NSString *)value WithPage:(NSString *)page
+{
+    NSString *strURL;
+    if (condition.length>1) {
+        strURL = [NSString stringWithFormat:@"http://www.df360.cc/df360/api/tuan_goods?%@=%@&page=%@",condition,value,page];
+    }
+    else
+    {
+        strURL = [NSString stringWithFormat:@"http://www.df360.cc/df360/api/tuan_goods?page=%@",page];
+    }
+    
+    strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%@",strURL);
+    
+    return strURL;
+}
+
+- (void)tuanSegmentIsClickWithType:(NSInteger)type withId:(NSString *)subid
+{
+    NSArray *typeArr = @[@"type",@"area",@"updatedate"];
+    
+    _searchCondition = [typeArr objectAtIndex:type];
+    
+    _searchValue = subid;
+    
+    _page = 0;
+    
+    [_tgArr removeAllObjects];
+    
+    [self getTGGoodsAgain];
 }
 
 - (void)buildUI
@@ -166,17 +246,37 @@
     
     /************ TableView ************/
 
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KCurrentWidth, KCurrentHeight - 84) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KCurrentWidth, KCurrentHeight - 84) style:UITableViewStylePlain];
     
-    tableView.backgroundColor = [UIColor clearColor];
+    _tableView.backgroundColor = [UIColor clearColor];
     
-    tableView.delegate = self;
+    _tableView.delegate = self;
     
-    tableView.dataSource = self;
+    _tableView.dataSource = self;
     
-    [self.view addSubview:tableView];
+    __block DFTodayShoppingVC *blockSelf = self;
+    [_tableView addHeaderWithCallback:^{
+        blockSelf -> _page = 0;
+        blockSelf -> _needRequest = YES;
+        [blockSelf -> _tgArr removeAllObjects];
+        [blockSelf getTGGoodsAgain];
+    }];
     
-    [self setExtraCellLineHidden:tableView];
+    
+    [_tableView addFooterWithCallback:^{
+        if (blockSelf -> _needRequest) {
+            blockSelf -> _page++;
+            [blockSelf getTGGoodsAgain];
+        }
+        else
+        {
+            [blockSelf -> _tableView footerEndRefreshing];
+        }
+    }];
+    
+    [self.view addSubview:_tableView];
+    
+    [self setExtraCellLineHidden:_tableView];
 }
 
 

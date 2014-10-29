@@ -10,6 +10,5 @@
 #import "DFCustomViewController.h"
 #import "LMComBoxView.h"
 
-@interface DFTodayShoppingVC : DFCustomViewController<LMComBoxViewDelegate>
-
+@interface DFTodayShoppingVC : DFCustomViewController
 @end

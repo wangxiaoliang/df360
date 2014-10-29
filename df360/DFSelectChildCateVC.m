@@ -8,6 +8,7 @@
 
 #import "DFSelectChildCateVC.h"
 #import "DFToolClass.h"
+#import "DFSendVC.h"
 
 @interface DFSelectChildCateVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -53,6 +54,8 @@
     
     tableView.dataSource = self;
     
+    [self setExtraCellLineHidden:tableView];
+    
     [self.view addSubview:tableView];
 }
 
@@ -64,6 +67,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([self.childCates count] == 0) {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    else
+    {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
+
     return [self.childCates count];
 }
 
@@ -84,7 +95,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSLog(@"%@",[self.childCates objectAtIndex:indexPath.row]);
+    
+    DFSendVC *send = [[DFSendVC alloc] init];
+    send.childDic = [self.childCates objectAtIndex:indexPath.row];
+    
+    [self.navigationController pushViewController:send animated:YES];
 }
+
+- (void)setExtraCellLineHidden: (UITableView *)tableView{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+    [tableView setTableHeaderView:view];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

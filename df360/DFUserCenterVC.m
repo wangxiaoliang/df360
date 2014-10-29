@@ -8,6 +8,7 @@
 
 #import "DFUserCenterVC.h"
 #import "DFToolClass.h"
+#import "DFMyMessageVC.h"
 #import "DFSelectFatherCateVC.h"
 
 #define loginTag   2001
@@ -19,6 +20,8 @@
     NSArray *titleArr;
     
     UIView *_topView;
+    
+    NSArray *_imgArr;
 }
 @end
 
@@ -39,7 +42,10 @@
     self.WRightBarStyle = RightBarStyleNone;
     self.WTitle = @"个人中心";
     [self buildUI];
-    titleArr = [[NSArray alloc] initWithObjects:@"我发布的消息",@"置顶的信息",@"我的兑换记录",@"修改资料",@"积分充值",@"挣取积分", nil];
+    titleArr = [[NSArray alloc] initWithObjects:@"我发布的消息",@"置顶的信息",@"修改资料",@"积分充值",@"挣取积分", nil];
+    
+    _imgArr = [[NSArray alloc] initWithObjects:@"ic_message",@"ic_top",@"ic_write",@"ic_money",@"ic_integral", nil];
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -52,21 +58,28 @@
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 80)];
-    _topView.backgroundColor = [UIColor clearColor];
+    
     [self.view addSubview:_topView];
+    
+    UIImageView *bgImage = [[UIImageView alloc] init];
+    
+    bgImage.image = [UIImage imageNamed:@"centerBg.jpg"];
+    
+    bgImage.frame = CGRectMake(0, 0, KCurrentWidth, 80);
+    
+    [_topView addSubview:bgImage];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
     imageView.backgroundColor = [UIColor clearColor];
     
-    imageView.image = [UIImage imageNamed:@"personImg"];
+    imageView.image = [UIImage imageNamed:@"head"];
     
     [_topView addSubview:imageView];
     
-    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(60, 20, 100, 40)];
+    UIButton *loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 25, 80, 30)];
     loginBtn.tag = loginTag;
     
-    [loginBtn setTitle:@"登陆" forState:UIControlStateNormal];
-    [loginBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [loginBtn setImage:[UIImage imageNamed:@"btn_login"] forState:UIControlStateNormal];
     
     [loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     [_topView addSubview:loginBtn];
@@ -105,7 +118,7 @@
         logout.hidden = YES;
     }
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, KCurrentWidth, 44 * 6) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, KCurrentWidth, 44 * 5) style:UITableViewStylePlain];
     
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -162,7 +175,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -172,6 +185,7 @@
         cell = [[UITableViewCell alloc] init];
     }
     cell.textLabel.text = [titleArr objectAtIndex:indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:[_imgArr objectAtIndex:indexPath.row]];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     return cell;
 }
@@ -180,10 +194,21 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSArray *identifyArr = @[@"myMessage",@"myTopMessage",@"myExchange",@"userInfoSetting",@"supplement"];
+    NSArray *identifyArr = @[@"myMessage",@"myMessage",@"userInfoSetting",@"supplement",@"getIntegral"];
     
-    [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:nil];
-
+    if (indexPath.row == 0) {
+        
+        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:@"myMessage"];
+        return;
+    }
+    if (indexPath.row == 1) {
+        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:@"myTopMessage"];
+        return;
+    }
+    else
+    {
+        [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:nil];
+    }
 }
 
 
@@ -193,6 +218,11 @@
         DFSelectFatherCateVC *selectFather = (DFSelectFatherCateVC *)segue.destinationViewController;
         selectFather.allCates = sender;
     }
+    if ([segue.identifier isEqualToString:@"myMessage"]) {
+        DFMyMessageVC *message = (DFMyMessageVC *)segue.destinationViewController;
+        message.messageType = sender;
+    }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated

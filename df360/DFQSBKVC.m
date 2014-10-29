@@ -15,6 +15,8 @@
 #import "DFSendQBVC.h"
 #import "DFQBDetailVC.h"
 #import "DFToolClass.h"
+#import "MJRefresh.h"
+
 
 @interface DFQSBKVC ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate,UIActionSheetDelegate>
 {
@@ -29,6 +31,15 @@
     NSInteger _requestCounts;
     
     NSMutableArray *_btnArr;
+    
+    BOOL _isFirst;
+    
+    BOOL _needRequest;
+    
+    NSString *_fid;
+    
+    UITableView *_tableView;
+    
 }
 @end
 
@@ -52,6 +63,10 @@
     _fidArr = [[NSArray alloc] init];
     
     _btnArr = [[NSMutableArray alloc] init];
+    
+    _fid = [[NSString alloc] init];
+    
+    _fid = @"2";
     
     UISearchBar *search = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:1];
     search.hidden = YES;
@@ -158,20 +173,41 @@
     
     
     /************ tableView ************/
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40.5, KCurrentWidth, KCurrentHeight - 144) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40.5, KCurrentWidth, KCurrentHeight - 144) style:UITableViewStylePlain];
     
-    tableView.delegate = self;
+    _tableView.delegate = self;
     
-    tableView.dataSource = self;
+    _tableView.dataSource = self;
     
-    tableView.tag = 110;
+    _tableView.tag = 110;
     
-    tableView.backgroundColor = [UIColor clearColor];
+    _tableView.backgroundColor = [UIColor clearColor];
     
-    [self setExtraCellLineHidden:tableView];
+    [self setExtraCellLineHidden:_tableView];
+    
+    __block DFQSBKVC *blockSelf = self;
+    [_tableView addHeaderWithCallback:^{
+        blockSelf -> _page = 0;
+        blockSelf -> _needRequest = YES;
+        [blockSelf -> _QSArr removeAllObjects];
+        [blockSelf requestQSAgainWithFid:blockSelf -> _fid];
+    }];
+    
+    
+    [_tableView addFooterWithCallback:^{
+        if (blockSelf -> _needRequest) {
+            blockSelf -> _page++;
+            [blockSelf requestQSAgainWithFid:blockSelf -> _fid];
+        }
+        else
+        {
+            [blockSelf -> _tableView footerEndRefreshing];
+        }
+    }];
+
 
     
-    [self.view addSubview:tableView];
+    [self.view addSubview:_tableView];
     
 }
 
@@ -221,6 +257,9 @@
         
         _QSArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
         
+        if (_QSArr.count < 10) {
+            _needRequest = NO;
+        }
         
         _requestCounts -= 1;
         
@@ -251,13 +290,20 @@
         
         NSLog(@"JSON: %@", responseObject);
         
-        [_QSArr removeAllObjects];
+
+        for (NSDictionary *dic in [responseObject objectForKey:@"data"]) {
+            [_QSArr addObject:dic];
+        }
         
-        _QSArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
         
-        UITableView *tableView = (UITableView *)[self.view viewWithTag:110];
+        if (_QSArr.count < 10) {
+            _needRequest = NO;
+        }
         
-        [tableView reloadData];
+        [_tableView reloadData];
+        
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
         
         [_hud dismiss];
         
@@ -281,6 +327,8 @@
     sender.backgroundColor = [DFToolClass getColor:@"f4f4f4"];
     
     _page = 0;
+    
+    [_QSArr removeAllObjects];
     
     [self requestQSAgainWithFid:[[_fidArr objectAtIndex:tag] objectForKey:@"c_id"]];
     

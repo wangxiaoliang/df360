@@ -56,9 +56,9 @@
 }
 
 /** 团购列表信息 */
-+ (NSString *)getTGoods
++ (NSString *)getTGoodsWithPage:(NSString *)page
 {
-    return [NSString stringWithFormat:@"%@tuan_goods",DFBaseUrl];
+    return [NSString stringWithFormat:@"%@tuan_goods?page=%@",DFBaseUrl,page];
 }
 
 /** 团购详情 */
@@ -157,5 +157,11 @@
 {
     return [NSString stringWithFormat:@"%@sysset_bysubcat_id?subcat_id=%@",DFBaseUrl, subcatid];
 
+}
+
+/** 获取发布布局 */
++ (NSString *)getLayoutWithId:(NSString *)catId
+{
+    return [NSString stringWithFormat:@"%@sysset_bysubcat_all?subcat_id=%@",DFBaseUrl, catId];
 }
 @end

@@ -113,7 +113,7 @@
     UIImageView *imageView = (UIImageView *)[self viewWithTag:101];
     
 
-    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",baseURL,[[arr objectAtIndex:row] objectForKey:@"goods_pic"]]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",baseURL,[[arr objectAtIndex:row] objectForKey:@"goods_pic"]]] placeholderImage:[UIImage imageNamed:@"default_img"]];
 
     
     
@@ -312,11 +312,11 @@
 - (void)reloadChildCellWithArray:(NSArray *)arr withIndex:(NSInteger)row
 {
     
-    NSDictionary *dic = [arr objectAtIndex:row];
+    NSDictionary *dic = (NSDictionary *)[arr objectAtIndex:row];
     
     UIImageView *imageView = (UIImageView *)[self viewWithTag:101];
     
-    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",baseURL,[[arr objectAtIndex:row] objectForKey:@"post_img_1"]]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",baseURL,[dic objectForKey:@"post_img_1"]]] placeholderImage:[UIImage imageNamed:@"default_img"]];
     UILabel *title = (UILabel *)[self viewWithTag:102];
     
     title.text = [dic objectForKey:@"post_text"];
@@ -437,6 +437,8 @@
 {
     UIImageView *imageView = (UIImageView *)[self viewWithTag:101];
     
+    [imageView setImageWithURL:[NSURL URLWithString:[DFToolClass stringISNULL:[[arr objectAtIndex:row] objectForKey:@"post_img_1"]]] placeholderImage:[UIImage imageNamed:@"default_img"]];
+    
     UILabel *titleLabel = (UILabel *)[self viewWithTag:102];
     
     titleLabel.text = [[arr objectAtIndex:row] objectForKey:@"post_title"];
@@ -447,11 +449,21 @@
     
     UILabel *beginTime = (UILabel *)[self viewWithTag:104];
     
-    beginTime.text = [[arr objectAtIndex:row] objectForKey:@"post_begin_time"];
+    NSDate *beginDate = [NSDate dateWithTimeIntervalSince1970:[[[arr objectAtIndex:row] objectForKey:@"post_begin_time"] floatValue]];
+    
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:[[[arr objectAtIndex:row] objectForKey:@"post_end_time"] floatValue]];
+    
+    NSDateFormatter * df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    NSString *beginStr = [df stringFromDate:beginDate];
+
+    NSString *endStr = [df stringFromDate:endDate];
+    
+    beginTime.text = beginStr;
     
     UILabel *endTime = (UILabel *)[self viewWithTag:105];
     
-    endTime.text = [[arr objectAtIndex:row] objectForKey:@"post_end_time"];
+    endTime.text = endStr;
 }
 
 @end
