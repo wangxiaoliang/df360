@@ -12,16 +12,21 @@
 #import "AFNetworking.h"
 #import "DFRequestUrl.h"
 #import "UIImageView+WebCache.h"
+#import "UMSocial.h"
 
 #define baseURL @"http://www.df360.cc/"
 
-@interface DFChildDetailVC ()<DFHudProgressDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface DFChildDetailVC ()<DFHudProgressDelegate,UITableViewDataSource,UITableViewDelegate,WCustomVCDelegate>
 {
     DFHudProgress *_hud;
     
     NSDictionary *dataDic;
     
     NSArray *listArr;
+    
+    NSString *_shareText;
+    
+    UIImage *_shareImg;
 }
 @end
 
@@ -50,6 +55,8 @@
     
     self.WTitle = @"详情";
     
+    self.delegate = self;
+    
     UISearchBar *search = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:1];
     search.hidden = YES;
     
@@ -71,25 +78,27 @@
 
     
     NSString *imageStr = [DFToolClass stringISNULL:[dataDic objectForKey:@"post_img_1"]];
-    [self.image_1 setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, imageStr]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [self.image_1 setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, imageStr]] placeholderImage:[UIImage imageNamed:@"default_img"]];
     
     imageStr = [DFToolClass stringISNULL:[dataDic objectForKey:@"post_img_2"]];
     
-    [self.image_2 setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, imageStr]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [self.image_2 setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, imageStr]] placeholderImage:[UIImage imageNamed:@"default_img"]];
     
     imageStr = [DFToolClass stringISNULL:[dataDic objectForKey:@"post_img_3"]];
     
-    [self.image_3 setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, imageStr]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [self.image_3 setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, imageStr]] placeholderImage:[UIImage imageNamed:@"default_img"]];
     
     imageStr = [DFToolClass stringISNULL:[dataDic objectForKey:@"post_img_4"]];
     
-    [self.image_4 setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, imageStr]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    [self.image_4 setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, imageStr]] placeholderImage:[UIImage imageNamed:@"default_img"]];
     
-    self.titleLabel.text = [dataDic objectForKey:@"post_title"];
+    self.titleLabel.text = [DFToolClass stringISNULL:[dataDic objectForKey:@"post_title"]];
     
-    NSDate *beginDate = [NSDate dateWithTimeIntervalSince1970:[[dataDic objectForKey:@"post_begin_time"] floatValue]];
     
-    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:[[dataDic objectForKey:@"post_end_time"] floatValue]];
+    
+    NSDate *beginDate = [NSDate dateWithTimeIntervalSince1970:[[DFToolClass stringISNULL:[dataDic objectForKey:@"post_begin_time"]] integerValue]];
+    
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:[[DFToolClass stringISNULL:[dataDic objectForKey:@"post_end_time"]] integerValue]];
     
     NSDateFormatter * df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"yy-MM-dd"];
@@ -102,9 +111,11 @@
     
     self.endLabel.text = [NSString stringWithFormat:@"结束时间:%@",endTime];
     
-    self.viewsLabel.text = [NSString stringWithFormat:@"已浏览%@次",[dataDic objectForKey:@"post_view"]];
     
-    self.detailTextView.text = [dataDic objectForKey:@"post_text"];
+    
+    self.viewsLabel.text = [NSString stringWithFormat:@"已浏览%@次",[DFToolClass stringISNULL:[dataDic objectForKey:@"post_view"]]];
+    
+    self.detailTextView.text = [DFToolClass stringISNULL:[dataDic objectForKey:@"post_text"]];
     
     [self.detailTableView reloadData];
 }
@@ -162,8 +173,8 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
     }
-    cell.textLabel.text = [[listArr objectAtIndex:indexPath.row] objectForKey:@"profile_setting_title"];
-    cell.detailTextLabel.text = [[listArr objectAtIndex:indexPath.row] objectForKey:@"post_profile_title"];
+    cell.textLabel.text = [DFToolClass stringISNULL:[[listArr objectAtIndex:indexPath.row] objectForKey:@"profile_setting_title"]];
+    cell.detailTextLabel.text = [DFToolClass stringISNULL:[[listArr objectAtIndex:indexPath.row] objectForKey:@"post_profile_title"]];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
     return cell;
@@ -216,7 +227,7 @@
     [manager POST:[DFRequestUrl report] parameters:para success:^(AFHTTPRequestOperation *operation,id responseObject){
         NSLog(@"json:%@",responseObject);
         
-        BOOL success = [responseObject objectForKey:@"status"];
+        BOOL success = [[responseObject objectForKey:@"status"] boolValue];
         
         if (success) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"举报成功" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -232,4 +243,97 @@
         [_hud dismiss];
     }];
 }
+
+- (void)share:(UIButton *)sender
+{
+    _shareImg = self.image_1.image;
+    
+    _shareText =[DFToolClass stringISNULL:[dataDic objectForKey:@"post_text"]];
+    
+    [UMSocialData defaultData].extConfig.title = @"登封360";
+    
+    NSInteger shareTag = [sender tag];
+    
+    switch (shareTag) {
+        case 0:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+            
+        }
+            break;
+        case 1:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+        }
+            break;
+        case 2:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+        }
+            break;
+        case 3:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+        }
+            break;
+        case 4:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+}
+- (void)alertWithTitle:(NSString *)str
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
 @end

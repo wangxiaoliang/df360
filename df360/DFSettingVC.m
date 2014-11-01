@@ -8,6 +8,7 @@
 
 #import "DFSettingVC.h"
 #import "DFToolClass.h"
+#import "DFAboutVC.h"
 #import "UMFeedbackViewController.h"
 
 @interface DFSettingVC ()<UITableViewDataSource,UITableViewDelegate>
@@ -105,6 +106,11 @@
     }
     if (indexPath.row == 2) {
         [self performSegueWithIdentifier:@"help" sender:nil];
+    }
+    if (indexPath.row == 3) {
+        DFAboutVC *about = [[DFAboutVC alloc] init];
+        
+        [self.navigationController pushViewController:about animated:YES];
     }
 }
 - (void)nativeFeedback

@@ -56,7 +56,7 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     
     if ([self.messageType isEqualToString:@"myMessage"]) {
-        [manager GET:[DFRequestUrl getMyInfoWithPage:[NSString stringWithFormat:@"%ld", _page] withUid:[ud objectForKey:@"uid"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:[DFRequestUrl getMyInfoWithPage:[NSString stringWithFormat:@"%d", _page] withUid:[ud objectForKey:@"uid"]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             NSLog(@"TopJSON: %@", responseObject);
             _myMessageArr = [responseObject objectForKey:@"data"];
@@ -74,7 +74,7 @@
     }
     else
     {
-        [manager GET:[DFRequestUrl getInfoUpWithUid:[ud objectForKey:@"uid"] withPage:[NSString stringWithFormat:@"%ld", _page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:[DFRequestUrl getInfoUpWithUid:[ud objectForKey:@"uid"] withPage:[NSString stringWithFormat:@"%d", _page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             NSLog(@"TopJSON: %@", responseObject);
             _myMessageArr = [responseObject objectForKey:@"data"];

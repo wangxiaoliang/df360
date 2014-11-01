@@ -9,7 +9,11 @@
 #import "DFCustomViewController.h"
 
 @interface DFTopInfoVC : DFCustomViewController
+@property (weak, nonatomic) IBOutlet UIScrollView *backScrollView;
+@property (weak, nonatomic) IBOutlet UIView *detailView;
+@property (weak, nonatomic) IBOutlet UIView *noticeView;
 @property (weak, nonatomic) IBOutlet UILabel *viewLabel;
+@property (weak, nonatomic) IBOutlet UIButton *reportBtn;
 @property (nonatomic, retain) NSDictionary *sendDic;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;

@@ -164,4 +164,17 @@
 {
     return [NSString stringWithFormat:@"%@sysset_bysubcat_all?subcat_id=%@",DFBaseUrl, catId];
 }
+
+/** 发布消息 */
++ (NSString *)postInfo
+{
+    return [NSString stringWithFormat:@"%@info_postinfo",DFBaseUrl];
+}
+
+/** 积分规则 */
++ (NSString*)jifenrole
+{
+    return [NSString stringWithFormat:@"%@jifenrole",DFBaseUrl];
+}
+
 @end

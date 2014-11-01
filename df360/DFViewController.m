@@ -19,8 +19,9 @@
 #import "DFSelectFatherCateVC.h"
 #import "DFUserCenterVC.h"
 #import "DFTopInfoVC.h"
+#import "DFSearchVC.h"
 
-@interface DFViewController ()<UISearchBarDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITabBarDelegate,DFHudProgressDelegate,UIActionSheetDelegate>
+@interface DFViewController ()<UISearchBarDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITabBarDelegate,DFHudProgressDelegate,UIActionSheetDelegate,UISearchBarDelegate>
 {
     UIScrollView *_childScrollView;
     UIPageControl *_childPageControl;
@@ -52,6 +53,14 @@
     
     NSInteger _requestCount;
     
+    NSMutableArray *_secondLintBtn;
+    
+    NSMutableArray *_secondLineLabel;
+    
+    float addHeight;
+    
+    BOOL selectFirstLine;
+    
 }
 
 @end
@@ -77,6 +86,10 @@
     self.view.backgroundColor = [DFToolClass getColor:@"e5e5e5"];
     
 
+    _secondLintBtn = [[NSMutableArray alloc] init];
+    
+    _secondLineLabel = [[NSMutableArray alloc] init];
+    
     self.WLeftBarStyle = LeftBarStyleNone;
     self.WRightBarStyle = RightBarStyleNone;
     
@@ -99,7 +112,7 @@
     
     UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [leftBtn setTitle:@"登封" forState:UIControlStateNormal];
-    leftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    leftBtn.titleLabel.font = [UIFont systemFontOfSize:17];
     leftBtn.backgroundColor = [UIColor clearColor];
     [leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
@@ -145,6 +158,8 @@
     
     [webBtn setFrame:CGRectMake(0, 373, KCurrentWidth, 100)];
     
+    webBtn.tag = 123;
+    
     [webBtn setImage:[UIImage imageNamed:@"icon_ad"] forState:UIControlStateNormal];
     
     webBtn.backgroundColor = [UIColor clearColor];
@@ -154,20 +169,28 @@
     
     UITabBar *downTab = [[UITabBar alloc] initWithFrame:CGRectMake(0, KCurrentHeight - 113, KCurrentWidth, 49)];
     
+    
+    UIImageView *tabimage = [[UIImageView alloc] initWithFrame:CGRectMake( KCurrentWidth - 42, 5, 25, 25)];
+    
+    tabimage.image = [UIImage imageNamed:@"home_tab_publish"];
+    
+    [downTab addSubview:tabimage];
+
+    
 //    downTab.backgroundColor = [UIColor redColor];
     
     NSMutableArray *tabItems = [NSMutableArray array];
     
-    NSArray *tabTitle = @[@"个人中心",@"今日团购",@"夜猫基地",@"设置",@"发布"];
+    NSArray *tabTitle = @[@"个人中心",@"今日团购",@"夜猫基地",@"设置",@"发布信息"];
     
-    NSArray *tabImage = @[@"home_tab_person",@"home_tab_collect",@"home_tab_history",@"home_tab_setting",@"home_tab_publish"];
+    NSArray *tabImage = @[@"home_tab_person",@"home_tab_collect",@"home_tab_history",@"home_tab_setting",@""];
     
     for (int i = 0; i < 5; i ++) {
         UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:[tabTitle objectAtIndex:i] image:nil tag:i];
-        item.image = [UIImage imageNamed:[tabImage objectAtIndex:i]];
+        [item setFinishedSelectedImage:[UIImage imageNamed:[tabImage objectAtIndex:i]] withFinishedUnselectedImage:[UIImage imageNamed:[tabImage objectAtIndex:i]]];
         [tabItems addObject:item];
     }
-    
+    //@"home_tab_publish"
     downTab.items = tabItems;
     
     downTab.delegate = self;
@@ -183,6 +206,12 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
+    
+    DFSearchVC *search = [[DFSearchVC alloc] init];
+    
+    search.searchStr = searchBar.text;
+    
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 - (void)pageChange
@@ -263,8 +292,8 @@
         else {
             for (int y = 0; y < PageItemCount; y ++) {
                 NSInteger tag = y + page*6;
-                
-                NSString *title = [[_topInfoArr objectAtIndex:tag] objectForKey:@"post_title"];
+                                
+                NSString *title = [DFToolClass stringISNULL:[[_topInfoArr objectAtIndex:tag] objectForKey:@"post_title"]];
                 
                 UIButton *topBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                 topBtn.backgroundColor = [UIColor whiteColor];
@@ -362,6 +391,13 @@
                     titleLabel.text = title;
                     titleLabel.font = [UIFont systemFontOfSize:13];
                     titleLabel.textAlignment = NSTextAlignmentCenter;
+                    
+                    if (i == 1) {
+                        [_secondLintBtn addObject:fatherBtn];
+                        [_secondLineLabel addObject:titleLabel];
+                    }
+
+                    
                     [_fatherScrollView addSubview:titleLabel];
                     [_fatherScrollView addSubview:fatherBtn];
                     
@@ -402,9 +438,60 @@
 - (void)categorySelected:(UIButton *)sender
 {
     
-    
-    UIImageView *imageView = (UIImageView *)[_backScrollView viewWithTag:101];
-    [imageView removeFromSuperview];
+    _fatherScrollView.ScrollEnabled = YES;
+
+    if (selectFirstLine) {
+        _backScrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 568 + 50);
+        
+        UIButton *webBtn = (UIButton *)[_backScrollView viewWithTag:123];
+        
+        CGRect webRect = webBtn.frame;
+        
+        webRect.origin.y += addHeight;
+        
+        [webBtn setFrame:webRect];
+        
+        CGRect fatherScrollRect = _fatherScrollView.frame;
+        
+        fatherScrollRect.size.height += addHeight;
+        
+        [_fatherScrollView setFrame:fatherScrollRect];
+        
+        CGRect fatherPageRect = _fatherPageControl.frame;
+        
+        fatherPageRect.origin.y += addHeight;
+        
+        [_fatherPageControl setFrame:fatherPageRect];
+        
+        for (UIButton *btn in _secondLintBtn) {
+            CGRect btnRect = btn.frame;
+            
+            btnRect.origin.y += addHeight;
+            
+            [btn setFrame:btnRect];
+        }
+        
+        for (UILabel *label in _secondLineLabel) {
+            CGRect labelRect = label.frame;
+            
+            labelRect.origin.y += addHeight;
+            
+            [label setFrame:labelRect];
+        }
+    }
+    else
+    {
+        _backScrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 568 + 50 + addHeight);
+        
+        UIButton *webBtn = (UIButton *)[_backScrollView viewWithTag:123];
+        
+        CGRect webRect = webBtn.frame;
+        
+        webRect.origin.y += addHeight;
+        
+        [webBtn setFrame:webRect];
+    }
+    addHeight = 0;
     [_childScrollView removeFromSuperview];
     [_childPageControl removeFromSuperview];
     
@@ -456,7 +543,7 @@
     UIImageView *pointImgView = [[UIImageView alloc] initWithFrame:CGRectMake(xValue, point.y + topHight - 20, 20, 20)];
     [pointImgView setImage:[UIImage imageNamed:@"UpTriangle"]];
     pointImgView.tag = 101;
-    [_backScrollView addSubview:pointImgView];
+//    [_backScrollView addSubview:pointImgView];
     
     //子菜单总共数量
     NSInteger childItems = [_childCatesArr count];
@@ -465,17 +552,23 @@
     NSInteger childPages = (childItems%12 == 0)?childItems/12:childItems/12+1;
     
     
-    _childScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, point.y + topHight - 7, KCurrentWidth, 150)];
+    _childScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, point.y + topHight , KCurrentWidth, 150)];
     
     _childScrollView.contentSize = CGSizeMake(KCurrentWidth * childPages, 150);
+    
+    
     _childScrollView.showsVerticalScrollIndicator = false;
     _childScrollView.pagingEnabled = YES;
 
 //    _childScrollView.delegate = self;
     
-    _childScrollView.backgroundColor = [UIColor blackColor];
+    _childScrollView.backgroundColor = [UIColor clearColor];
     
+    UIImageView *childBackView = [[UIImageView alloc] initWithFrame:_childScrollView.frame];
     
+    childBackView.image = [UIImage imageNamed:@"home_center_grid_pull_bg"];
+    
+    [_childScrollView addSubview:childBackView];
     
     [_backScrollView addSubview:_childScrollView];
     
@@ -514,18 +607,81 @@
     }
     
     /**************************** 重构ScrollView的高度 以及pagecontrol的位置 *****************************/
-    [_childScrollView setFrame:CGRectMake(0, point.y + topHight - 7, KCurrentWidth, 10 + 40*maxCellCount)];
+    [_childScrollView setFrame:CGRectMake(0, point.y + topHight , KCurrentWidth, 10 + 40*maxCellCount)];
     _childScrollView.contentSize = CGSizeMake(KCurrentWidth * childPages, 10 + 40*maxCellCount);
+    
+    [childBackView setFrame:CGRectMake(0, 0, KCurrentWidth * childPages, 10 + 40*maxCellCount)];
     
     UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewSwiped:)];
     [_childScrollView addGestureRecognizer:swipeGesture];
 
     
-    _childPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, point.y + topHight + 3 + 40*maxCellCount, KCurrentWidth, 10)];
+    _childPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, point.y + topHight + 10 + 40*maxCellCount, KCurrentWidth, 10)];
     _childPageControl.backgroundColor = [UIColor clearColor];
     _childPageControl.numberOfPages = childPages;
     [_childPageControl addTarget:self action:@selector(topPageControlSelected:) forControlEvents:UIControlEventValueChanged];
     [_backScrollView addSubview:_childPageControl];
+    
+    addHeight = 40 *maxCellCount;
+    
+    selectFirstLine = point.y<100?YES:NO;
+    
+    if(point.y < 100)
+    {
+        _backScrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 568 + 50 + addHeight);
+        
+        UIButton *webBtn = (UIButton *)[_backScrollView viewWithTag:123];
+        
+        CGRect webRect = webBtn.frame;
+        
+        webRect.origin.y += addHeight;
+        
+        [webBtn setFrame:webRect];
+        
+        CGRect fatherScrollRect = _fatherScrollView.frame;
+        
+        fatherScrollRect.size.height += addHeight;
+        
+        [_fatherScrollView setFrame:fatherScrollRect];
+        
+        CGRect fatherPageRect = _fatherPageControl.frame;
+        
+        fatherPageRect.origin.y += addHeight;
+        
+        [_fatherPageControl setFrame:fatherPageRect];
+        
+        for (UIButton *btn in _secondLintBtn) {
+            CGRect btnRect = btn.frame;
+            
+            btnRect.origin.y += addHeight;
+            
+            [btn setFrame:btnRect];
+        }
+        
+        for (UILabel *label in _secondLineLabel) {
+            CGRect labelRect = label.frame;
+            
+            labelRect.origin.y += addHeight;
+            
+            [label setFrame:labelRect];
+        }
+    }
+    else
+    {
+        _backScrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 568 + 50 + addHeight);
+        
+        UIButton *webBtn = (UIButton *)[_backScrollView viewWithTag:123];
+        
+        CGRect webRect = webBtn.frame;
+        
+        webRect.origin.y += addHeight;
+        
+        [webBtn setFrame:webRect];
+    }
+    
+    addHeight = -addHeight;
+    
+    _fatherScrollView.ScrollEnabled = NO;
 
 }
 
@@ -632,6 +788,7 @@
         _topPageControl.currentPage = page;
     }
     if (scrollView == _fatherScrollView) {
+        
         int page = scrollView.contentOffset.x/290;
         _fatherPageControl.currentPage = page;
         UIImageView *imageView = (UIImageView *)[_backScrollView viewWithTag:101];
@@ -692,19 +849,27 @@
     if (tag == 4) {
         if ([DFToolClass isLogin]) {
             [self performSegueWithIdentifier:[NSString stringWithFormat:@"tab%ld",(long)tag] sender:_fatherCatesArr];
+            
+            tabBar.selectedItem = nil;
         }
         else
         {
             [self performSegueWithIdentifier:@"notLogin" sender:nil];
+            tabBar.selectedItem = nil;
+
         }
     }
     else if (tag == 0)
     {
         [self performSegueWithIdentifier:[NSString stringWithFormat:@"tab%ld",(long)tag] sender:_fatherCatesArr];
+        tabBar.selectedItem = nil;
+
     }
     else
     {
         [self performSegueWithIdentifier:[NSString stringWithFormat:@"tab%ld",(long)tag] sender:nil];
+        tabBar.selectedItem = nil;
+
     }
 }
 
@@ -730,6 +895,7 @@
         top.sendDic = sender;
     }
 }
+
 
 - (void)didReceiveMemoryWarning
 {

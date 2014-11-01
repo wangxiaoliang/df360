@@ -33,6 +33,24 @@
 
 @end
 
+@protocol DFShareHud <NSObject>
+
+@end
+
+@interface DFShareHud : UIView
+{
+    UIView *_bgView;
+    UILabel *_label;
+}
+
+@property (nonatomic, assign) id<DFShareHud>delegage;
+
+- (void)success;
+
+- (void)error;
+
+@end
+
 @protocol DFSegmentDelegate <NSObject>
 
 - (void)segmentIsClickWithType:(NSInteger)type withId:(NSString *)subid;

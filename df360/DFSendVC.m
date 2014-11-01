@@ -13,9 +13,12 @@
 #import "AFNetworking.h"
 #import "photoCell.h"
 #import "AFNetworking.h"
-#import <AssetsLibrary/AssetsLibrary.h>
+#import "DFSendSelectVC.h"
 
-@interface DFSendVC ()<DFHudProgressDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,photoCellDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+#define TitleLabelTag    40001
+#define ContentLabelTag  40002
+
+@interface DFSendVC ()<DFHudProgressDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,photoCellDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,sendSelectDelegate>
 {
     DFHudProgress *_hud;
     
@@ -33,7 +36,13 @@
     
     UIImage *_selectImg;
     
+    NSMutableDictionary *_postDic;
     
+    NSDictionary *_imagePara;
+    
+    NSMutableArray *_tableViewData;
+    
+    NSInteger _checkboxIndex; //多选时记录index
 }
 @end
 
@@ -60,6 +69,34 @@
     _photoArr = [[NSMutableArray alloc] init];
     
     _layoutArr = [[NSMutableArray alloc] init];
+    
+    _postDic = [[NSMutableDictionary alloc] initWithCapacity:10];
+    
+    [_postDic setObject:@"" forKey:@"post_text"];
+    
+    _imagePara = [[NSDictionary alloc] initWithObjects:@[@"post_img_1",@"post_img_2",@"post_img_1",@"post_img_1"] forKeys:@[@"0",@"1",@"2",@"3"]];
+    
+    _tableViewData = [[NSMutableArray alloc] init];
+    
+    
+    NSUserDefaults *df = [NSUserDefaults standardUserDefaults];
+    
+    [_postDic setObject:@"0" forKey:@"post_up"];
+    
+    [_postDic setObject:[DFToolClass getIPAddress] forKey:@"post_ip"];
+    
+    [_postDic setObject:[df objectForKey:@"fatherId"] forKey:@"cat_id"];
+    
+    [_postDic setObject:[df objectForKey:@"fatherTitle"] forKey:@"cat_title"];
+    
+    [_postDic setObject:[self.childDic objectForKey:@"cat_id"] forKey:@"subcat_id"];
+    
+    [_postDic setObject:[self.childDic objectForKey:@"cat_title"] forKey:@"subcat_title"];
+    
+    [_postDic setObject:[df objectForKey:@"uid"] forKey:@"member_uid"];
+    
+    [_postDic setObject:[df objectForKey:@"username"] forKey:@"member_title"];
+
     
     UISearchBar *search = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:1];
     search.hidden = YES;
@@ -101,7 +138,7 @@
     /********************** 照片CollectionView *************************/
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, 90) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 320, 104) collectionViewLayout:flowLayout];
     [_collectionView registerClass:[photoCell class] forCellWithReuseIdentifier:@"Cell"];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
@@ -111,9 +148,9 @@
 
 - (void)buildLayout
 {
-    UITextField *title = [[UITextField alloc] initWithFrame:CGRectMake(0, 100, KCurrentWidth, 25)];
+    UITextField *title = [[UITextField alloc] initWithFrame:CGRectMake(0, 94, KCurrentWidth, 25)];
     
-    title.placeholder = @"标题";
+    title.placeholder = @"  标题";
     
     title.font = [UIFont systemFontOfSize:15];
     
@@ -121,11 +158,15 @@
     
     title.delegate = self;
     
+    title.backgroundColor = [UIColor whiteColor];
+    
+    title.tag = TitleLabelTag;
+    
     [self.view addSubview:title];
     
-    UITextField *content = [[UITextField alloc] initWithFrame:CGRectMake(0, 130, KCurrentWidth, 55)];
+    UITextField *content = [[UITextField alloc] initWithFrame:CGRectMake(0, 120, KCurrentWidth, 55)];
     
-    content.placeholder = @"内容";
+    content.placeholder = @"  内容";
     
     content.borderStyle = UITextBorderStyleNone;
     
@@ -133,9 +174,17 @@
 
     content.delegate = self;
     
+    content.backgroundColor = [UIColor whiteColor];
+    
+    content.tag = ContentLabelTag;
+    
     [self.view addSubview:content];
     
-    _detailTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 190, KCurrentWidth, KCurrentHeight - 220) style:UITableViewStylePlain];
+    for (int i = 0; i < _layoutArr.count; i ++) {
+        [_tableViewData addObject:@""];
+    }
+    
+    _detailTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 190, KCurrentWidth, KCurrentHeight - 230) style:UITableViewStylePlain];
     
     _detailTableView.dataSource = self;
     
@@ -147,7 +196,7 @@
     
     sendBtn.backgroundColor = [UIColor orangeColor];
     
-    sendBtn.frame = CGRectMake(0, KCurrentHeight - 30, KCurrentWidth, 30);
+    sendBtn.frame = CGRectMake(0, KCurrentHeight - 40, KCurrentWidth, 40);
     
     [sendBtn setTitle:@"发布" forState:UIControlStateNormal];
     
@@ -158,59 +207,78 @@
     [self.view addSubview:sendBtn];
 }
 
+#pragma mark - 发布信息
 - (void)sendMessage
 {
+    
+    if ([[_postDic objectForKey:@"post_text"] isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"帖子内容不能为空" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    
+    else
+    {
+        [_hud show];
+        
+        NSString *url = @"http://www.df360.cc/df360/api/info_postinfo";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+        
+        [manager POST:url parameters:_postDic success:^(AFHTTPRequestOperation *operation,id responseObject){
+            NSLog(@"json:%@",responseObject);
+            [_hud dismiss];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"发布成功!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+            
+            [_hud dismiss];
+            NSLog(@"operation:%@",operation);
+            
+            NSLog(@"error:%@",error);
+        }];
+
+    }
+    
 }
 
 - (void)uploadImgWithImage:(UIImage *)image withFilename:(NSString *)filename withPaths:(NSString *)paths
 {
+    [_hud show];
     
-    NSString *name = [[filename componentsSeparatedByString:@"."] objectAtIndex:0];
-    
-    NSString *urlString = @"http://www.df360.cc/df360/api/ptest";
+    NSString *urlString = @"http://www.df360.cc/df360/api/imgvideo_upload";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSData *imgData = UIImageJPEGRepresentation(image, 0.5);
 
-    
-//    NSDate *date = [NSDate date];
-//    NSDateFormatter *dm = [[NSDateFormatter alloc] init];
-//    [dm setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-//    NSString *imageName = [dm stringFromDate:date];
-//    NSMutableData *requestData = [NSMutableData data];
-//    NSString *boundary = @"BOUNDARY";
-//
-//    [requestData appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//    [requestData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"image.jpg\"\r\n",imageName]dataUsingEncoding:NSUTF8StringEncoding]];
-//    [requestData appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-//    [requestData appendData:imgData];
-//    [requestData appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-//    [requestData appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    
+    NSURL *filePath = [NSURL fileURLWithPath:paths];
 
-    NSDictionary *parameters = @{@"file_name":paths,@"post_name":@"loadfile"};
     
     NSLog(@"%@",paths);
     
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@",responseObject);
+    
+    [manager POST:urlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileURL:filePath name:@"loadfile" error:nil];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"response ======= %@",responseObject);
+        
+        NSString *key = [_imagePara objectForKey:[NSString stringWithFormat:@"%d",_indexPath.row]];
+        
+        NSString *value = [[responseObject objectForKey:@"data"] objectForKey:@"filepath"];
+        
+        NSString *imageName = [[value componentsSeparatedByString:@"http://www.df360.cc/df360/uploads/"] objectAtIndex:1];
+        
+        [_postDic setValue:imageName forKey:key];
+        
+        
+        [_hud dismiss];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-
-        
+        NSLog(@"error =======  %@",error);
+        [_hud dismiss];
     }];
-    
-//    [manager POST:urlString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-////        [formData appendPartWithFileData:imgData name:name fileName:filename mimeType:@"image/jpeg"];
-//        [formData appendPartWithFormData:imgData name:name];
-//    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        NSLog(@"response ======= %@",responseObject);
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"error =======  %@",error);
-//    }];
     
  }
 
@@ -298,13 +366,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identify = @"sendCell";
+//    static NSString *identify = @"sendCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
-    }
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
     
     [self initCell:cell WithIndex:indexPath.row];
     
@@ -318,11 +383,10 @@
     
     cell.textLabel.text = [layoutDic objectForKey:@"c_name"];
     
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     
     if ([[layoutDic objectForKey:@"c_type"] isEqualToString:@"input"]) {
-        UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100, 7, KCurrentWidth - 130, 30)];
-        textFiled.placeholder = [layoutDic objectForKey:@"c_name"];
+        UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100, 7, KCurrentWidth - 140, 30)];
         
         textFiled.borderStyle = UITextBorderStyleRoundedRect;
         
@@ -330,13 +394,75 @@
         
         textFiled.delegate = self;
         
+        textFiled.tag = index;
+        
+        textFiled.textAlignment = NSTextAlignmentRight;
+        
+        textFiled.text = [_tableViewData objectAtIndex:index];
+        
         [cell addSubview:textFiled];
+        
+        UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(KCurrentWidth - 40, 7, 40, 30)];
+        
+        unitLabel.backgroundColor = [UIColor clearColor];
+        
+        unitLabel.text = [[layoutDic objectForKey:@"c_unit"] isEqualToString:@"m<sup>2</sup>"]?@"m²":[layoutDic objectForKey:@"c_unit"];
+        
+        unitLabel.font = [UIFont systemFontOfSize:13];
+        
+        unitLabel.textAlignment = NSTextAlignmentCenter;
+        
+        [cell addSubview:unitLabel];
     }
     else
     {
+        UILabel *valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 7, KCurrentWidth - 140, 30)];
+        
+        valueLabel.backgroundColor = [UIColor clearColor];
+        
+        valueLabel.text = [_tableViewData objectAtIndex:index];
+        
+        valueLabel.font = [UIFont systemFontOfSize:14];
+        
+        valueLabel.textAlignment = NSTextAlignmentRight;
+        
+        [cell addSubview:valueLabel];
+        
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSDictionary *layoutDic = [_layoutArr objectAtIndex:indexPath.row];
+    
+    if ([[layoutDic objectForKey:@"c_type"] isEqualToString:@"select"]) {
+        [self selectWithDic:layoutDic withIndex:indexPath.row];
+    }
+    if ([[layoutDic objectForKey:@"c_type"] isEqualToString:@"checkbox"]) {
+        
+        _checkboxIndex = indexPath.row;
+        
+        DFSendSelectVC *sendSelect = [[DFSendSelectVC alloc] init];
+        sendSelect.selectDic = layoutDic;
+        sendSelect.sendDelegate = self;
+        [self.navigationController pushViewController:sendSelect animated:YES];
+    }
+}
+
+- (void)selectWithDic:(NSDictionary *)dic withIndex:(NSInteger)index
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[dic objectForKey:@"c_name"] delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil];
+    actionSheet.tag = index;
+    for (NSDictionary *cdic in [dic objectForKey:@"child_categories"]) {
+        [actionSheet addButtonWithTitle:[cdic objectForKey:@"c_name"]];
+    }
+    [actionSheet showInView:self.view];
+}
+
+
 
 #pragma mark - 选择照片
 - (void)choosePhoto
@@ -404,6 +530,30 @@
         imagePickerController.sourceType = sourceType;
         
         [self presentViewController:imagePickerController animated:YES completion:^{}];
+        
+    }
+    else
+    {
+        NSDictionary *layoutDic = [_layoutArr objectAtIndex:actionSheet.tag];
+        
+        NSArray *cArr = [layoutDic objectForKey:@"child_categories"];
+        
+        NSString *key = [layoutDic objectForKey:@"c_id"];
+        
+        if (buttonIndex != 0) {
+            NSString *value = [[cArr objectAtIndex:buttonIndex-1] objectForKey:@"c_id"];
+            
+            [_postDic setValue:value forKey:key];
+            
+            [_tableViewData replaceObjectAtIndex:actionSheet.tag withObject:[[cArr objectAtIndex:buttonIndex - 1] objectForKey:@"c_name"]];
+            
+            [_detailTableView reloadData];
+            
+            return;
+        }
+        
+        
+        
         
     }
 }
@@ -478,6 +628,40 @@
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
+#pragma mark - textFiledDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField.tag != TitleLabelTag  && textField.tag != ContentLabelTag) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect rect = self.view.frame;
+            rect.origin.y -= 223;
+            [self.view setFrame:rect];
+        }];
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField.tag == TitleLabelTag) {
+        [_postDic setObject:textField.text forKey:@"post_title"];
+        return;
+    }
+    if (textField.tag == ContentLabelTag) {
+        [_postDic setObject:textField.text forKey:@"post_text"];
+        return;
+    }
+    else
+    {
+        [_tableViewData replaceObjectAtIndex:textField.tag withObject:textField.text];
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect rect = self.view.frame;
+            rect.origin.y += 223;
+            [self.view setFrame:rect];
+        }];
+
+    }
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -485,6 +669,22 @@
     return YES;
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField.tag < 100) {
+        [_tableViewData replaceObjectAtIndex:textField.tag withObject:textField.text];
+    }
+    return YES;
+}
+
+- (void)addDicWithKey:(NSString *)key andValue:(NSString *)value andTitle:(NSString *)title
+{
+    [_tableViewData replaceObjectAtIndex:_checkboxIndex withObject:title];
+    
+    [_detailTableView reloadData];
+    
+    [_postDic setObject:value forKey:key];
+}
 
 - (void)didReceiveMemoryWarning
 {

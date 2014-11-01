@@ -7,6 +7,7 @@
 //
 
 #import "DFAppDelegate.h"
+#import "UMSocial.h"
 
 @implementation DFAppDelegate
 
@@ -23,7 +24,9 @@
                                                           [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     
-        
+    [UMSocialData setAppKey:UMENG_APPKEY];
+
+    
     return YES;
 }
 							

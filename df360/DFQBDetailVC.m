@@ -89,16 +89,29 @@
     
     /******************** 帖子详细 **********************/
     
-    UITextView *detailView = [[UITextView alloc] initWithFrame:CGRectMake(10, 20, KCurrentWidth - 20, 120)];
     
-    detailView.text = [_infoDic objectForKey:@"message"];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, KCurrentWidth - 20, 30)];
+    
+    titleLabel.text = [DFToolClass stringISNULL:[_infoDic objectForKey:@"subject"]];
+    
+    titleLabel.textAlignment = NSTextAlignmentLeft;
+    
+    titleLabel.backgroundColor = [UIColor whiteColor];
+    
+    [self.view addSubview:titleLabel];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(10, 50, KCurrentWidth - 20, 0.5)];
+    
+    line.backgroundColor = [UIColor lightGrayColor];
+    
+    [self.view addSubview:line];
+    
+    UITextView *detailView = [[UITextView alloc] initWithFrame:CGRectMake(10, 50.5, KCurrentWidth - 20, 90)];
+    
+    detailView.text = [DFToolClass stringISNULL:[_infoDic objectForKey:@"message"]];
     
     detailView.backgroundColor = [UIColor whiteColor];
     
-    detailView.layer.masksToBounds = YES;
-    detailView.layer.cornerRadius = 6.0;
-    detailView.layer.borderWidth = 1.0;
-    detailView.layer.borderColor = [[UIColor whiteColor] CGColor];
     detailView.editable = false;
 
     
@@ -179,7 +192,7 @@
     
     /******************** 底部更多按钮 **********************/
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 464, KCurrentWidth, 0.5)];
+    line = [[UIView alloc] initWithFrame:CGRectMake(0, 464, KCurrentWidth, 0.5)];
     
     line.tag = 20001;
     

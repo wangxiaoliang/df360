@@ -197,11 +197,11 @@
 {
     NSString *strURL;
     if (_searchCondition.length > 1) {
-        strURL = [NSString stringWithFormat:@"http://www.df360.cc/df360/api/subcat_list?&subcat_id=%@&%@=%@&page=%@",[self.childDic objectForKey:@"cat_id"],_searchCondition,_searchValue,[NSString stringWithFormat:@"%ld",_page]];
+        strURL = [NSString stringWithFormat:@"http://www.df360.cc/df360/api/subcat_list?&subcat_id=%@&%@=%@&page=%@",[self.childDic objectForKey:@"cat_id"],_searchCondition,_searchValue,[NSString stringWithFormat:@"%d",_page]];
     }
     else
     {
-        strURL = [NSString stringWithFormat:@"http://www.df360.cc/df360/api/subcat_list?&subcat_id=%@&page=%@",[self.childDic objectForKey:@"cat_id"],[NSString stringWithFormat:@"%ld",_page]];
+        strURL = [NSString stringWithFormat:@"http://www.df360.cc/df360/api/subcat_list?&subcat_id=%@&page=%@",[self.childDic objectForKey:@"cat_id"],[NSString stringWithFormat:@"%d",_page]];
     }
     
     strURL = [strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

@@ -177,7 +177,7 @@
 {
     UIImageView *image = (UIImageView *)[self viewWithTag:101];
     
-    [image setImage:[UIImage imageNamed:@"personImg"]];
+    [image setImage:[UIImage imageNamed:@"default_img"]];
     
     UILabel *title = (UILabel *)[self viewWithTag:102];
     
@@ -234,7 +234,7 @@
 {
     UIImageView *imageView = (UIImageView *)[self viewWithTag:101];
     
-    imageView.image = [UIImage imageNamed:@"personImg"];
+    imageView.image = [UIImage imageNamed:@"default_img"];
     
     UILabel *name = (UILabel *)[self viewWithTag:102];
     
@@ -441,17 +441,19 @@
     
     UILabel *titleLabel = (UILabel *)[self viewWithTag:102];
     
-    titleLabel.text = [[arr objectAtIndex:row] objectForKey:@"post_title"];
+    titleLabel.text = [DFToolClass stringISNULL:[[arr objectAtIndex:row] objectForKey:@"post_title"]];
     
     UILabel *cateLable = (UILabel *)[self viewWithTag:103];
     
-    cateLable.text = [[arr objectAtIndex:row] objectForKey:@"cat_title"];
+    cateLable.text = [DFToolClass stringISNULL:[[arr objectAtIndex:row] objectForKey:@"cat_title"]];
     
     UILabel *beginTime = (UILabel *)[self viewWithTag:104];
     
-    NSDate *beginDate = [NSDate dateWithTimeIntervalSince1970:[[[arr objectAtIndex:row] objectForKey:@"post_begin_time"] floatValue]];
+    NSDate *beginDate = [NSDate dateWithTimeIntervalSince1970:[[DFToolClass stringISNULL:[[arr objectAtIndex:row] objectForKey:@"post_begin_time"]] floatValue]];
     
-    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:[[[arr objectAtIndex:row] objectForKey:@"post_end_time"] floatValue]];
+
+    
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:[[DFToolClass stringISNULL:[[arr objectAtIndex:row] objectForKey:@"post_end_time"]] floatValue]];
     
     NSDateFormatter * df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"yyyy-MM-dd"];

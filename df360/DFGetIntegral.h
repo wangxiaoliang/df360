@@ -9,5 +9,6 @@
 #import "DFCustomViewController.h"
 
 @interface DFGetIntegral : DFCustomViewController
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

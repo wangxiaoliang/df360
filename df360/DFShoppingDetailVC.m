@@ -13,12 +13,17 @@
 #import "DFToolView.h"
 #import "UIImageView+WebCache.h"
 #import "DFShoppingBuyVC.h"
+#import "UMSocial.h"
 
-@interface DFShoppingDetailVC ()<DFHudProgressDelegate>
+@interface DFShoppingDetailVC ()<DFHudProgressDelegate,WCustomVCDelegate>
 {
     DFHudProgress *_hud;
     
     NSDictionary *_dataDic;
+    
+    NSString *_shareText;
+    
+    UIImage *_shareImg;
 }
 @end
 
@@ -41,10 +46,13 @@
     self.WTitle = @"团购详情";
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleDefault;
+    
+    self.delegate = self;
 
     _dataDic = [[NSDictionary alloc] init];
     
     _hud = [[DFHudProgress alloc] init];
+    
     _hud.delegate = self;
     
     [self getTGGoods];
@@ -116,6 +124,93 @@
 }
 */
 
+- (void)share:(UIButton *)sender
+{
+    _shareImg = self.imageView.image;
+    
+    _shareText = [_dataDic objectForKey:@"goods_text"];
+    
+    [UMSocialData defaultData].extConfig.title = @"登封360";
+    
+    NSInteger shareTag = [sender tag];
+    
+    switch (shareTag) {
+        case 0:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+ 
+        }
+        break;
+        case 1:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+        }
+            break;
+        case 2:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+        }
+            break;
+            case 3:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+        }
+            break;
+            case 4:
+        {
+            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:_shareText image:_shareImg location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                if (response.responseCode == UMSResponseCodeSuccess) {
+                    NSLog(@"分享成功！");
+                    [self alertWithTitle:@"分享成功!"];
+                }
+                else
+                {
+                    [self alertWithTitle:@"分享失败!"];
+                }
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
 - (IBAction)buySelected:(id)sender {
     
     [self performSegueWithIdentifier:@"shoppingBuy" sender:_dataDic];
@@ -127,6 +222,12 @@
         DFShoppingBuyVC *buy = (DFShoppingBuyVC *)segue.destinationViewController;
         buy.senderDic = sender;
     }
+}
+
+- (void)alertWithTitle:(NSString *)str
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 @end

@@ -10,4 +10,5 @@
 
 @interface DFSendVC : DFCustomViewController
 @property (nonatomic, retain) NSDictionary *childDic;
++ (void)addDicWithKey:(NSString *)key andValue:(NSString *)value;
 @end

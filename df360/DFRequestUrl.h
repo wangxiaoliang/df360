@@ -69,6 +69,9 @@
 
 /** 获取发布布局 */
 + (NSString *)getLayoutWithId:(NSString *)catId;
+
+/** 发布消息 */
++ (NSString *)postInfo;
 /** 初始化所属区域 */
 + (NSString *)getArea;
 
@@ -83,4 +86,7 @@
 
 /** 初始化接口 */
 + (NSString *)sysSetWithSubcatid:(NSString *)subcatid;
+
+/** 积分规则 */
++ (NSString*)jifenrole;
 @end

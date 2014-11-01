@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "DFRequestUrl.h"
 #import "DFCustomTableViewCell.h"
+#import "MJRefresh.h"
 
 @interface DFQBMessageVC ()<DFHudProgressDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -19,7 +20,14 @@
     
     DFHudProgress *_hud;
     
-    NSArray *_messageArr;
+    NSMutableArray *_messageArr;
+    
+    BOOL _firstRequest;
+    
+    BOOL _needRequest;
+    
+    UITableView *_tableView;
+
 }
 @end
 
@@ -42,7 +50,11 @@
     
     _hud.delegate = self;
     
-    _messageArr = [[NSArray alloc] init];
+    _messageArr = [[NSMutableArray alloc] init];
+    
+    _firstRequest = YES;
+    _needRequest = YES;
+
     
     self.WTitle = @"留言";
     self.WLeftBarStyle = LeftBarStyleDefault;
@@ -56,18 +68,36 @@
 
 - (void)getMessage
 {
-    [_hud show];
+    if (_firstRequest) {
+        [_hud show];
+    }
+
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[DFRequestUrl getQBMessageWithTid:self.tid withPage:[NSString stringWithFormat:@"%ld",_page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[DFRequestUrl getQBMessageWithTid:self.tid withPage:[NSString stringWithFormat:@"%d",_page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"JSON: %@", responseObject);
         
-        _messageArr = [responseObject objectForKey:@"data"];
-    
+        NSArray *moreArr = [responseObject objectForKey:@"data"];
         
-        [self buildUI];
+        for (NSDictionary *dic in moreArr) {
+            [_messageArr addObject:dic];
+        }
         
+        if (moreArr.count != 10) {
+            _needRequest = false;
+        }
+        if (_firstRequest) {
+            _firstRequest = false;
+            
+            [self buildUI];
+        }
+        else
+        {
+            [_tableView reloadData];
+        }
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
         [_hud dismiss];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -80,19 +110,39 @@
 
 - (void)buildUI
 {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, KCurrentHeight) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, KCurrentHeight) style:UITableViewStylePlain];
     
-    tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.backgroundColor = [UIColor whiteColor];
     
-    tableView.dataSource = self;
+    _tableView.dataSource = self;
     
-    tableView.delegate = self;
+    _tableView.delegate = self;
     
-    tableView.tag = 10001;
+    _tableView.tag = 10001;
     
-    [self setExtraCellLineHidden:tableView];
+    [self setExtraCellLineHidden:_tableView];
     
-    [self.view addSubview:tableView];
+    __block DFQBMessageVC *blockSelf = self;
+    [_tableView addHeaderWithCallback:^{
+        blockSelf -> _page = 0;
+        blockSelf -> _needRequest = YES;
+        [blockSelf -> _messageArr removeAllObjects];
+        [blockSelf getMessage];
+    }];
+    
+    
+    [_tableView addFooterWithCallback:^{
+        if (blockSelf -> _needRequest) {
+            blockSelf -> _page++;
+            [blockSelf getMessage];
+        }
+        else
+        {
+            [blockSelf -> _tableView footerEndRefreshing];
+        }
+    }];
+    
+    [self.view addSubview:_tableView];
 }
 
 #pragma mark - tableViewDelegate

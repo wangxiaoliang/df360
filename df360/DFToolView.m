@@ -54,6 +54,44 @@
 
 @end
 
+@implementation DFShareHud
+
+- (id)init
+{
+    CGRect frame = CGRectMake(61, 220, 198, 50);
+    self = [super initWithFrame:frame];
+    return self;
+}
+
+-(void)success
+{
+    DFAppDelegate *app = (DFAppDelegate *)[UIApplication sharedApplication].delegate;
+    _bgView = [[UIView alloc] init];
+    [_bgView setFrame:CGRectMake(0, 0, 320, 768)];
+    _bgView.backgroundColor = [UIColor blackColor];
+    _bgView.alpha = 0.5f;
+    
+    _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    
+    _label.font = [UIFont systemFontOfSize:13];
+    
+    _label.text = @"分享成功";
+    
+    _label.textAlignment = NSTextAlignmentCenter;
+    
+    [app.window addSubview:_bgView];
+    [app.window addSubview:_label];
+    [app.window addSubview:self];
+
+
+    
+    
+}
+
+@end
+
+
+
 @implementation DFSegmentController
 
 - (id)initWithFrame:(CGRect)frame withTitle:(NSArray *)title withData:(NSArray *)data

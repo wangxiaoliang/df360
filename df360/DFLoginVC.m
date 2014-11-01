@@ -157,6 +157,8 @@
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:[[responseObject objectForKey:@"data"] objectForKey:@"uid"] forKey:@"uid"];
+        [defaults setObject:[[responseObject objectForKey:@"data"] objectForKey:@"email"] forKey:@"email"];
+        
         
         [self saveUserInfo];
         

@@ -8,10 +8,21 @@
 
 #import "DFUserInfoSettingVC.h"
 #import "DFCustomTableViewCell.h"
+#import "DFToolView.h"
+#import "AFNetworking.h"
 
-@interface DFUserInfoSettingVC ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+
+@interface DFUserInfoSettingVC ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,DFHudProgressDelegate>
 {
     NSArray *_titleArr;
+    NSString *_nameStr;
+    NSString *_telStr;
+    NSString *_QQStr;
+    NSString *_emailStr;
+    NSString *_addressStr;
+    NSString *_uid;
+    
+    DFHudProgress *_hud;
 }
 @end
 
@@ -22,7 +33,19 @@
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
 
+    [self initParaData];
+    
     _titleArr = [[NSArray alloc] initWithObjects:@"姓名         *",@"联系电话  *",@"联系QQ",@"联系邮箱",@"联系地址", nil];
+    
+    NSUserDefaults *df = [NSUserDefaults standardUserDefaults];
+    
+    _nameStr = [df objectForKey:@"username"];
+    _emailStr = [df objectForKey:@"email"];
+    _uid = [df objectForKey:@"uid"];
+    
+    _hud = [[DFHudProgress alloc] init];
+    
+    _hud.delegate = self;
     
     [self buildUI];
     
@@ -30,6 +53,16 @@
     // Do any additional setup after loading the view.
 }
 
+
+- (void)initParaData
+{
+    _nameStr = @"";
+    _telStr = @"";
+    _QQStr = @"";
+    _emailStr = @"";
+    _addressStr = @"";
+    _uid = @"";
+}
 - (void)buildUI
 {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, KCurrentWidth, 220) style:UITableViewStylePlain];
@@ -56,8 +89,63 @@
     
     btn.backgroundColor = [UIColor redColor];
     
+    [btn addTarget:self action:@selector(modifyUserInfo) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:btn];
     
+}
+
+- (void)modifyUserInfo
+{
+    if ([_nameStr isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"姓名不能为空!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        
+        [alert show];
+    }
+    if ([_telStr isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"联系电话不能为空!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        
+        [alert show];
+
+    }
+    else
+    {
+        [_hud show];
+        
+        NSString *url = @"http://www.df360.cc/df360/api/info_member";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        
+        
+        NSDictionary *para = @{@"member_uid":_uid,@"member_title":_nameStr,@"member_phone":_telStr,@"member_qq":_QQStr,@"member_address":_addressStr};
+        
+        
+        
+        NSLog(@"%@",para);
+        
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+        
+        [manager POST:url parameters:para success:^(AFHTTPRequestOperation *operation,id responseObject){
+            NSLog(@"json:%@",responseObject);
+            
+            [_hud dismiss];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"修改成功!" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            
+            [alert show];
+            
+        }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+            
+            [_hud dismiss];
+            
+            NSLog(@"operation:%@",operation);
+            
+            NSLog(@"error:%@",error);
+        }];
+    }
+
 }
 
 #pragma mark - tableViewDelegate
@@ -84,12 +172,42 @@
     
     UITextField *textField = (UITextField *)[cell viewWithTag:indexPath.row + 1000];
     textField.delegate = self;
+    if (indexPath.row == 0) {
+        textField.text = _nameStr;
+    }
+    if (indexPath.row == 3) {
+        textField.text = _emailStr;
+    }
     return cell;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    NSLog(@"%ld",textField.tag);
+    NSLog(@"%d",textField.tag);
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField.tag == 1000)
+    {
+        _nameStr = textField.text;
+    }
+    if (textField.tag == 1001) {
+        _telStr = textField.text;
+    }
+    if (textField.tag == 1002) {
+        _QQStr = textField.text;
+    }
+    
+    if (textField.tag == 1003) {
+        _emailStr = textField.text;
+    }
+    
+    if (textField.tag == 1004) {
+        _addressStr = textField.text;
+    }
+
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

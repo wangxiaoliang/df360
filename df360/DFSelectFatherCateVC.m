@@ -84,8 +84,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSUserDefaults *df = [NSUserDefaults standardUserDefaults];
+    
+    [df setObject:[[self.allCates objectAtIndex:indexPath.row] objectForKey:@"cat_id"] forKey:@"fatherId"];
+    [df setObject:[[self.allCates objectAtIndex:indexPath.row] objectForKey:@"cat_title"] forKey:@"fatherTitle"];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performSegueWithIdentifier:@"selectChildCate" sender:[[self.allCates objectAtIndex:indexPath.row] objectForKey:@"child"]];
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
