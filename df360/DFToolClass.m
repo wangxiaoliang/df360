@@ -96,4 +96,19 @@
     return [str isEqual:[NSNull null]]?@"":str;
 }
 
++ (CGFloat)heightOfLabel:(NSString *)strText forFont:(UIFont *)font labelLength:(CGFloat)length
+{
+    CGSize size;
+    
+    if (kOSVersion >= 7.0) {
+        NSDictionary *attribute = @{UITextAttributeFont: font};
+        size = [strText boundingRectWithSize:CGSizeMake(length, 0) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+    }
+    else {
+        size = [strText sizeWithFont:font constrainedToSize:CGSizeMake(length, 10000) lineBreakMode:NSLineBreakByCharWrapping];
+    }
+    
+    return size.height;
+}
+
 @end

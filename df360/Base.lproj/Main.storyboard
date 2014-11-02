@@ -719,7 +719,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="Zyo-ru-QPJ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="139"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="148"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="KDm-gi-QA6">
@@ -737,8 +737,8 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LMx-87-Qxc">
-                                <rect key="frame" x="92" y="132" width="136" height="23"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <rect key="frame" x="29" y="132" width="261" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="QcT-1Z-smO">
@@ -778,15 +778,15 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="xH2-he-HVV">
-                                <rect key="frame" x="20" y="178" width="280" height="110"/>
+                                <rect key="frame" x="20" y="188" width="280" height="110"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="JZf-0k-iAL">
                                         <rect key="frame" x="0.0" y="30" width="280" height="1"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品描述" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0Yx-gM-FS7">
-                                        <rect key="frame" x="0.0" y="1" width="81" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="81" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="qLm-0I-rEM">
@@ -799,15 +799,15 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="cN8-np-dmw">
-                                <rect key="frame" x="20" y="304" width="280" height="88"/>
+                                <rect key="frame" x="20" y="314" width="280" height="88"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="Hk1-Ra-xE8">
                                         <rect key="frame" x="0.0" y="30" width="280" height="1"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商家介绍" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6wU-fF-MQo">
-                                        <rect key="frame" x="0.0" y="1" width="81" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <rect key="frame" x="0.0" y="1" width="81" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="vmj-cs-l8R">
@@ -820,15 +820,15 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="iQI-uv-aBI">
-                                <rect key="frame" x="20" y="400" width="280" height="69"/>
+                                <rect key="frame" x="20" y="410" width="280" height="69"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="Qng-OI-pOg">
                                         <rect key="frame" x="0.0" y="30" width="280" height="1"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="特别提示" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="D7u-7F-m3Y">
-                                        <rect key="frame" x="0.0" y="1" width="81" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <rect key="frame" x="0.0" y="1" width="81" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="hgr-GQ-yNi">
@@ -1000,6 +1000,112 @@
             </objects>
             <point key="canvasLocation" x="1683" y="670"/>
         </scene>
+        <!--MyTG Detail-->
+        <scene sceneID="bAo-k6-Lkv">
+            <objects>
+                <viewController storyboardIdentifier="MyTGDetail" id="bgv-4K-cVI" customClass="DFMyTGDetail" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="reM-rc-eEE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="bRa-nb-Zef">
+                                <rect key="frame" x="16" y="20" width="288" height="176"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="bgv-4K-cVI" id="Vxe-MR-qbV"/>
+                                    <outlet property="delegate" destination="bgv-4K-cVI" id="HLl-s3-far"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" id="d9L-Sn-nJX">
+                                <rect key="frame" x="16" y="219" width="288" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本团购商品现在仅支持用户积分购买，" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fDy-Bw-yoe">
+                                        <rect key="frame" x="17" y="8" width="263" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="其他支付方式敬请期待！" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="H0c-2c-z6x">
+                                        <rect key="frame" x="17" y="30" width="263" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="61m-A8-7iw">
+                                <rect key="frame" x="52" y="294" width="217" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="确认无误，立即支付">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="payClick:" destination="bgv-4K-cVI" eventType="touchUpInside" id="QhX-ZM-PBv"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="9aL-T8-nN5">
+                                <rect key="frame" x="16" y="356" width="288" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="XjO-Od-iem">
+                                        <rect key="frame" x="0.0" y="30" width="288" height="1"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支付方式" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OZw-Tm-Yia">
+                                        <rect key="frame" x="102" y="1" width="85" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="支付宝支付" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DGX-OL-2fQ">
+                                        <rect key="frame" x="84" y="39" width="85" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="需要支付宝账户支付（目前只支持支付宝支付）" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="r1z-Mb-jDO">
+                                        <rect key="frame" x="84" y="55" width="174" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_alipay_plugin_enabled" id="CdP-WV-Pqd">
+                                        <rect key="frame" x="14" y="39" width="62" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_yawp_refund" id="F3h-Al-W7U">
+                                        <rect key="frame" x="261" y="61" width="25" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="JFPayView" destination="9aL-T8-nN5" id="TrX-cG-cmY"/>
+                        <outlet property="lineLabel" destination="fDy-Bw-yoe" id="FNf-RM-WWV"/>
+                        <outlet property="lineLabel2" destination="H0c-2c-z6x" id="46Y-SH-9p3"/>
+                        <outlet property="noticeView" destination="d9L-Sn-nJX" id="OCE-dB-jnQ"/>
+                        <outlet property="payBtn" destination="61m-A8-7iw" id="H8z-kM-FvR"/>
+                        <outlet property="tableView" destination="bRa-nb-Zef" id="Xzy-j7-pqE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="18r-og-0uh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2256" y="736"/>
+        </scene>
         <!--My Top MessageVC-->
         <scene sceneID="5UU-Pp-L41">
             <objects>
@@ -1035,6 +1141,7 @@
         <image name="group_remaining_time" width="34" height="34"/>
         <image name="group_sold" width="34" height="34"/>
         <image name="group_yawp_refund" width="34" height="34"/>
+        <image name="ic_alipay_plugin_enabled" width="92" height="60"/>
         <image name="minus" width="72" height="72"/>
         <image name="plus" width="72" height="72"/>
     </resources>

@@ -48,7 +48,7 @@
     
     [self addSubview:imageView];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, 120, 40)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, 240, 40)];
     
     titleLabel.backgroundColor = [UIColor clearColor];
     
@@ -60,7 +60,7 @@
     
     [self addSubview:titleLabel];
     
-    UILabel *nowPrice = [[UILabel alloc] initWithFrame:CGRectMake(80, 30, 70, 30)];
+    UILabel *nowPrice = [[UILabel alloc] initWithFrame:CGRectMake(80, 30, 100, 30)];
     
     nowPrice.text = @"￥190";
     
@@ -74,7 +74,7 @@
     
     [self addSubview:nowPrice];
     
-    UILabel *oldPrice = [[UILabel alloc] initWithFrame:CGRectMake(150, 36, 60, 20)];
+    UILabel *oldPrice = [[UILabel alloc] initWithFrame:CGRectMake(180, 36, 100, 20)];
     
     oldPrice.text = @"￥200";
     
@@ -86,7 +86,9 @@
     
     [self addSubview:oldPrice];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(150, 45.5, 40, 0.5)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(180, 45.5, 80, 0.5)];
+    
+    line.tag = 110;
     
     line.backgroundColor = [UIColor blackColor];
     
@@ -123,15 +125,25 @@
     
     UILabel *nowPrice = (UILabel *)[self viewWithTag:103];
     
-    nowPrice.text = [NSString stringWithFormat:@"￥%@",[[arr objectAtIndex:row] objectForKey:@"goods_market_price"]];
+    nowPrice.text = [NSString stringWithFormat:@"现价￥%@",[[arr objectAtIndex:row] objectForKey:@"goods_price"]];
+    
+    UIView *line = (UIView *)[self viewWithTag:110];
+    
+    
     
     UILabel *oldPrice = (UILabel *)[self viewWithTag:104];
     
-    oldPrice.text = [NSString stringWithFormat:@"￥%@",[[arr objectAtIndex:row] objectForKey:@"goods_price"]];
+    oldPrice.text = [NSString stringWithFormat:@"原价￥%@",[[arr objectAtIndex:row] objectForKey:@"goods_market_price"]];
+    
+    CGSize size = CGSizeMake(320,2000);
+    
+    CGSize labelsize = [[NSString stringWithFormat:@"原价￥%@",[[arr objectAtIndex:row] objectForKey:@"goods_market_price"]] sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping];
+    
+    [line setFrame:CGRectMake(180, 45.5, labelsize.width, 0.5)];
     
     UILabel *number = (UILabel *)[self viewWithTag:105];
     
-    number.text = [NSString stringWithFormat:@"%@人购买",[[arr objectAtIndex:row] objectForKey:@"goods_total_buy"]];
+    number.text = [NSString stringWithFormat:@"%@人购买",[[arr objectAtIndex:row] objectForKey:@"goods_sellsum"]];
 }
 
 /** 糗百 */

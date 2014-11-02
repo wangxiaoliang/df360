@@ -46,6 +46,8 @@
 		304A40E81A048D9900F25CB9 /* DFIntegralCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 304A40E71A048D9900F25CB9 /* DFIntegralCell.xib */; };
 		304A40EB1A04AAAA00F25CB9 /* DFSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 304A40EA1A04AAAA00F25CB9 /* DFSearchVC.m */; };
 		304A40EE1A04D8A300F25CB9 /* DFAboutVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 304A40ED1A04D8A300F25CB9 /* DFAboutVC.m */; };
+		304A40F11A06504500F25CB9 /* DFMyChangeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 304A40F01A06504500F25CB9 /* DFMyChangeVC.m */; };
+		304A40F41A066B2E00F25CB9 /* DFMyTGDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 304A40F31A066B2E00F25CB9 /* DFMyTGDetail.m */; };
 		30A0EEC719F7F93200DAD260 /* DFQBMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A0EEC619F7F93200DAD260 /* DFQBMessageVC.m */; };
 		30A412A619CEB636006AE94D /* DFChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A412A519CEB636006AE94D /* DFChildVC.m */; };
 		30AF174919F404BF00B086A6 /* DFShoppingDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AF174819F404BF00B086A6 /* DFShoppingDetailVC.m */; };
@@ -212,6 +214,10 @@
 		304A40EA1A04AAAA00F25CB9 /* DFSearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFSearchVC.m; sourceTree = "<group>"; };
 		304A40EC1A04D8A300F25CB9 /* DFAboutVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFAboutVC.h; sourceTree = "<group>"; };
 		304A40ED1A04D8A300F25CB9 /* DFAboutVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFAboutVC.m; sourceTree = "<group>"; };
+		304A40EF1A06504500F25CB9 /* DFMyChangeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMyChangeVC.h; sourceTree = "<group>"; };
+		304A40F01A06504500F25CB9 /* DFMyChangeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMyChangeVC.m; sourceTree = "<group>"; };
+		304A40F21A066B2E00F25CB9 /* DFMyTGDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMyTGDetail.h; sourceTree = "<group>"; };
+		304A40F31A066B2E00F25CB9 /* DFMyTGDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMyTGDetail.m; sourceTree = "<group>"; };
 		30A0EEC519F7F93200DAD260 /* DFQBMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFQBMessageVC.h; sourceTree = "<group>"; };
 		30A0EEC619F7F93200DAD260 /* DFQBMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFQBMessageVC.m; sourceTree = "<group>"; };
 		30A412A419CEB636006AE94D /* DFChildVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFChildVC.h; sourceTree = "<group>"; };
@@ -668,6 +674,10 @@
 				304A40E21A04848500F25CB9 /* DFIntegralCell.h */,
 				304A40E31A04848500F25CB9 /* DFIntegralCell.m */,
 				304A40E71A048D9900F25CB9 /* DFIntegralCell.xib */,
+				304A40EF1A06504500F25CB9 /* DFMyChangeVC.h */,
+				304A40F01A06504500F25CB9 /* DFMyChangeVC.m */,
+				304A40F21A066B2E00F25CB9 /* DFMyTGDetail.h */,
+				304A40F31A066B2E00F25CB9 /* DFMyTGDetail.m */,
 			);
 			name = "个人中心";
 			sourceTree = "<group>";
@@ -1023,6 +1033,7 @@
 				30DCFC1E19FAA32400785CD8 /* UIScrollView+MJRefresh.m in Sources */,
 				30B9F65F19D0611500335DF0 /* DFSelectChildCateVC.m in Sources */,
 				30B9F65919CEDBFD00335DF0 /* DFSendVC.m in Sources */,
+				304A40F11A06504500F25CB9 /* DFMyChangeVC.m in Sources */,
 				30AF176819F413D300B086A6 /* MKAnnotationView+WebCache.m in Sources */,
 				30003D7919C9D97D0010A13F /* DFCustomTableViewCell.m in Sources */,
 				30DCFC1A19FAA32400785CD8 /* MJRefreshConst.m in Sources */,
@@ -1046,6 +1057,7 @@
 				30003D7C19CACA890010A13F /* DFSendQBVC.m in Sources */,
 				30CDABE419FF8F0700DF66F3 /* photoCell.m in Sources */,
 				30D79A2119C6B70C007F110D /* FMDatabaseAdditions.m in Sources */,
+				304A40F41A066B2E00F25CB9 /* DFMyTGDetail.m in Sources */,
 				30DCFBFB19FA8E0C00785CD8 /* UMFeedbackTableViewCellRight.m in Sources */,
 				30D79A4019C6B71B007F110D /* RefreshView.m in Sources */,
 				30C4A45519B60897006B9E0D /* DFSettingVC.m in Sources */,

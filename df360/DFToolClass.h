@@ -30,4 +30,6 @@
 /** 判断字符串是否为null */
 + (NSString *)stringISNULL:(NSString *)str;
 
++ (CGFloat)heightOfLabel:(NSString *)strText forFont:(UIFont *)font labelLength:(CGFloat)length;
+
 @end

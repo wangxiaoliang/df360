@@ -160,13 +160,16 @@
         
         NSLog(@"TopJSON: %@", responseObject);
         
-        for (NSDictionary *dic in [responseObject objectForKey:@"data"]) {
+        NSArray *dataArr = [responseObject objectForKey:@"data"];
+
+        
+        for (NSDictionary *dic in dataArr) {
             
             [_childArr addObject:dic];
         }
         
         
-        if (_childArr.count != 10) {
+        if (dataArr.count != 10) {
             _needRequest = false;
         }
         if (_firstRequest) {
@@ -189,6 +192,8 @@
         
         NSLog(@"Error: %@", error);
         _requestCount -= 1;
+        [_tableView headerEndRefreshing];
+        [_tableView footerEndRefreshing];
         [_hud dismiss];
     }];
 }
