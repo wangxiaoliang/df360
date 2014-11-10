@@ -17,4 +17,7 @@
 - (IBAction)plusSelected:(id)sender;
 - (IBAction)buySelected:(id)sender;
 @property (nonatomic, retain) NSDictionary *senderDic;
+@property (weak, nonatomic) IBOutlet UIView *downView;
+@property (weak, nonatomic) IBOutlet UILabel *gtitle;
+@property (weak, nonatomic) IBOutlet UIButton *payBtn;
 @end

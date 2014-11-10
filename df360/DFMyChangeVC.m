@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "MJRefresh.h"
 #import "DFMyTGDetail.h"
+#import "DFCustomTableViewCell.h"
 
 @interface DFMyChangeVC ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate>
 {
@@ -328,28 +329,34 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     static NSString *identify = @"changeCell";
     
     static NSString *indetify1 = @"jifenCell";
     
+    
     if (_isTG) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
-        }
-        [self initTGCell:cell withIndex:indexPath.row];
         
+        DFCustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
+        
+        if (!cell) {
+            cell = [[DFCustomTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identify];
+            [cell initMyTGCell];
+        }
+        [cell initTGCellWithArray:_dataSource withIndex:indexPath.row];
+
         return cell;
     }
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:indetify1];
+        
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indetify1];
-    }
-    [self initJFCell:cell withIndex:indexPath.row];
-    
-    if (indexPath.row%2==0) {
-        cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        [self initJFCell:cell withIndex:indexPath.row];
+        if (indexPath.row%2==0) {
+            cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        }
     }
     
     return cell;
@@ -364,7 +371,7 @@
     titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
     // 测试字串
-    NSString *s =[[_dataSource objectAtIndex:index] objectForKey:@"goods_title"];
+    NSString *s =[DFToolClass stringISNULL:[[_dataSource objectAtIndex:index] objectForKey:@"goods_title"]];
     
     titleLabel.text = s;
     
@@ -376,11 +383,16 @@
     
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, height + 15, 80, 15)];
     
-    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[[_dataSource objectAtIndex:index] objectForKey:@"orderlist_time"] floatValue]];
+    
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[DFToolClass stringISNULL:[[_dataSource objectAtIndex:index] objectForKey:@"orderlist_time"]] floatValue]];
     
     NSDateFormatter * df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"yy-MM-dd"];
     NSString *regStr = [df stringFromDate:confromTimesp];
+    
+    if ([[DFToolClass stringISNULL:[[_dataSource objectAtIndex:index] objectForKey:@"orderlist_time"]] isEqualToString:@""]) {
+        regStr = @"";
+    }
     
     timeLabel.text = regStr;
     
@@ -396,19 +408,21 @@
     
     NSString *typeStr = @"";
     
-    if ([[[_dataSource objectAtIndex:index] objectForKey:@"orderlist_usestatus"] isEqualToString:@"2"]) {
+    NSString *listStatus = [DFToolClass stringISNULL:[[_dataSource objectAtIndex:index] objectForKey:@"orderlist_usestatus"]];
+    
+    if ([listStatus isEqualToString:@"2"]) {
         typeStr = @"已支付未消费";
     }
-    if ([[[_dataSource objectAtIndex:index] objectForKey:@"orderlist_usestatus"] isEqualToString:@"1"]) {
+    if ([listStatus isEqualToString:@"1"]) {
         typeStr = @"未支付";
     }
-    if ([[[_dataSource objectAtIndex:index] objectForKey:@"orderlist_usestatus"] isEqualToString:@"3"]) {
+    if ([listStatus isEqualToString:@"3"]) {
         typeStr = @"已付款已消费";
     }
-    if ([[[_dataSource objectAtIndex:index] objectForKey:@"orderlist_usestatus"] isEqualToString:@"4"]) {
+    if ([listStatus isEqualToString:@"4"]) {
         typeStr = @"申请退款中";
     }
-    if ([[[_dataSource objectAtIndex:index] objectForKey:@"orderlist_usestatus"] isEqualToString:@"5"]) {
+    if ([listStatus isEqualToString:@"5"]) {
         typeStr = @"已退款";
     }
     
@@ -461,11 +475,17 @@
     
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 0, 100, 44)];
     
-    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[[_dataSource objectAtIndex:index] objectForKey:@"submitdate"] floatValue]];
+    
+    
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[DFToolClass stringISNULL:[[_dataSource objectAtIndex:index] objectForKey:@"submitdate"]] floatValue]];
     
     NSDateFormatter * df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"yy-MM-dd"];
     NSString *regStr = [df stringFromDate:confromTimesp];
+    
+    if ([[DFToolClass stringISNULL:[[_dataSource objectAtIndex:index] objectForKey:@"submitdate"]] isEqualToString:@""]) {
+        regStr = @"";
+    }
     
     timeLabel.text = regStr;
     

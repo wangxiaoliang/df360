@@ -43,4 +43,8 @@
 
 /** 我发布、置顶的信息赋值 */
 - (void)reloadMySendMessageWithArray:(NSArray *)arr WithIndex:(NSInteger)row;
+
+- (void)initMyTGCell;
+
+- (void)initTGCellWithArray:(NSMutableArray *)arr withIndex:(NSInteger)index;
 @end

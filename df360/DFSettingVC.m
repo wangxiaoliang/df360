@@ -9,13 +9,19 @@
 #import "DFSettingVC.h"
 #import "DFToolClass.h"
 #import "DFAboutVC.h"
+#import "DFToolView.h"
+#include "AFNetworking.h"
 #import "UMFeedbackViewController.h"
 
-@interface DFSettingVC ()<UITableViewDataSource,UITableViewDelegate>
+@interface DFSettingVC ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate,UIAlertViewDelegate>
 {
     NSArray *_titleArr;
     
     NSArray *_imgArr;
+    
+    DFHudProgress *_hud;
+    
+    NSString *appUrl;
 }
 @end
 
@@ -38,6 +44,10 @@
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
     self.WTitle = @"设置";
+    
+    _hud = [[DFHudProgress alloc] init];
+    
+    _hud.delegate = self;
     
     UISearchBar *search = (UISearchBar *)[self.navigationController.navigationBar viewWithTag:1];
     search.hidden = YES;
@@ -101,6 +111,32 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 0) {
+        [_hud show];
+        
+        NSString *url = @"http://www.df360.cc/df360/api/update_version";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        
+        [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSDictionary *dic = [responseObject objectForKey:@"data"];
+            
+            appUrl = [dic objectForKey:@"appstore"];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"有新版更新(%@)",[dic objectForKey:@"versionName2"]] message:[dic objectForKey:@"versionNote"] delegate:self cancelButtonTitle:@"取消更新" otherButtonTitles:@"立即更新", nil];
+            
+            [alert show];
+            
+            [_hud dismiss];
+            
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [_hud dismiss];
+        }];
+    }
     if (indexPath.row == 1) {
         [self nativeFeedback];
     }
@@ -127,6 +163,15 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"%d",buttonIndex);
+    if (buttonIndex == 1) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appUrl]];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

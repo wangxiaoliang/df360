@@ -480,4 +480,138 @@
     endTime.text = endStr;
 }
 
+- (void)initMyTGCell
+{
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 5, cellWigth-30, 10)];
+    
+    titleLabel.tag = 801;
+    
+    [self addSubview:titleLabel];
+    
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 80, 15)];
+    
+    timeLabel.tag = 802;
+    
+    [self addSubview:timeLabel];
+    
+    UILabel *typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 15, 60, 15)];
+    
+    typeLabel.tag = 803;
+    
+    [self addSubview:typeLabel];
+    
+    UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 35, 80, 15)];
+    
+    totalLabel.tag = 804;
+    
+    [self addSubview:totalLabel];
+    
+    UILabel *numLabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 35, 60, 15)];
+    
+    numLabel.tag = 805;
+    
+    [self addSubview:numLabel];
+
+}
+
+- (void)initTGCellWithArray:(NSMutableArray *)arr withIndex:(NSInteger)index
+{
+    UILabel *titleLabel = (UILabel *)[self viewWithTag:801];
+    
+    [titleLabel setNumberOfLines:0];
+    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    // 测试字串
+    NSString *s =[DFToolClass stringISNULL:[[arr objectAtIndex:index] objectForKey:@"goods_title"]];
+    
+    titleLabel.text = s;
+    
+    CGFloat height = [DFToolClass heightOfLabel:s forFont:[UIFont systemFontOfSize:14] labelLength:160];
+    
+    [titleLabel setFrame:CGRectMake(15, 5, cellWigth - 30, height + 15)];
+    
+    
+    UILabel *timeLabel = (UILabel *)[self viewWithTag:802];
+    
+    [timeLabel setFrame:CGRectMake(15, height + 15, 80, 15)];
+    
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[DFToolClass stringISNULL:[[arr objectAtIndex:index] objectForKey:@"orderlist_time"]] floatValue]];
+    
+    NSDateFormatter * df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yy-MM-dd"];
+    NSString *regStr = [df stringFromDate:confromTimesp];
+    
+    if ([[DFToolClass stringISNULL:[[arr objectAtIndex:index] objectForKey:@"orderlist_time"]] isEqualToString:@""]) {
+        regStr = @"";
+    }
+    
+    timeLabel.text = regStr;
+    
+    timeLabel.textColor = [UIColor lightGrayColor];
+    
+    timeLabel.font = [UIFont systemFontOfSize:14];
+    
+    timeLabel.backgroundColor = [UIColor clearColor];
+    
+    UILabel *typeLabel = (UILabel *)[self viewWithTag:803];
+    
+    [typeLabel setFrame:CGRectMake(95, height + 15, 60, 15)];
+    
+    NSString *typeStr = @"";
+    
+    NSString *listStatus = [DFToolClass stringISNULL:[[arr objectAtIndex:index] objectForKey:@"orderlist_usestatus"]];
+    
+    if ([listStatus isEqualToString:@"2"]) {
+        typeStr = @"已支付未消费";
+    }
+    if ([listStatus isEqualToString:@"1"]) {
+        typeStr = @"未支付";
+    }
+    if ([listStatus isEqualToString:@"3"]) {
+        typeStr = @"已付款已消费";
+    }
+    if ([listStatus isEqualToString:@"4"]) {
+        typeStr = @"申请退款中";
+    }
+    if ([listStatus isEqualToString:@"5"]) {
+        typeStr = @"已退款";
+    }
+    
+    typeLabel.text = typeStr;
+    
+    typeLabel.textColor = [UIColor orangeColor];
+    
+    typeLabel.font = [UIFont systemFontOfSize:14];
+    
+    typeLabel.backgroundColor = [UIColor clearColor];
+    
+    
+    UILabel *totalLabel = (UILabel *)[self viewWithTag:804];
+    
+    [totalLabel setFrame:CGRectMake(15, height + 35, 80, 15)];
+    
+    totalLabel.textColor = [UIColor lightGrayColor];
+    
+    totalLabel.text = [NSString stringWithFormat:@"总价:%@",[DFToolClass stringISNULL:[[arr objectAtIndex:index] objectForKey:@"goods_price"]]];
+    
+    totalLabel.font = [UIFont systemFontOfSize:14];
+    
+    totalLabel.backgroundColor = [UIColor clearColor];
+    
+    UILabel *numLabel = (UILabel *)[self viewWithTag:805];
+    
+    [numLabel setFrame:CGRectMake(95, height + 35, 60, 15)];
+    
+    numLabel.textColor = [UIColor lightGrayColor];
+    
+    numLabel.text = [NSString stringWithFormat:@"数量:%@",[DFToolClass stringISNULL:[[arr objectAtIndex:index] objectForKey:@"goods_sum"]]];
+    
+    numLabel.font = [UIFont systemFontOfSize:14];
+    
+    numLabel.backgroundColor = [UIColor clearColor];
+        
+    [self setFrame:CGRectMake(0, 0, cellWigth, height + 60)];
+
+}
+
 @end

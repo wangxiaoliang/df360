@@ -8,12 +8,16 @@
 
 #import "DFMyTGDetail.h"
 #import "DFToolClass.h"
+#import "DFToolView.h"
+#import "AFNetworking.h"
 
-@interface DFMyTGDetail ()<UITableViewDataSource,UITableViewDelegate>
+@interface DFMyTGDetail ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate>
 {
     NSArray *titleArr;
     
     float tableViewHeight;
+    
+    DFHudProgress *_hud;
 }
 @end
 
@@ -25,6 +29,10 @@
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
 
+    _hud = [[DFHudProgress alloc] init];
+    
+    _hud.delegate =self;
+    
     if (_isTG) {
         self.JFPayView.hidden = YES;
         
@@ -219,5 +227,59 @@
 */
 
 - (IBAction)payClick:(id)sender {
+    
+    if ([[_senderDic objectForKey:@"orderlist_usestatus"] isEqualToString:@"1"]) {
+        [_hud show];
+        
+        NSString *url = @"http://www.df360.cc/df360/api/tuang_order_use";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        NSDictionary *para = @{@"orderid":[_senderDic objectForKey:@"orderlist_id"],@"orderlist_usestatus":[_senderDic objectForKey:@"orderlist_usestatus"]};
+        
+        [manager GET:url parameters:para success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            
+            [alert show];
+            
+            
+            [_hud dismiss];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [_hud dismiss];
+        }];
+
+    }
+    else
+    {
+        [_hud show];
+        
+        NSString *url = @"http://www.df360.cc/df360/api/back_payorder";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        NSDictionary *para = @{@"orderid":[_senderDic objectForKey:@"orderlist_id"]};
+        
+        NSLog(@"%@",para);
+        
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+        
+        [manager POST:url parameters:para success:^(AFHTTPRequestOperation *operation,id responseObject){
+            NSLog(@"json:%@",responseObject);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            
+            [alert show];
+            [self.navigationController popViewControllerAnimated:YES];
+
+            [_hud dismiss];
+        }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+            NSLog(@"error:%@",error);
+            [_hud dismiss];
+        }];
+    }
 }
 @end
