@@ -20,6 +20,9 @@
 #import "DFUserCenterVC.h"
 #import "DFTopInfoVC.h"
 #import "DFSearchVC.h"
+#import "UIImageView+WebCache.h"
+#import "DFAppDelegate.h"
+
 
 @interface DFViewController ()<UISearchBarDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITabBarDelegate,DFHudProgressDelegate,UIActionSheetDelegate,UISearchBarDelegate>
 {
@@ -32,6 +35,8 @@
     NSInteger numbersOfCell;
     
     UIScrollView *_topScrollView;  //置顶ScrollView
+
+    UIScrollView *_topImgeScroView;
     
     UIPageControl *_topPageControl;  //置顶pageView
     
@@ -61,6 +66,10 @@
     
     BOOL selectFirstLine;
     
+    NSArray *_topImgArr;
+    
+    NSInteger timeCount;
+    
 }
 
 @end
@@ -83,6 +92,8 @@
     
     [self getFatherCates];
     
+    [self getTopImg];
+    
     self.view.backgroundColor = [DFToolClass getColor:@"e5e5e5"];
     
 
@@ -93,8 +104,28 @@
     self.WLeftBarStyle = LeftBarStyleNone;
     self.WRightBarStyle = RightBarStyleNone;
     
+    DFAppDelegate *app = (DFAppDelegate *)[UIApplication sharedApplication].delegate;
+    UIImageView *startImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, KCurrentHeight)];
+    startImage.tag = 777;
+    startImage.backgroundColor = [UIColor clearColor];
+    startImage.image = [UIImage imageNamed:@"home_page"];
+    [app.window addSubview:startImage];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self dismissImg];
+        
+    });
+
     [super viewDidLoad];
     	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)dismissImg
+{
+    
+    DFAppDelegate *app = (DFAppDelegate *)[UIApplication sharedApplication].delegate;
+    UIImageView *imageView = (UIImageView *)[app.window viewWithTag:777];
+    [imageView removeFromSuperview];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -114,7 +145,7 @@
     [leftBtn setTitle:@"登封" forState:UIControlStateNormal];
     leftBtn.titleLabel.font = [UIFont systemFontOfSize:17];
     leftBtn.backgroundColor = [UIColor clearColor];
-    [leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [leftBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     
@@ -143,12 +174,12 @@
     [self.view addSubview:_backScrollView];
     
     //固定置顶的图片
-    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 53)];
-    image.image = [UIImage imageNamed:@"info_index_top"];
-    [_backScrollView addSubview:image];
+//    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 53)];
+//    image.image = [UIImage imageNamed:@"info_index_top"];
+//    [_backScrollView addSubview:image];
     
     
-    float btnWidth = (self.view.bounds.size.width - 100)/4;
+//    float btnWidth = (self.view.bounds.size.width - 100)/4;
     
     
     //第三方网站界面
@@ -202,6 +233,40 @@
     
 }
 
+- (void)buildTopScrollView
+{
+    _topImgeScroView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, 100)];
+    
+    _topImgeScroView.backgroundColor = [UIColor clearColor];
+    
+
+    
+    _topImgeScroView.pagingEnabled = YES;
+    
+    _topImgeScroView.contentSize = CGSizeMake(_topImgArr.count * KCurrentWidth, 100);
+    
+    for (int i = 0; i < _topImgArr.count; i ++) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(KCurrentWidth * i, 0, KCurrentWidth, 100)];
+        
+        [imageView setImageWithURL:[NSURL URLWithString:[[_topImgArr objectAtIndex:i] objectForKey:@"img_url"]] placeholderImage:nil];
+        
+        [_topImgeScroView addSubview:imageView];
+    }
+    
+    [_backScrollView addSubview:_topImgeScroView];
+    
+    timeCount = 0;
+    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(scrollTimer) userInfo:nil repeats:YES];
+
+}
+
+-(void)scrollTimer{
+    timeCount ++;
+    if (timeCount == _topImgArr.count) {
+        timeCount = 0;
+    }
+    [_topImgeScroView scrollRectToVisible:CGRectMake(timeCount * KCurrentWidth, 0, KCurrentWidth, 53) animated:YES];
+}
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
@@ -223,6 +288,9 @@
 #pragma mark - 构建置顶信息UI
 - (void)buildTopUI
 {
+    float btnWidth = (self.view.bounds.size.width - 100)/4;
+
+    float topHeight = btnWidth * 2 + 100 + 47;
     
     //置顶信息总共数量
     NSInteger topItems = [_topInfoArr count];
@@ -230,13 +298,13 @@
     //置顶信息页数
     NSInteger topPages = (topItems%6 == 0)?topItems/6:topItems/6+1;
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 62.5, KCurrentWidth, 0.5)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 62.5 + topHeight, KCurrentWidth, 0.5)];
     line.backgroundColor = [UIColor blackColor];
 
     [_backScrollView addSubview:line];
     
     
-    _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 53, KCurrentWidth , 80)];
+    _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 53 +topHeight, KCurrentWidth , 80)];
     
     _topScrollView.contentSize = CGSizeMake(KCurrentWidth * topPages, 80);
     _topScrollView.showsVerticalScrollIndicator = false;
@@ -244,7 +312,7 @@
     _topScrollView.delegate = self;
     _topScrollView.pagingEnabled = YES;
     
-    _topPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 143, 320, 10)];
+    _topPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 143 + topHeight, 320, 10)];
     _topPageControl.backgroundColor = [UIColor clearColor];
     _topPageControl.numberOfPages = topPages;
     _topPageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
@@ -321,7 +389,7 @@
     
     float btnWidth = (self.view.bounds.size.width - 100)/4;
     
-    float topHight = 163;
+    float topHight = 53 + 47;
     
     //父级菜单总数
     NSInteger fatherItmes = [_fatherCatesArr count];
@@ -463,6 +531,19 @@
         
         [_fatherPageControl setFrame:fatherPageRect];
         
+        CGRect topRect = _topScrollView.frame;
+        
+        topRect.origin.y += addHeight;
+        
+        [_topScrollView setFrame:topRect];
+        
+        CGRect topPageRect = _topPageControl.frame;
+        
+        topPageRect.origin.y += addHeight;
+        
+        [_topPageControl setFrame:topPageRect];
+
+        
         for (UIButton *btn in _secondLintBtn) {
             CGRect btnRect = btn.frame;
             
@@ -490,6 +571,19 @@
         webRect.origin.y += addHeight;
         
         [webBtn setFrame:webRect];
+        
+        CGRect topRect = _topScrollView.frame;
+        
+        topRect.origin.y += addHeight;
+        
+        [_topScrollView setFrame:topRect];
+        
+        CGRect topPageRect = _topPageControl.frame;
+        
+        topPageRect.origin.y += addHeight;
+        
+        [_topPageControl setFrame:topPageRect];
+
     }
     addHeight = 0;
     [_childScrollView removeFromSuperview];
@@ -535,7 +629,7 @@
     
 
 
-    float topHight =  163;
+    float topHight =  53 + 47;
 
     float xValue = (point.x > KCurrentWidth)?point.x - KCurrentWidth:point.x;
     
@@ -650,6 +744,18 @@
         
         [_fatherPageControl setFrame:fatherPageRect];
         
+        CGRect topRect = _topScrollView.frame;
+        
+        topRect.origin.y += addHeight;
+        
+        [_topScrollView setFrame:topRect];
+        
+        CGRect topPageRect = _topPageControl.frame;
+        
+        topPageRect.origin.y += addHeight;
+        
+        [_topPageControl setFrame:topPageRect];
+        
         for (UIButton *btn in _secondLintBtn) {
             CGRect btnRect = btn.frame;
             
@@ -677,6 +783,18 @@
         webRect.origin.y += addHeight;
         
         [webBtn setFrame:webRect];
+        
+        CGRect topRect = _topScrollView.frame;
+        
+        topRect.origin.y += addHeight;
+        
+        [_topScrollView setFrame:topRect];
+        
+        CGRect topPageRect = _topPageControl.frame;
+        
+        topPageRect.origin.y += addHeight;
+        
+        [_topPageControl setFrame:topPageRect];
     }
     
     addHeight = -addHeight;
@@ -768,6 +886,27 @@
 
     }];
     
+}
+
+#pragma mark - 获取置顶图片
+- (void)getTopImg
+{
+    NSString *url = @"http://www.df360.cc/df360/api/home_ads";
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"TopJSON: %@", responseObject);
+        _topImgArr = [[NSArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
+        [self buildTopScrollView];
+        
+        _topInfoArr = [[NSMutableArray alloc] initWithArray:[responseObject objectForKey:@"data"]];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        NSLog(@"operation: %@",operation);
+        
+        
+    }];
 }
 
 #pragma mark - hudDissmiss

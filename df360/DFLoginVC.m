@@ -118,15 +118,15 @@
     
     [self.view addSubview:loginBtn];
     
-    UIButton *otherLoginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    otherLoginBtn.frame = CGRectMake(20, 300, 280, 36);
-    [otherLoginBtn setTitle:@"QQ登录(使用百度的第三方登录)" forState:UIControlStateNormal];
-    [otherLoginBtn setBackgroundImage:[UIImage imageNamed:@"movdet_btn.png"] forState:UIControlStateNormal];
-    [otherLoginBtn setBackgroundImage:[UIImage imageNamed:@"movdet_btn_press.png"] forState:UIControlStateHighlighted];
-    otherLoginBtn.backgroundColor = [UIColor lightGrayColor];
-    [otherLoginBtn addTarget:self action:@selector(otherLogin:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:otherLoginBtn];
+//    UIButton *otherLoginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    otherLoginBtn.frame = CGRectMake(20, 300, 280, 36);
+//    [otherLoginBtn setTitle:@"QQ登录(使用百度的第三方登录)" forState:UIControlStateNormal];
+//    [otherLoginBtn setBackgroundImage:[UIImage imageNamed:@"movdet_btn.png"] forState:UIControlStateNormal];
+//    [otherLoginBtn setBackgroundImage:[UIImage imageNamed:@"movdet_btn_press.png"] forState:UIControlStateHighlighted];
+//    otherLoginBtn.backgroundColor = [UIColor lightGrayColor];
+//    [otherLoginBtn addTarget:self action:@selector(otherLogin:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.view addSubview:otherLoginBtn];
 
     
 }

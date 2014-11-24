@@ -89,4 +89,11 @@
 
 /** 积分规则 */
 + (NSString*)jifenrole;
+
+/** 收藏 */
++ (NSString *)tuanFavWithUserId:(NSString *)uid
+                   withGoods_id:(NSString *)goods_id;
+
+/** 我的收藏 */
++ (NSString *)myFavWithUserId:(NSString *)uid;
 @end

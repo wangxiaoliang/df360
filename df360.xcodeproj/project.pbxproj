@@ -48,6 +48,7 @@
 		304A40EE1A04D8A300F25CB9 /* DFAboutVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 304A40ED1A04D8A300F25CB9 /* DFAboutVC.m */; };
 		304A40F11A06504500F25CB9 /* DFMyChangeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 304A40F01A06504500F25CB9 /* DFMyChangeVC.m */; };
 		304A40F41A066B2E00F25CB9 /* DFMyTGDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 304A40F31A066B2E00F25CB9 /* DFMyTGDetail.m */; };
+		3051EF701A1CD57E00094048 /* DFMyFavVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3051EF6F1A1CD57E00094048 /* DFMyFavVC.m */; };
 		30A0EEC719F7F93200DAD260 /* DFQBMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A0EEC619F7F93200DAD260 /* DFQBMessageVC.m */; };
 		30A412A619CEB636006AE94D /* DFChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A412A519CEB636006AE94D /* DFChildVC.m */; };
 		30AF174919F404BF00B086A6 /* DFShoppingDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AF174819F404BF00B086A6 /* DFShoppingDetailVC.m */; };
@@ -218,6 +219,8 @@
 		304A40F01A06504500F25CB9 /* DFMyChangeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMyChangeVC.m; sourceTree = "<group>"; };
 		304A40F21A066B2E00F25CB9 /* DFMyTGDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMyTGDetail.h; sourceTree = "<group>"; };
 		304A40F31A066B2E00F25CB9 /* DFMyTGDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMyTGDetail.m; sourceTree = "<group>"; };
+		3051EF6E1A1CD57E00094048 /* DFMyFavVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFMyFavVC.h; sourceTree = "<group>"; };
+		3051EF6F1A1CD57E00094048 /* DFMyFavVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFMyFavVC.m; sourceTree = "<group>"; };
 		30A0EEC519F7F93200DAD260 /* DFQBMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFQBMessageVC.h; sourceTree = "<group>"; };
 		30A0EEC619F7F93200DAD260 /* DFQBMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DFQBMessageVC.m; sourceTree = "<group>"; };
 		30A412A419CEB636006AE94D /* DFChildVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DFChildVC.h; sourceTree = "<group>"; };
@@ -678,6 +681,8 @@
 				304A40F01A06504500F25CB9 /* DFMyChangeVC.m */,
 				304A40F21A066B2E00F25CB9 /* DFMyTGDetail.h */,
 				304A40F31A066B2E00F25CB9 /* DFMyTGDetail.m */,
+				3051EF6E1A1CD57E00094048 /* DFMyFavVC.h */,
+				3051EF6F1A1CD57E00094048 /* DFMyFavVC.m */,
 			);
 			name = "个人中心";
 			sourceTree = "<group>";
@@ -1050,6 +1055,7 @@
 				30DCFC1F19FAA32400785CD8 /* UIView+Extension.m in Sources */,
 				3005DB4E19C586DD008591A2 /* DFQSBKVC.m in Sources */,
 				304A40EE1A04D8A300F25CB9 /* DFAboutVC.m in Sources */,
+				3051EF701A1CD57E00094048 /* DFMyFavVC.m in Sources */,
 				30AF174919F404BF00B086A6 /* DFShoppingDetailVC.m in Sources */,
 				30A412A619CEB636006AE94D /* DFChildVC.m in Sources */,
 				30AF177219F413D300B086A6 /* UIImage+GIF.m in Sources */,
@@ -1243,7 +1249,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: he qi (9Z4ME8VT5U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: he qi (25U53MAW9B)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: he qi (25U53MAW9B)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "df360/df360-Prefix.pch";
@@ -1255,7 +1261,7 @@
 					"$(PROJECT_DIR)/df360/UMSocial_Sdk_4.2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f11a52fb-f89d-4379-8d19-4f3868b26048";
+				PROVISIONING_PROFILE = "4e431ef5-f5ac-47f3-8e2e-db69c1fb8f40";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1267,7 +1273,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: he qi (9Z4ME8VT5U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: he qi (25U53MAW9B)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: he qi (25U53MAW9B)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "df360/df360-Prefix.pch";
@@ -1279,7 +1285,7 @@
 					"$(PROJECT_DIR)/df360/UMSocial_Sdk_4.2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f11a52fb-f89d-4379-8d19-4f3868b26048";
+				PROVISIONING_PROFILE = "4e431ef5-f5ac-47f3-8e2e-db69c1fb8f40";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

@@ -48,7 +48,7 @@
     
     [self addSubview:imageView];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, 240, 40)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, 240, 25)];
     
     titleLabel.backgroundColor = [UIColor clearColor];
     
@@ -60,7 +60,7 @@
     
     [self addSubview:titleLabel];
     
-    UILabel *nowPrice = [[UILabel alloc] initWithFrame:CGRectMake(80, 30, 100, 30)];
+    UILabel *nowPrice = [[UILabel alloc] initWithFrame:CGRectMake(80, 45, 100, 30)];
     
     nowPrice.text = @"￥190";
     
@@ -74,7 +74,7 @@
     
     [self addSubview:nowPrice];
     
-    UILabel *oldPrice = [[UILabel alloc] initWithFrame:CGRectMake(180, 36, 100, 20)];
+    UILabel *oldPrice = [[UILabel alloc] initWithFrame:CGRectMake(180, 50, 100, 20)];
     
     oldPrice.text = @"￥200";
     
@@ -86,7 +86,7 @@
     
     [self addSubview:oldPrice];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(180, 45.5, 80, 0.5)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(180, 60, 80, 0.5)];
     
     line.tag = 110;
     
@@ -107,6 +107,21 @@
     number.backgroundColor = [UIColor clearColor];
     
     [self addSubview:number];
+
+    
+    UILabel *desLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 30, 150, 15)];
+    
+    desLabel.backgroundColor = [UIColor clearColor];
+    
+    desLabel.tag = 106;
+    
+    desLabel.text = @"大甩卖";
+    
+    desLabel.font = [UIFont systemFontOfSize:16];
+    
+    [self addSubview:desLabel];
+
+    
 }
 
 /** 给团购Cell赋值 */
@@ -139,11 +154,16 @@
     
     CGSize labelsize = [[NSString stringWithFormat:@"原价￥%@",[[arr objectAtIndex:row] objectForKey:@"goods_market_price"]] sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping];
     
-    [line setFrame:CGRectMake(180, 45.5, labelsize.width, 0.5)];
+    [line setFrame:CGRectMake(180, 60, labelsize.width, 0.5)];
     
     UILabel *number = (UILabel *)[self viewWithTag:105];
     
     number.text = [NSString stringWithFormat:@"%@人购买",[[arr objectAtIndex:row] objectForKey:@"goods_sellsum"]];
+    
+    UILabel *desLabel = (UILabel *)[self viewWithTag:106];
+    
+    desLabel.text = [[arr objectAtIndex:row] objectForKey:@"goods_text"];
+
 }
 
 /** 糗百 */

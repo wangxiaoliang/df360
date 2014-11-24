@@ -13,6 +13,7 @@
 #include "AFNetworking.h"
 #import "UMFeedbackViewController.h"
 
+
 @interface DFSettingVC ()<UITableViewDataSource,UITableViewDelegate,DFHudProgressDelegate,UIAlertViewDelegate>
 {
     NSArray *_titleArr;
@@ -22,6 +23,7 @@
     DFHudProgress *_hud;
     
     NSString *appUrl;
+    
 }
 @end
 
@@ -38,6 +40,8 @@
 
 - (void)viewDidLoad
 {
+
+    
     _titleArr = [[NSArray alloc] initWithObjects:@"版本更新",@"用户反馈",@"帮助",@"关于我们", nil];
     
     _imgArr = [[NSArray alloc] initWithObjects:@"ic_update",@"ic_feedback",@"ic_help",@"ic_about", nil];
@@ -60,6 +64,7 @@
 
 - (void)buildUI
 {
+    
     self.view.backgroundColor = [DFToolClass getColor:@"e5e5e5"];
 
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KCurrentWidth, 176) style:UITableViewStylePlain];
@@ -171,6 +176,8 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appUrl]];
     }
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {

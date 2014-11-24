@@ -12,6 +12,8 @@
 #import "DFSelectFatherCateVC.h"
 #import "DFLoginVC.h"
 #import "DFMyChangeVC.h"
+#import "DFMyFavVC.h"
+
 
 #define loginTag   2001
 #define logoutTag  2002
@@ -44,9 +46,9 @@
     self.WRightBarStyle = RightBarStyleNone;
     self.WTitle = @"个人中心";
     [self buildUI];
-    titleArr = [[NSArray alloc] initWithObjects:@"我发布的消息",@"置顶的信息",@"我的兑换记录",@"修改资料",@"积分充值",@"挣取积分", nil];
+    titleArr = [[NSArray alloc] initWithObjects:@"我发布的消息",@"我的收藏",@"置顶的信息",@"我的兑换记录",@"修改资料",@"积分充值",@"挣取积分", nil];
     
-    _imgArr = [[NSArray alloc] initWithObjects:@"ic_message",@"ic_top",@"ic_money",@"ic_write",@"ic_money",@"ic_integral", nil];
+    _imgArr = [[NSArray alloc] initWithObjects:@"ic_message",@"ic_message",@"ic_top",@"ic_money",@"ic_write",@"ic_money",@"ic_integral", nil];
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -120,7 +122,7 @@
         logout.hidden = YES;
     }
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, KCurrentWidth, 44 * 6) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, KCurrentWidth, 44 * 5) style:UITableViewStylePlain];
     
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -177,7 +179,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -196,19 +198,28 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSArray *identifyArr = @[@"myMessage",@"myMessage",@"",@"userInfoSetting",@"supplement",@"getIntegral"];
+    NSArray *identifyArr = @[@"myMessage",@"",@"myMessage",@"",@"userInfoSetting",@"supplement",@"getIntegral"];
     if ([DFToolClass isLogin]) {
         if (indexPath.row == 0) {
             
             [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:@"myMessage"];
             return;
         }
+        
         if (indexPath.row == 1) {
-            [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:@"myTopMessage"];
+            DFMyFavVC *myFav = [[DFMyFavVC alloc] init];
+            
+            [self.navigationController pushViewController:myFav animated:YES];
+            
             return;
         }
         
         if (indexPath.row == 2) {
+            [self performSegueWithIdentifier:[identifyArr objectAtIndex:indexPath.row] sender:@"myTopMessage"];
+            return;
+        }
+        
+        if (indexPath.row == 3) {
             
             DFMyChangeVC *change = [[DFMyChangeVC alloc] init];
             

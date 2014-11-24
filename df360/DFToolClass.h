@@ -32,4 +32,5 @@
 
 + (CGFloat)heightOfLabel:(NSString *)strText forFont:(UIFont *)font labelLength:(CGFloat)length;
 
+
 @end

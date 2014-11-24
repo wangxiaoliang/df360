@@ -112,7 +112,7 @@
 - (void)getTGGoods
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[DFRequestUrl getTGoodsWithPage:[NSString stringWithFormat:@"%ld",_page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[DFRequestUrl getTGoodsWithPage:[NSString stringWithFormat:@"%d",_page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"JSON: %@", responseObject);
         
@@ -138,7 +138,7 @@
     [_hud show];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[self getTGURLWithSearchCondition:_searchCondition WithSearchValue:_searchValue WithPage:[NSString stringWithFormat:@"%ld",_page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[self getTGURLWithSearchCondition:_searchCondition WithSearchValue:_searchValue WithPage:[NSString stringWithFormat:@"%d",_page]] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"JSON: %@", responseObject);
         if (_tgArr.count < 10) {

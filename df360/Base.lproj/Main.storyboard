@@ -713,146 +713,14 @@
         <!--Shopping DetailVC-->
         <scene sceneID="JqF-SO-5Oh">
             <objects>
-                <viewController id="ONm-eg-tMg" customClass="DFShoppingDetailVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DFShoppingDetailVC" id="ONm-eg-tMg" customClass="DFShoppingDetailVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MgS-m5-zzj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" id="Zyo-ru-QPJ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="148"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="KDm-gi-QA6">
-                                        <rect key="frame" x="30" y="8" width="260" height="111"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ViB-Y4-Yck">
-                                        <rect key="frame" x="200" y="98" width="90" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LMx-87-Qxc">
-                                <rect key="frame" x="29" y="132" width="261" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" id="QcT-1Z-smO">
-                                <rect key="frame" x="0.0" y="522" width="320" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" id="uEg-Tc-kKz">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                    </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TeR-lw-S3h">
-                                        <rect key="frame" x="7" y="12" width="97" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cLJ-rF-AXt">
-                                        <rect key="frame" x="112" y="12" width="97" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="chx-Gh-FpU">
-                                        <rect key="frame" x="223" y="6" width="91" height="32"/>
-                                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="立即抢购">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="buySelected:" destination="ONm-eg-tMg" eventType="touchUpInside" id="5ho-Rm-NBh"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" id="ZYJ-3Y-Xwm">
-                                        <rect key="frame" x="110" y="23" width="66" height="1"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="xH2-he-HVV">
-                                <rect key="frame" x="20" y="188" width="280" height="110"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" id="JZf-0k-iAL">
-                                        <rect key="frame" x="0.0" y="30" width="280" height="1"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                    </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品描述" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0Yx-gM-FS7">
-                                        <rect key="frame" x="0.0" y="0.0" width="81" height="31"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="qLm-0I-rEM">
-                                        <rect key="frame" x="0.0" y="39" width="280" height="71"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="cN8-np-dmw">
-                                <rect key="frame" x="20" y="314" width="280" height="88"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" id="Hk1-Ra-xE8">
-                                        <rect key="frame" x="0.0" y="30" width="280" height="1"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                    </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商家介绍" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6wU-fF-MQo">
-                                        <rect key="frame" x="0.0" y="1" width="81" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="vmj-cs-l8R">
-                                        <rect key="frame" x="0.0" y="39" width="280" height="49"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="iQI-uv-aBI">
-                                <rect key="frame" x="20" y="410" width="280" height="69"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" id="Qng-OI-pOg">
-                                        <rect key="frame" x="0.0" y="30" width="280" height="1"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                    </view>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="特别提示" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="D7u-7F-m3Y">
-                                        <rect key="frame" x="0.0" y="1" width="81" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="hgr-GQ-yNi">
-                                        <rect key="frame" x="0.0" y="39" width="280" height="30"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Gcf-MT-KpX"/>
                     <connections>
-                        <outlet property="haveSeedLabel" destination="ViB-Y4-Yck" id="C5M-ra-xno"/>
-                        <outlet property="imageView" destination="KDm-gi-QA6" id="7o1-3m-eQL"/>
-                        <outlet property="infoTextView" destination="qLm-0I-rEM" id="OTI-sH-aW9"/>
-                        <outlet property="introductionTextView" destination="vmj-cs-l8R" id="QSB-zC-fso"/>
-                        <outlet property="noticeTextView" destination="hgr-GQ-yNi" id="rxa-Hq-bYd"/>
-                        <outlet property="nowPriceLabel" destination="TeR-lw-S3h" id="64W-P3-I2b"/>
-                        <outlet property="oldPriceLabel" destination="cLJ-rF-AXt" id="GdH-hZ-sfM"/>
-                        <outlet property="titleLabel" destination="LMx-87-Qxc" id="Y6y-0p-Mrb"/>
                         <segue destination="OUV-6h-we6" kind="push" identifier="shoppingBuy" id="8mN-Xn-KuM"/>
                     </connections>
                 </viewController>
@@ -1151,6 +1019,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.96470588235294119" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="Zv2-ND-9Mb"/>
                 </viewController>
@@ -1173,8 +1042,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="pwg-i2-mpx"/>
-        <segue reference="TXf-qv-d0T"/>
         <segue reference="OpU-RE-zRj"/>
+        <segue reference="sjf-Pt-skH"/>
+        <segue reference="TXf-qv-d0T"/>
     </inferredMetricsTieBreakers>
 </document>

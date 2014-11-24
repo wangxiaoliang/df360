@@ -177,4 +177,18 @@
     return [NSString stringWithFormat:@"%@jifenrole",DFBaseUrl];
 }
 
+/** 收藏 */
++ (NSString *)tuanFavWithUserId:(NSString *)uid
+                   withGoods_id:(NSString *)goods_id
+{
+    return [NSString stringWithFormat:@"%@tuan_fav?u_id=%@&goods_id=%@",DFBaseUrl, uid, goods_id];
+
+}
+
+/** 我的收藏 */
++ (NSString *)myFavWithUserId:(NSString *)uid
+{
+    return [NSString stringWithFormat:@"%@mine_favs?u_id=%@",DFBaseUrl, uid];
+}
+
 @end

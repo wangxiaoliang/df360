@@ -77,8 +77,8 @@
     /*********   LeftBarItem ********/
     if (self.WLeftBarStyle == LeftBarStyleDefault) {
         UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btnBack setBackgroundImage:[UIImage imageNamed:@"yy_navbar_arrow.png"] forState:UIControlStateNormal];
-        [btnBack setBackgroundImage:[UIImage imageNamed:@"yy_navbar_arrow_press.png"] forState:UIControlStateHighlighted];
+        [btnBack setBackgroundImage:[UIImage imageNamed:@"navbar_arrow-1"] forState:UIControlStateNormal];
+        [btnBack setBackgroundImage:[UIImage imageNamed:@"navbar_arrow_press-1"] forState:UIControlStateHighlighted];
         btnBack.frame = CGRectMake(0, 0, 12, 20);
         btnBack.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 15);
         [btnBack addTarget:self action:@selector(doback) forControlEvents:UIControlEventTouchUpInside];
@@ -88,8 +88,8 @@
     else if (self.WLeftBarStyle == LeftBarStyleClick)
     {
         UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btnBack setBackgroundImage:[UIImage imageNamed:@"yy_navbar_arrow.png"] forState:UIControlStateNormal];
-        [btnBack setBackgroundImage:[UIImage imageNamed:@"yy_navbar_arrow_press.png"] forState:UIControlStateHighlighted];
+        [btnBack setBackgroundImage:[UIImage imageNamed:@"navbar_arrow-1"] forState:UIControlStateNormal];
+        [btnBack setBackgroundImage:[UIImage imageNamed:@"navbar_arrow_press-1"] forState:UIControlStateHighlighted];
         btnBack.frame = CGRectMake(0, 0, 12, 20);
         btnBack.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 15);
         [btnBack addTarget:self action:@selector(doback) forControlEvents:UIControlEventTouchUpInside];
@@ -103,9 +103,9 @@
     /*********   RightBarItem ********/
     if (self.WRightBarStyle == RightBarStyleDefault) {
         UIButton *btnShare = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnShare.frame = CGRectMake(0, 0, 20, 20);
-        [btnShare setBackgroundImage:[UIImage imageNamed:@"navbar_btn_share.png"] forState:UIControlStateNormal];
-        [btnShare setBackgroundImage:[UIImage imageNamed:@"navbar_btn_share_press.png"] forState:UIControlStateHighlighted];
+        btnShare.frame = CGRectMake(0, 0, 30, 30);
+        [btnShare setBackgroundImage:[UIImage imageNamed:@"wb_share_normal"] forState:UIControlStateNormal];
+        [btnShare setBackgroundImage:[UIImage imageNamed:@"wb_share_pressed"] forState:UIControlStateHighlighted];
         btnShare.contentEdgeInsets = UIEdgeInsetsMake(0, 15, 0, -10);
         [btnShare addTarget:self action:@selector(doShare) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btnShare];
@@ -129,11 +129,11 @@
         label.text = _WTitle;
         label.font = [UIFont systemFontOfSize:18];
         if (self.WLeftBarStyle == LeftBarStyleClick) {
-            label.textColor = [UIColor whiteColor];
+            label.textColor = [UIColor blackColor];
         }
         else
         {
-            label.textColor = [UIColor whiteColor];
+            label.textColor = [UIColor blackColor];
         }
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;

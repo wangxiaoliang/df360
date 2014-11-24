@@ -8,6 +8,7 @@
 
 #import "DFAppDelegate.h"
 #import "UMSocial.h"
+#import "DFToolClass.h"
 
 @implementation DFAppDelegate
 
@@ -15,7 +16,7 @@
 {
     // Override point for customization after application launch.
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor orangeColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:248.0/255.0 green:248.0/255.0 blue:247.0/255.0 alpha:1]];
     
     
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];

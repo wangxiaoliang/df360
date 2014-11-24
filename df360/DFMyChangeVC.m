@@ -42,7 +42,7 @@
 
 - (void)viewDidLoad {
     
-    self.WTitle = @"收支明细";
+    self.WTitle = @"团购订单";
     self.WLeftBarStyle = LeftBarStyleDefault;
     self.WRightBarStyle = RightBarStyleNone;
     
@@ -64,40 +64,40 @@
 
 - (void)buildUI
 {
-    tgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    tgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    [tgBtn setFrame:CGRectMake(0, 0, KCurrentWidth/2, 40)];
+//    
+//    [tgBtn setTitle:@"团购订单" forState:UIControlStateNormal];
+//    
+//    [tgBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//    
+//    tgBtn.backgroundColor = [UIColor lightGrayColor];
+//    
+//    
+//    tgBtn.selected = YES;
+//    
+//    [tgBtn addTarget:self action:@selector(tgBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.view addSubview:tgBtn];
+//    
+//    
+//    jfBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    [jfBtn setFrame:CGRectMake(KCurrentWidth/2, 0, KCurrentWidth/2, 40)];
+//    
+//    [jfBtn setTitle:@"积分兑换" forState:UIControlStateNormal];
+//    
+//    [jfBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//    
+//    jfBtn.backgroundColor = [UIColor whiteColor];
+//    
+//    [jfBtn addTarget:self action:@selector(jfBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.view addSubview:jfBtn];
     
-    [tgBtn setFrame:CGRectMake(0, 0, KCurrentWidth/2, 40)];
     
-    [tgBtn setTitle:@"团购订单" forState:UIControlStateNormal];
-    
-    [tgBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    
-    tgBtn.backgroundColor = [UIColor lightGrayColor];
-    
-    
-    tgBtn.selected = YES;
-    
-    [tgBtn addTarget:self action:@selector(tgBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:tgBtn];
-    
-    
-    jfBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [jfBtn setFrame:CGRectMake(KCurrentWidth/2, 0, KCurrentWidth/2, 40)];
-    
-    [jfBtn setTitle:@"积分兑换" forState:UIControlStateNormal];
-    
-    [jfBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    
-    jfBtn.backgroundColor = [UIColor whiteColor];
-    
-    [jfBtn addTarget:self action:@selector(jfBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:jfBtn];
-    
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, KCurrentWidth, KCurrentHeight - 40) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KCurrentWidth, KCurrentHeight) style:UITableViewStylePlain];
     
     _tableView.dataSource = self;
     

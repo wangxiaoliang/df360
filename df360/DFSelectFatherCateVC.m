@@ -54,7 +54,59 @@
     
     tableView.dataSource = self;
     
-    [self.view addSubview:tableView];
+//    [self.view addSubview:tableView];
+    
+    float btnWidth = (self.view.bounds.size.width - 100)/4;
+
+    
+    NSArray *imageArr = [[NSArray alloc] initWithObjects:@"ic_house", @"ic_mark", @"ic_jobs", @"ic_resume", @"ic-friends", @"ic_study", @"ic_pet", @"ic_clean", @"ic-photo", @"ic_travel", @"ic_hotel", @"ic_play", @"ic_shoping", @"ic_tag", nil];
+    
+    NSInteger PageItemCount = imageArr.count;
+    //需要显示两行
+    if (PageItemCount >= 5) {
+        for (int i = 0; i<4; i++) {
+            //当前行有几个item
+            NSInteger cellItemCount = (PageItemCount-i*4)>=4?4:(PageItemCount-i*4);
+            for (int y = 0; y < cellItemCount; y ++) {
+                NSInteger tag = y + i*4;
+                
+                NSString *title = [[self.allCates objectAtIndex:tag] objectForKey:@"cat_title"];
+                
+                UIButton *fatherBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                fatherBtn.backgroundColor = [UIColor clearColor];
+                [fatherBtn setFrame:CGRectMake(20 + (btnWidth + 20)*y ,20 + (40 + btnWidth)*i, btnWidth, btnWidth)];
+                [fatherBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                fatherBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+                fatherBtn.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+                [fatherBtn addTarget:self action:@selector(categorySelected:) forControlEvents:UIControlEventTouchUpInside];
+                fatherBtn.tag = tag;
+                [fatherBtn setImage:[UIImage imageNamed:[imageArr objectAtIndex:tag]] forState:UIControlStateNormal];
+                UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20 + (btnWidth + 20)*y ,20 + (40 + btnWidth)*i + 60, btnWidth, 20)];
+                titleLabel.backgroundColor = [UIColor clearColor];
+                titleLabel.text = title;
+                titleLabel.font = [UIFont systemFontOfSize:13];
+                titleLabel.textAlignment = NSTextAlignmentCenter;
+                
+                [self.view addSubview:fatherBtn];
+                
+                [self.view addSubview:titleLabel];
+            }
+        }
+        
+    }
+
+}
+
+- (void)categorySelected:(UIButton *)btn
+{
+    NSInteger tag = [btn tag];
+    
+    NSUserDefaults *df = [NSUserDefaults standardUserDefaults];
+    
+    [df setObject:[[self.allCates objectAtIndex:tag] objectForKey:@"cat_id"] forKey:@"fatherId"];
+    [df setObject:[[self.allCates objectAtIndex:tag] objectForKey:@"cat_title"] forKey:@"fatherTitle"];
+    
+    [self performSegueWithIdentifier:@"selectChildCate" sender:[[self.allCates objectAtIndex:tag] objectForKey:@"child"]];
 }
 
 #pragma mark - TableViewDelegate
